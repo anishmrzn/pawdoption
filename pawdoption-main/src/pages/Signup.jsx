@@ -34,7 +34,7 @@ function Signup() {
         console.log(response);
       }
     } catch (error) {
-      console.error("Error during signup:", error);
+      console.error("Error during signup: ", error);
     }
   };
 
