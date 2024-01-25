@@ -1,0 +1,78 @@
+/* 
+primary-color-##7a5839
+secondary color- #c9a687
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  margin: 0;
+  font-family: "Quicksand", sans-serif;
+  box-sizing: border-box;
+}
+.container {
+  @apply max-w-full
+  px-5
+  py-3
+  
+  md:py-5;
+}
+.hero {
+  @apply bg-[url("/public/hero2.jpg")]
+  bg-cover
+  bg-center;
+}
+.active {
+  @apply text-2xl
+  text-[#c9a687]
+  transition-all
+  duration-500;
+}
+.button {
+  @apply font-bold text-white text-sm lg:text-lg hover:shadow-2xl transition-all duration-500 bg-[#c9a687] px-5 lg:px-8 py-2 rounded-xl;
+}
+.sticky {
+  @apply fixed w-[96%] bg-white z-10 shadow-md pt-3 pb-7  px-3 transform translate-y-[-1.3rem];
+}
+
+/* hamburger menu */
+.hamburger {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  transition: all 0.25s;
+  position: relative;
+}
+.hamburger-top,
+.hamburger-middle,
+.hamburger-bottom {
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  top: 0;
+  left: 0;
+  background: #9b9898;
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+.hamburger-middle {
+  transform: translateY(7px);
+}
+.hamburger-bottom {
+  transform: translateY(14px);
+}
+.open {
+  transform: rotate(90deg);
+}
+.open .hamburger-top {
+  transform: rotate(45deg) translateY(6px) translateX(6px);
+}
+.open .hamburger-middle {
+  display: none;
+}
+.open .hamburger-bottom {
+  transform: rotate(-45deg) translateY(6px) translateX(-6px);
+}
+.clip {
+  clip-path: polygon(36% 0, 42% 9%, 100% 9%, 100% 100%, 0 100%, 0 9%, 29% 9%);
+}
