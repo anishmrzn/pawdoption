@@ -1,11 +1,14 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from paws.models import Pets
 from .serializers import PetSerializer
 from rest_framework import status
 
-# from .models import CustomUser
+
+from .models import CustomUser
 # from .models import CustomUserManager
 from .serializers import CustomUserSerializer
 
@@ -18,10 +21,10 @@ def getRoutes(request):
   
   routes = [
     
-      {'endpoint': 'api/token'},
-      {'endpoint': 'api/token/refresh'},
+      {'POST': 'api/token'},
+      {'POST': 'api/token/refresh'},
       {'endpoint': 'api/pets'},
-      {'endpoint': 'api/signup'},
+      {'POST': 'api/signup'},
       # {'endpoint': ''},
       # {'endpoint': ''},
     
@@ -60,4 +63,20 @@ def customUserCreate(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-  
+@api_view(['POST'])
+def customUserLogin(request):
+    if request.method == 'POST':
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user:
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    

@@ -16,7 +16,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('id', 'email', 'username', 'name', 'password', 'confirm_password')
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {
+            'password': {'write_only': True}
+            }
 
     def validate(self, data):
         password = data.get('password')
@@ -28,5 +30,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        validated_data.pop('confirm_password', None)
-        return super().create(validated_data)
+        password = validated_data.pop('password', None)
+        confirm_password = validated_data.pop('confirm_password', None)
+        instance = self.Meta.model(**validated_data)
+        
+        if password and confirm_password is not None:
+            instance.set_password(password)
+            instance.set_password(confirm_password)
+        instance.save()    
+        return instance
+    
+    
+    
