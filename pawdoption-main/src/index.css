@@ -1,6 +1,30 @@
 /* 
 primary-color-##7a5839
+shades-#6d4f33
+        #61462d
+        #553d27
+        #493422
+        #3d2c1c
+        #302316
+        tints - #947960
+        #a18a74
+        #af9a88
+        #bcab9c
+        #c9bcaf
+        #d7ccc3
+
+
 secondary color- #c9a687
+shades-
+#ceae93
+#d3b79f
+#d9c0ab
+#dec9b7
+#e4d2c3
+#e9dbcf
+#eee4db
+
+
 */
 @tailwind base;
 @tailwind components;
@@ -18,10 +42,11 @@ body {
   md:py-5;
 }
 .hero {
-  @apply bg-[url("/public/hero2.jpg")]
+  @apply bg-[url("/hero2.jpg")]
   bg-cover
   bg-center;
 }
+
 .active {
   @apply text-2xl
   text-[#c9a687]
