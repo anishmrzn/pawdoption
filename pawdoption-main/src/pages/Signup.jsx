@@ -1,7 +1,11 @@
 import { useState } from "react";
 import PageNav from "../components/PageNav";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -29,12 +33,13 @@ function Signup() {
         body: JSON.stringify(formData),
       });
       if (response.ok) {
-        window.location.replace("http://localhost:5173/login");
+        toast.success("Registered Successfully");
+        navigate("/login");
       } else {
-        window.location.replace("http://localhost:5173/error");
+        toast.error("Please try again");
       }
     } catch (error) {
-      console.error("Error during signup: ", error);
+      toast.error("Error during signup");
     }
   };
 

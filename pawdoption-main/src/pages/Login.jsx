@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PageNav from "../components/PageNav";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function Login() {
+  const navigate = useNavigate();
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
@@ -34,9 +36,10 @@ function Login() {
         console.log("DATA:", data.access);
         if (data.access) {
           localStorage.setItem("token", data.access);
-          window.location = "http://127.0.0.1:8000/";
+          navigate("/");
+          toast.success("Successfully Loged in");
         } else {
-          alert("Username OR password did not work");
+          toast.error("Username OR password did not work");
         }
       });
   };
