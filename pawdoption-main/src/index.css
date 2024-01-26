@@ -18,7 +18,7 @@ body {
   md:py-5;
 }
 .hero {
-  @apply bg-[url("/public/hero2.jpg")]
+  @apply bg-[url("/hero2.jpg")]
   bg-cover
   bg-center;
 }

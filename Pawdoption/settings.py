@@ -92,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pawdoption',
         'USER':'root',
-        'PASSWORD':'bluecupcake14',
+        'PASSWORD':'Or@ngePotion0',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
@@ -135,7 +135,7 @@ USE_TZ = True
 
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'pawdoption-main/dist/assets',
+    BASE_DIR / 'pawdoption-main/dist/assets/',
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
