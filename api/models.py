@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from django.contrib.auth.hashers import make_password
 
 # Create your models here.
 
 
 class CustomUserManager(BaseUserManager):
-    def createuser(self, email, username, name, password=None):
+    def createuser(self, email, username, name, password):
         email = self.normalize_email(email)
         user = self.model(email=email, username=username, name=name)
         user.set_password(password)
@@ -16,7 +16,7 @@ class CustomUserManager(BaseUserManager):
     
     # def createsuperuser(self, email, username, name, password=None, **extra_fields):
     #     extra_fields.setdefault('is_staff', True)
-    #     extra_fields.setdefault('is_superuser', True)
+    #     extra_fields.setdefault('is_superuser', True)  
     #     return self.createuser(email, username, name, password, **extra_fields)
     
 
