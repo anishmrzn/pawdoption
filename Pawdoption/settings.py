@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     
     'paws.apps.PawsConfig',
     'api.apps.ApiConfig',
+    'supplierdata.apps.SupplierdataConfig',
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
@@ -93,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pawdoption',
         'USER':'root',
-        'PASSWORD':'Or@ngePotion0',
+        'PASSWORD':'reruru12',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
