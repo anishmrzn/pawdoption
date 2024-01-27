@@ -1,14 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import PageNav from "../components/PageNav";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { LoginContext } from "../context/LoginContextProvider";
 
 function Login() {
+  const { setToken } = useContext(LoginContext);
   const navigate = useNavigate();
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
   });
+
+  const pressKey = (e) => {
+    if (e.key === "Enter") {
+      submitHandler();
+    }
+  };
   const inputHandler = (e) => {
     setLoginFormData({
       ...loginFormData,
@@ -19,7 +27,6 @@ function Login() {
     const formData = new FormData();
     formData.append("username", loginFormData.username);
     formData.append("password", loginFormData.password);
-    console.log(formData);
 
     fetch("http://127.0.0.1:8000/api/token/", {
       method: "POST",
@@ -33,9 +40,10 @@ function Login() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("DATA:", data.access);
+        // console.log("DATA:", data.access);
         if (data.access) {
-          localStorage.setItem("token", data.access);
+          // localStorage.setItem("token", data.access);
+          setToken(data.access);
           navigate("/");
           toast.success("Successfully Loged in");
         } else {

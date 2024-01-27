@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { LoginContext } from "../context/LoginContextProvider";
 
 function PageNav() {
-  const token = localStorage.getItem("token");
-  console.log(token);
+  const { token, setToken } = React.useContext(LoginContext);
+  const navigate = useNavigate();
+
+  // const token = localStorage.getItem("token");
+  // console.log(token);
   const [btnState, setBtnState] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [sticky, setSticky] = useState(false);
@@ -18,8 +22,9 @@ function PageNav() {
     setBtnState((btnState) => !btnState);
   }
   function handleLogout() {
-    localStorage.removeItem("token");
-    window.location.replace("http://localhost:5173/");
+    // localStorage.removeItem("token");
+    setToken("");
+    navigate("/");
   }
   function handleDropdown() {
     setDropDown((dropDown) => !dropDown);
@@ -58,7 +63,7 @@ function PageNav() {
             </li>
           </div>
         </ul>
-        {token === null ? (
+        {!token ? (
           <div className=" hidden md:flex absolute left-[88%] top-[-20%]">
             <Link to="/login" className="button ">
               Login

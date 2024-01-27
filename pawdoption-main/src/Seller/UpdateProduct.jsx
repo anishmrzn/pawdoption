@@ -1,0 +1,202 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { toast } from "react-toastify";
+import { useProductContext } from "../context/ProductContext";
+const API = "http://localhost:8000/products";
+function UpdateProduct() {
+  const navigate = useNavigate;
+  const { singleProduct, getSingleProduct } = useProductContext();
+  const { id } = useParams();
+  const [productImg, setProductImg] = useState("");
+  const [description, setDescription] = useState("");
+  const [productName, setProductName] = useState("");
+  const [price, setPrice] = useState();
+  const [discount, setDiscount] = useState();
+  const [stock, setStock] = useState();
+  const [category, setCategory] = useState("");
+  const [shortDescription, setShortDescription] = useState("");
+  const [featured, setFeatured] = useState(false);
+  const [supplierId, setSupplierId] = useState("");
+  const [animalCategory, setAnimalCategory] = useState("");
+
+  useEffect(() => {
+    getSingleProduct(`${API}/${id}`);
+  }, []);
+
+  useEffect(() => {
+    if (singleProduct) {
+      setProductImg(singleProduct.productImg || "");
+      setDescription(singleProduct.description || "");
+      setProductName(singleProduct.productName || "");
+      setPrice(singleProduct.price || "");
+      setDiscount(singleProduct.discount || "");
+      setStock(singleProduct.stock || "");
+      setCategory(singleProduct.category || "");
+      setShortDescription(singleProduct.shortDescription || "");
+      setFeatured(singleProduct.featured || "");
+      setAnimalCategory(singleProduct.animalCategory || "");
+    }
+  }, [singleProduct]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("prductImg", productImg);
+      formData.append("description", description);
+      formData.append("productName", productName);
+      formData.append("price", price);
+      formData.append("discount", discount);
+      formData.append("stock", stock);
+      formData.append("category", category);
+      formData.append("shortDescription", shortDescription);
+      formData.append("featured", featured);
+      formData.append("supplierId", supplierId);
+      formData.append("animalCategory", animalCategory);
+      const { data } = await axios.put(
+        `http://localhost:8000/singleProduct/${id}`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleDelete = async () => {
+    try {
+      let answer = window.prompt(
+        "Are you sure you want to delete this product?"
+      );
+      if (!answer) return;
+      const { data } = await axios.delete(`${API}/${id}`);
+      toast.success("product deleted successfully");
+      navigate("/seller");
+    } catch (error) {
+      console.log(error);
+      toast.error("error deleting");
+    }
+  };
+  return (
+    <div>
+      <form className="grid grid-cols-3 gap-5">
+        <label htmlFor="productImg">Product Image :</label>
+        <input
+          type="file"
+          id="productImg"
+          accept="image/*"
+          onChange={(e) => {
+            setProductImg(e.target.value);
+          }}
+          className="col-span-2 border-2"
+        />
+        <label htmlFor="productName">Product Name :</label>
+        <input
+          type="text"
+          id="productName"
+          onChange={(e) => {
+            setProductName(e.target.value);
+          }}
+          value={productName}
+          className="col-span-2 border-2"
+        />
+        <label htmlFor="productShortDes">Product shortDescription :</label>
+        <input
+          type="text"
+          id="productShortDes"
+          onChange={(e) => {
+            setShortDescription(e.target.value);
+          }}
+          value={shortDescription}
+          maxLength="40"
+          className="col-span-2 border-2"
+        />
+        <label htmlFor="productDes">Product description :</label>
+        <input
+          type="text"
+          id="productDes"
+          value={description}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+          className="col-span-2 border-2"
+        />
+        <label htmlFor="productPrice">Product price :</label>
+        <input
+          type="text"
+          id="productPrice"
+          value={price}
+          onChange={(e) => {
+            setPrice(e.target.value);
+          }}
+          className="col-span-2 border-2"
+        />
+        <label htmlFor="productDis">Product discount :</label>
+        <input
+          type="text"
+          id="productDis"
+          value={discount}
+          onChange={(e) => {
+            setDiscount(e.target.value);
+          }}
+          className="col-span-2 border-2"
+        />
+        <label htmlFor="productCat">Product Categoty :</label>
+        <select
+          type="file"
+          id="productCat"
+          value={category}
+          onChange={(e) => {
+            setCategory(e.target.value);
+          }}
+          className="col-span-2 border-2"
+        >
+          <option value="Accessories">Accessories</option>
+          <option value="Pet Food">Pet Food</option>
+          <option value="Grooming">Grooming</option>
+        </select>
+        <label htmlFor="animal">Animal Category :</label>
+        <select
+          id="animal"
+          value={animalCategory}
+          onChange={(e) => {
+            setAnimalCategory(e.target.value);
+          }}
+          className="col-span-2 border-2"
+        >
+          <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
+        </select>
+        <label htmlFor="stock">Stock:</label>
+        <input
+          type="number"
+          id="stock"
+          value={stock}
+          onChange={(e) => {
+            setStock(e.target.value);
+          }}
+          className="col-span-2 border-2"
+        />
+        <label htmlFor="featured">Featured</label>
+        <input
+          type="checkbox"
+          id="featured"
+          checked={featured}
+          onChange={(e) => {
+            setFeatured(e.target.checked);
+          }}
+          className="col-span-2"
+        />
+
+        <button onClick={handleSubmit} className="col-span-1">
+          Update Product
+        </button>
+        <button onClick={handleDelete} className="col-span-1">
+          Delete Product
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default UpdateProduct;
