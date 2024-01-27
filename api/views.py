@@ -8,8 +8,6 @@ from .serializers import PetSerializer
 from rest_framework import status
 
 
-from .models import CustomUser
-# from .models import CustomUserManager
 from .serializers import CustomUserSerializer
 
 
@@ -18,19 +16,15 @@ from .serializers import CustomUserSerializer
 
 @api_view(['GET'])
 def getRoutes(request):
-  
-  routes = [
-    
-      {'POST': 'api/token'},
-      {'POST': 'api/token/refresh'},
-      {'endpoint': 'api/pets'},
-      {'POST': 'api/signup'},
-      # {'endpoint': ''},
-      # {'endpoint': ''},
-    
-  ]
-  
-  return Response(routes)
+    routes = [
+    {'POST': 'api/token'},
+    {'POST': 'api/token/refresh'},
+    {'endpoint': 'api/pets'},
+    {'POST': 'api/signup'},
+    {'methods': ['POST', 'GET'], 'endpoint': 'api/create-product'},    
+]
+
+    return Response(routes)
 
 
 @api_view(['GET'])
