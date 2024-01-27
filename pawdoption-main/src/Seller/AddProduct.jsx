@@ -13,9 +13,7 @@ function AddProduct() {
   const [featured, setFeatured] = useState(false);
   const [supplierId, setSupplierId] = useState("");
   const [animalCategory, setAnimalCategory] = useState("");
-  const singleProduct = {
-    supplierId: "Astha daraz",
-  };
+
   useEffect(() => {
     async function getData() {
       try {
@@ -27,11 +25,6 @@ function AddProduct() {
       }
     }
     getData();
-  }, []);
-  useEffect(() => {
-    if (singleProduct) {
-      setSupplierId(singleProduct.seller || "");
-    }
   }, []);
 
   const handleSubmit = async (e) => {
