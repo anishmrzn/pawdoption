@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     
     'paws.apps.PawsConfig',
     'api.apps.ApiConfig',
+    'supplierdata.apps.SupplierdataConfig',
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
