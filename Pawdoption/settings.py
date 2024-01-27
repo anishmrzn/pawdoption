@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pawdoption',
         'USER':'root',
-        'PASSWORD':'Or@ngePotion0',
+        'PASSWORD':'bluecupcake14',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
