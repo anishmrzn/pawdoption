@@ -16,6 +16,7 @@ def createProduct(request):
       return Response(serializer.data, status = status.HTTP_201_CREATED)
     return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 def getProduct(request):  
     products = Products.objects.all()
@@ -28,6 +29,31 @@ def getSingleProduct(request, pk):
   product = Products.objects.get(productId = pk)
   serializer = ProductsSerializer(product, many = False)
   return Response(serializer.data)
-    
-  
 
+
+@api_view(['PUT'])
+def updateProduct(request, pk):
+  try:
+    product = Products.objects.get(productId = pk)
+  except Products.DoesNotExist:
+    return Response({"message":"Product not found"}, status= status.HTTP_404_NOT_FOUND)
+  
+  serializer = ProductsSerializer(product, data= request.data)
+  if serializer.is_valid():
+    serializer.save()
+    return Response(serializer.data)
+  return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['DELETE'])
+def deleteProduct(request, pk):
+    try:
+        product = Products.objects.get(productId=pk)
+        product.delete()
+        return Response({"message": "Product deleted successfully"}, status = status.HTTP_200_OK)
+    except Products.DoesNotExist:
+        return Response({"message": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+  

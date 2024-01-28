@@ -223,3 +223,4 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+APPEND_SLASH = False
