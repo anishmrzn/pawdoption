@@ -103,6 +103,7 @@ DATABASES = {
         'NAME': 'pawdoption',
         'USER':'root',
         'PASSWORD':'Or@ngePotion0',
+        # 'PASSWORD' : 'bluecupcake14'
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
@@ -223,3 +224,4 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+APPEND_SLASH = False
