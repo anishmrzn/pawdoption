@@ -3,10 +3,10 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContextProvider";
 
 function PageNav() {
-  const { token, setToken } = React.useContext(LoginContext);
+  // const { token, setToken } = React.useContext(LoginContext);
   const navigate = useNavigate();
 
-  // const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   // console.log(token);
   const [btnState, setBtnState] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -22,8 +22,8 @@ function PageNav() {
     setBtnState((btnState) => !btnState);
   }
   function handleLogout() {
-    // localStorage.removeItem("token");
-    setToken("");
+    localStorage.removeItem("token");
+    // setToken("");
     navigate("/");
   }
   function handleDropdown() {
@@ -84,6 +84,9 @@ function PageNav() {
                 <ul className="flex flex-col gap-3">
                   <li>My Account</li>
                   <li>My Orders</li>
+                  <li>
+                    <Link to="/seller">Seller</Link>
+                  </li>
                   <li>
                     <button onClick={handleLogout}>Log out</button>
                   </li>

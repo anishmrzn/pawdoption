@@ -1,5 +1,9 @@
 from django.db import models
 import uuid
+# import cloudinary
+# import cloudinary.uploader
+# import cloudinary.api
+# from cloudinary.models import CloudinaryField
 
 
 # Create your models here.
@@ -8,7 +12,7 @@ class Products(models.Model):
   productId = models.UUIDField(default=uuid.uuid4,unique=True,primary_key = True, editable = False)
   productName = models.TextField(max_length = 200, blank = False, null = False)
   shortDescription = models.TextField(max_length = 50, blank = True, null = True)
-  productImg = models.ImageField(blank=True, null= True, default= '/placeholder.png')
+  productImg = models.ImageField(upload_to='products', default='default.png')
   Description = models.TextField(max_length = 200, blank = True, null = True)
   price = models.DecimalField(max_digits=8, decimal_places=2)
   stock = models.IntegerField(editable = True,blank = False, null = False)

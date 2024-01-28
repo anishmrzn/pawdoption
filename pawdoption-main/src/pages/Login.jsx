@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { LoginContext } from "../context/LoginContextProvider";
 
 function Login() {
-  const { setToken } = useContext(LoginContext);
+  // const { setToken } = useContext(LoginContext);
   const navigate = useNavigate();
   const [loginFormData, setLoginFormData] = useState({
     username: "",
@@ -42,8 +42,8 @@ function Login() {
       .then((data) => {
         // console.log("DATA:", data.access);
         if (data.access) {
-          // localStorage.setItem("token", data.access);
-          setToken(data.access);
+          localStorage.setItem("token", data.access);
+          // setToken(data.access);
           navigate("/");
           toast.success("Successfully Loged in");
         } else {

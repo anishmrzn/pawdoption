@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function AddProduct() {
   const [productImg, setProductImg] = useState("");
@@ -11,53 +12,79 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [featured, setFeatured] = useState(false);
-  const [supplierId, setSupplierId] = useState("");
+  // const [supplierId, setSupplierId] = useState("");
   const [animalCategory, setAnimalCategory] = useState("");
-  const singleProduct = {
-    supplierId: "Astha daraz",
-  };
-  useEffect(() => {
-    async function getData() {
-      try {
-        const res = await axios.get("http://localhost:8000/singleProduct");
-        const product = await res.data;
-        console.log(product);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    getData();
-  }, []);
-  useEffect(() => {
-    if (singleProduct) {
-      setSupplierId(singleProduct.seller || "");
-    }
-  }, []);
+  // const singleProduct = {
+  //   supplierId: "Astha daraz",
+  // };
+  // useEffect(() => {
+  //   async function getData() {
+  //     try {
+  //       const res = await axios.post(
+  //         "http://127.0.0.1:8000/api/create-product/"
+  //       );
+  //       const product = await res.data;
+  //       console.log(product);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   }
+  //   getData();
+  // }, []);
+  // useEffect(() => {
+  //   if (singleProduct) {
+  //     setSupplierId(singleProduct.seller || "");
+  //   }
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("prductImg", productImg);
-      formData.append("description", description);
-      formData.append("productName", productName);
-      formData.append("price", price);
-      formData.append("discount", discount);
-      formData.append("stock", stock);
-      formData.append("category", category);
-      formData.append("shortDescription", shortDescription);
-      formData.append("featured", featured);
-      formData.append("supplierId", supplierId);
-      formData.append("animalCategory", animalCategory);
-      const { data } = await axios.post(
-        "http://localhost:8000/singleProduct",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    const formData = new FormData();
+    formData.append("productImg", productImg);
+    formData.append("description", description);
+    formData.append("productName", productName);
+    formData.append("price", parseFloat(price));
+    formData.append("discount", parseFloat(discount));
+    formData.append("stock", parseFloat(stock));
+    formData.append("category", category);
+    formData.append("shortDescription", shortDescription);
+    formData.append("featured", featured);
+    // formData.append("supplierId", supplierId);
+    //   formData.append("animalCategory", animalCategory);
+    //   const { data } = await axios.post(
+    //     "http://127.0.0.1:8000/api/create-product/",
+    //     formData,
+    //     { headers: { "Content-Type": "multipart/form-data" } }
+    //   );
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    fetch("http://127.0.0.1:8000/api/create-product/", {
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
+      body: JSON.stringify({
+        productImg: productImg,
+        description: description,
+        productName: productName,
+        price: price,
+        discount: discount,
+        stock: stock,
+        category: category,
+        shortDescription: shortDescription,
+        featured: featured,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.access) {
+          toast.success("Product Added");
+        } else {
+          toast.error("Unsuccessful");
+        }
+      });
   };
+
   return (
     <div>
       <form encType="multipart/form-data" className="grid grid-cols-3 gap-5">
@@ -67,7 +94,7 @@ function AddProduct() {
           id="productImg"
           accept="image/*"
           onChange={(e) => {
-            setProductImg(e.target.value);
+            setProductImg(e.target.files[0]);
           }}
           className="col-span-2 border-2"
         />
@@ -167,7 +194,7 @@ function AddProduct() {
           }}
           className="col-span-2"
         />
-        <label htmlFor="seller">Seller:</label>
+        {/* <label htmlFor="seller">Seller:</label>
         <input
           type="text"
           id="seller"
@@ -176,7 +203,7 @@ function AddProduct() {
             setStock(e.target.value);
           }}
           className="col-span-2 border-2"
-        />
+        /> */}
         <button onClick={handleSubmit}>Submit</button>
       </form>
     </div>

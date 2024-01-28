@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def createProduct(request):
     serializer = ProductsSerializer(data=request.data)
     if serializer.is_valid():
@@ -25,7 +25,7 @@ def getProduct(request):
  
 @api_view(['GET'])
 def getSingleProduct(request, pk):
-  product = Products.objects.get(productId =pk)
+  product = Products.objects.get(productId = pk)
   serializer = ProductsSerializer(product, many = False)
   return Response(serializer.data)
     

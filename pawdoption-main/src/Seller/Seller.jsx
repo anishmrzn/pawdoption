@@ -15,7 +15,7 @@ function Seller() {
             <Link to="/seller/add">Add</Link>
           </li>
           <li>
-            <Link to="/seller/update">Update</Link>
+            <Link to="/seller/manage">Update</Link>
           </li>
         </ul>
       </div>
