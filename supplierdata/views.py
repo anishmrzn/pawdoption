@@ -54,6 +54,27 @@ def deleteProduct(request, pk):
         return Response({"message": "Product deleted successfully"}, status = status.HTTP_200_OK)
     except Products.DoesNotExist:
         return Response({"message": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+      
+
+@api_view(['GET'])
+def products(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            # Get a single product by ID
+            try:
+                product = Products.objects.get(productId = pk)
+                serializer = ProductsSerializer(product)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except Products.DoesNotExist:
+                return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            # Get all products
+            products = Products.objects.all()
+            serializer = ProductsSerializer(products, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 
   

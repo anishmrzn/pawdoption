@@ -10,7 +10,10 @@ function ManageProducts() {
         {products?.map((product) => {
           // return <FeatureProducts product={product} key={product._id} />;
           return (
-            <Link key={product.id} to={`/seller/update/${product.id}`}>
+            <Link
+              key={product.productId}
+              to={`/seller/update/${product.productId}`}
+            >
               <div className="flex  flex-col gap-4 border p-4 rounded-3xl shadow-md">
                 <img
                   className="w-52 h-60 object-cover rounded-3xl"

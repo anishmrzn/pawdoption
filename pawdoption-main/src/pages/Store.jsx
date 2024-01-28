@@ -4,6 +4,7 @@ import { useProductContext } from "../context/ProductContext";
 
 function Store() {
   const { products } = useProductContext();
+
   return (
     <div className="grid grid-cols-5 gap-10 lg:gap-16">
       <div className="col-span-5">
