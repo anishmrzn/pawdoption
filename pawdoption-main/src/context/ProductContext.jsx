@@ -4,7 +4,7 @@ import reducer from "../Reducer/productReducer";
 
 const AppContext = createContext();
 
-const API = "http://127.0.0.1:8000/api/get-product/";
+const API = "http://127.0.0.1:8000/api/products/";
 
 const AppProvider = ({ children }) => {
   const initialState = {

@@ -4,11 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { useProductContext } from "../context/ProductContext";
-const API = "http://localhost:8000/products";
+const API = "http://127.0.0.1:8000/api/products/";
+
 function UpdateProduct() {
   const navigate = useNavigate;
-  const { singleProduct, getSingleProduct } = useProductContext();
-  const { id } = useParams();
+
   const [productImg, setProductImg] = useState("");
   const [description, setDescription] = useState("");
   const [productName, setProductName] = useState("");
@@ -21,8 +21,10 @@ function UpdateProduct() {
   const [supplierId, setSupplierId] = useState("");
   const [animalCategory, setAnimalCategory] = useState("");
 
+  const { singleProduct, getSingleProduct } = useProductContext();
+  const { id } = useParams();
   useEffect(() => {
-    getSingleProduct(`${API}/${id}`);
+    getSingleProduct(`${API}${id}/`);
   }, []);
 
   useEffect(() => {
@@ -54,27 +56,53 @@ function UpdateProduct() {
       formData.append("featured", featured);
       formData.append("supplierId", supplierId);
       formData.append("animalCategory", animalCategory);
-      const { data } = await axios.put(
-        `http://localhost:8000/singleProduct/${id}`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-    } catch (err) {
-      console.log(err);
+      //   const { data } = await axios.put(
+      //     `http://127.0.0.1:8000/update/${id}/`,
+      //     formData,
+      //     { headers: { "Content-Type": "multipart/form-data" } }
+      //   );
+      // } catch (err) {
+      //   console.log(err);
+      // }
+      const response = await fetch(`http://127.0.0.1:8000/api/update/${id}/`, {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (response.ok) {
+        toast.success("Product Updated");
+        window.location.replace("http://localhost:5173/store");
+      }
+    } catch (error) {
+      toast.error("Error");
     }
   };
   const handleDelete = async () => {
     try {
-      let answer = window.prompt(
-        "Are you sure you want to delete this product?"
-      );
-      if (!answer) return;
-      const { data } = await axios.delete(`${API}/${id}`);
-      toast.success("product deleted successfully");
-      navigate("/seller");
+      // let answer = window.prompt(
+      //   "Are you sure you want to delete this product?"
+      // );
+      // if (!answer) return;
+      //   const { data } = await axios.delete(
+      //     `http://127.0.0.1:8000/delete/${id}/`
+      //   );
+      //   toast.success("product deleted successfully");
+      //   navigate("/seller");
+      // } catch (error) {
+      //   console.log(error);
+      //   toast.error("error deleting");
+      // }
+      const response = await fetch(`http://127.0.0.1:8000/api/delete/${id}/`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        toast.success("Product deleted");
+        // navigate("/store");
+        window.location.replace("http://localhost:5173/store");
+      }
     } catch (error) {
-      console.log(error);
-      toast.error("error deleting");
+      toast.error("Error");
     }
   };
   return (
