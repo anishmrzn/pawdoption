@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from supplierdata.urls import createProduct,getSingleProduct,getProduct
+from supplierdata.urls import createProduct,getSingleProduct,getProduct,updateProduct,deleteProduct
 
 urlpatterns = [
     path('', views.getRoutes, name = 'routes'),
@@ -17,6 +17,8 @@ urlpatterns = [
     path('login/', customUserLogin, name='login_user'),
     path('create-product/', createProduct, name = 'create-product'),
     path('get-product/', getProduct, name = 'get-product'),
-    path('single-product/<str:pk>/', getSingleProduct, name = 'single-product')
+    path('single-product/<str:pk>/', getSingleProduct, name = 'single-product'),
+    path('update/<str:pk>/', updateProduct, name = 'update-product'),
+    path('delete/<str:pk>/',deleteProduct, name = 'delete-product')
 
 ]
