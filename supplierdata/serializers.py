@@ -11,3 +11,15 @@ class ProductsSerializer(serializers.ModelSerializer):
         model = Products
         fields = '__all__'
         
+    def create(self, validated_data):
+        
+        image_file = validated_data.pop('productImg', None)
+        
+        product_instance = Products.objects.create(**validated_data)
+       
+        if image_file:
+            product_instance.productImg = image_file
+            product_instance.save()
+
+        return product_instance
+        

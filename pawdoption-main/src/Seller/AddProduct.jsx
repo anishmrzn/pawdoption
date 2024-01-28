@@ -39,55 +39,44 @@ function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    const formData = new FormData();
-    formData.append("productImg", productImg);
-    formData.append("description", description);
-    formData.append("productName", productName);
-    formData.append("price", parseFloat(price));
-    formData.append("discount", parseFloat(discount));
-    formData.append("stock", parseFloat(stock));
-    formData.append("category", category);
-    formData.append("shortDescription", shortDescription);
-    formData.append("featured", featured);
-    // formData.append("supplierId", supplierId);
-    //   formData.append("animalCategory", animalCategory);
-    //   const { data } = await axios.post(
-    //     "http://127.0.0.1:8000/api/create-product/",
-    //     formData,
-    //     { headers: { "Content-Type": "multipart/form-data" } }
-    //   );
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    fetch("http://127.0.0.1:8000/api/create-product/", {
-      method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
-      body: JSON.stringify({
-        productImg: productImg,
-        description: description,
-        productName: productName,
-        price: price,
-        discount: discount,
-        stock: stock,
-        category: category,
-        shortDescription: shortDescription,
-        featured: featured,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.access) {
-          toast.success("Product Added");
-        } else {
-          toast.error("Unsuccessful");
+
+    try {
+      const formData = new FormData();
+      formData.append("productImg", productImg);
+      formData.append("description", description);
+      formData.append("productName", productName);
+      formData.append("price", price);
+      formData.append("discount", discount);
+      formData.append("stock", stock);
+      formData.append("category", category);
+      formData.append("shortDescription", shortDescription);
+      formData.append("featured", featured);
+      formData.append("animalCategory", animalCategory);
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/create-product/",
+        {
+          method: "POST",
+          body: formData,
         }
-      });
+      );
+
+      if (response.ok) {
+        toast.success("Product Added");
+      } else {
+        toast.error("Unsuccessful");
+      }
+    } catch (error) {
+      toast.error("Error during signup");
+    }
   };
 
   return (
-    <div>
-      <form encType="multipart/form-data" className="grid grid-cols-3 gap-5">
+    <div className="flex flex-col gap-10 ">
+      <h1 className="text-center font-extrabold text-2xl">
+        Add your product here
+      </h1>
+      <form className="grid grid-cols-3 gap-5">
         <label htmlFor="productImg">Product Image :</label>
         <input
           type="file"
