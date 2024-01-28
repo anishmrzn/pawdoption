@@ -10,7 +10,7 @@ function UpdateProduct() {
   const navigate = useNavigate;
 
   const [productImg, setProductImg] = useState("");
-  const [description, setDescription] = useState("");
+  const [Description, setDescription] = useState("");
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState();
   const [discount, setDiscount] = useState();
@@ -30,7 +30,7 @@ function UpdateProduct() {
   useEffect(() => {
     if (singleProduct) {
       setProductImg(singleProduct.productImg || "");
-      setDescription(singleProduct.description || "");
+      setDescription(singleProduct.Description || "");
       setProductName(singleProduct.productName || "");
       setPrice(singleProduct.price || "");
       setDiscount(singleProduct.discount || "");
@@ -46,7 +46,7 @@ function UpdateProduct() {
     try {
       const formData = new FormData();
       formData.append("prductImg", productImg);
-      formData.append("description", description);
+      formData.append("Description", Description);
       formData.append("productName", productName);
       formData.append("price", price);
       formData.append("discount", discount);
@@ -143,7 +143,7 @@ function UpdateProduct() {
         <input
           type="text"
           id="productDes"
-          value={description}
+          value={Description}
           onChange={(e) => {
             setDescription(e.target.value);
           }}
