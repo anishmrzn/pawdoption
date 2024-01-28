@@ -7,13 +7,17 @@ function ProductContainer({ products }) {
         <img
           src={products.productImg}
           alt="Items"
-          className="w-[20rem] transform hover:scale-110 transition-all duration-500 "
+          className="w-[15rem] h-[15rem] transform hover:scale-110 transition-all duration-500 "
         />
         <div className="flex flex-col gap-2">
           <h3 className="text-center font-bold">{products.productName}</h3>
           <div className="flex gap-5 ml-3">
             <span>
-              Rs.{products.price - products.price * (products.discount / 100)}
+              Rs.
+              {(
+                products.price -
+                products.price * (products.discount / 100)
+              ).toFixed(2)}
             </span>
             <span className="line-through text-gray-500">
               Rs.{products.price}

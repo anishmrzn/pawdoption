@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useProductContext } from "../context/ProductContext";
 import { useEffect } from "react";
-const API = "http://127.0.0.1:8000/api/single-product";
+import PageNav from "../components/PageNav";
+
 function SingleProduct() {
   const { singleProduct, getSingleProduct } = useProductContext();
 
@@ -11,7 +12,9 @@ function SingleProduct() {
   }, []);
   return (
     <div>
+      <PageNav />
       <h1>{singleProduct.productName}</h1>
+      <p>{singleProduct.Description}</p>
     </div>
   );
 }

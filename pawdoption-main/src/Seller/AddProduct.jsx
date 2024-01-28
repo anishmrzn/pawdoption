@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
+  const navigate = useNavigate();
   const [productImg, setProductImg] = useState("");
-  const [description, setDescription] = useState("");
+  const [Description, setDescription] = useState("");
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState();
   const [discount, setDiscount] = useState();
@@ -43,7 +45,7 @@ function AddProduct() {
     try {
       const formData = new FormData();
       formData.append("productImg", productImg);
-      formData.append("description", description);
+      formData.append("Description", Description);
       formData.append("productName", productName);
       formData.append("price", price);
       formData.append("discount", discount);
@@ -63,11 +65,13 @@ function AddProduct() {
 
       if (response.ok) {
         toast.success("Product Added");
+        navigate("/store");
+        window.location.reload();
       } else {
         toast.error("Unsuccessful");
       }
     } catch (error) {
-      toast.error("Error during signup");
+      toast.error("Error");
     }
   };
 
@@ -112,7 +116,7 @@ function AddProduct() {
         <input
           type="text"
           id="productDes"
-          value={description}
+          value={Description}
           onChange={(e) => {
             setDescription(e.target.value);
           }}
