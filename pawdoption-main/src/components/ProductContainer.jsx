@@ -1,9 +1,8 @@
 import { NavLink } from "react-router-dom";
 
 function ProductContainer({ products }) {
-  console.log(products);
   return (
-    <NavLink to={`/singleproducts/${products.id}`}>
+    <NavLink to={`/singleproduct/${products.productId}`}>
       <div className="border-2 rounded-xl overflow-hidden flex flex-col gap-5 cursor-pointer hover:shadow-2xl">
         <img
           src={products.productImg}

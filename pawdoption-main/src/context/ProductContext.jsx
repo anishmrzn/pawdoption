@@ -4,7 +4,7 @@ import reducer from "../Reducer/productReducer";
 
 const AppContext = createContext();
 
-const API = "http://localhost:8000/products";
+const API = "http://127.0.0.1:8000/api/get-product/";
 
 const AppProvider = ({ children }) => {
   const initialState = {
@@ -31,8 +31,9 @@ const AppProvider = ({ children }) => {
   const getSingleProduct = async (url) => {
     dispatch({ type: "SET_SINGLE_LOADING" });
     try {
-      const res = await axios.get(url, { withCredentials: true });
+      const res = await axios.get(url);
       const singleProduct = await res.data;
+
       dispatch({ type: "SET_SINGLE_PRODUCT", payload: singleProduct });
     } catch (error) {
       dispatch({ type: "SET_SINGLE_ERROR" });

@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useProductContext } from "../context/ProductContext";
 import { useEffect } from "react";
-const API = "http://localhost:8000/products";
+const API = "http://127.0.0.1:8000/api/single-product";
 function SingleProduct() {
   const { singleProduct, getSingleProduct } = useProductContext();
+
   const { id } = useParams();
   useEffect(() => {
-    getSingleProduct(`${API}/${id}`);
+    getSingleProduct(`http://127.0.0.1:8000/api/single-product/${id}`);
   }, []);
   return (
     <div>

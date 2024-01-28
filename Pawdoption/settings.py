@@ -11,8 +11,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from datetime import timedelta
+# import cloudinary_storage
 from pathlib import Path
 import os
+
+# import cloudinary
+# import cloudinary.uploader
+# import cloudinary.api
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,6 +52,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
+    # 'cloudinary',
+    # 'cloudinary_storage'
 ]
 
 MIDDLEWARE = [
@@ -136,14 +144,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL= '/static/'
-MEDIA_URL = '/images/'
+MEDIA_URL = '/static/'
 
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
@@ -201,3 +209,18 @@ AUTH_USER_MODEL = 'api.CustomUser'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+# CLOUDINARY_URL = "cloudinary://<554852596428659>:<mr7DiXiNtCngFiM6ZwwmvEKdKHU>@<djzfsffst>"
+
+# # CLOUDINARY_URL="cloudinary://554852596428659:554852596428659@djzfsffst"
+
+
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'djzfsffst',
+#     'API_KEY': '554852596428659',
+#     'API_SECRET' : 'mr7DiXiNtCngFiM6ZwwmvEKdKHU'
+# }
+
+
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
