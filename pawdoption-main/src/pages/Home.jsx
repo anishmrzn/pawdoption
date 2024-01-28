@@ -9,7 +9,9 @@ function Home() {
     <div className="flex flex-col gap-10  ">
       <Hero />
       <Adoption />
+
       <FeaturedItems />
+
       <About />
       <Footer />
     </div>
