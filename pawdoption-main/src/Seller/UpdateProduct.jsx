@@ -99,9 +99,9 @@ function UpdateProduct() {
       });
 
       if (response.ok) {
-        toast.success("Product deleted");
         // navigate("/store");
         window.location.replace("http://localhost:5173/store");
+        toast.success("Product deleted");
       }
     } catch (error) {
       toast.error("Error");
@@ -111,16 +111,23 @@ function UpdateProduct() {
     <div className="flex flex-col gap-10 items-center border-2 px-16 py-10 rounded-2xl shadow-xl ">
       <h1 className=" font-extrabold text-2xl">Update your product </h1>
       <form className="grid grid-cols-3 gap-5 font-semibold">
-        <label htmlFor="productImg">Product Image :</label>
-        <input
-          type="file"
-          id="productImg"
-          accept="image/*"
-          onChange={(e) => {
-            setProductImg(e.target.files[0]);
-          }}
-          className="col-span-2 border-2  rounded-xl border-gray-400"
+        <img
+          src={`http://127.0.0.1:8000/${singleProduct.productImg}`}
+          alt="singleProduct"
+          className="col-span-1 border-2 rounded-2xl border-gray-500"
         />
+        <div className="col-span-2 flex gap-3 items-center">
+          <label htmlFor="productImg">Product Image :</label>
+          <input
+            type="file"
+            id="productImg"
+            accept="image/*"
+            onChange={(e) => {
+              setProductImg(e.target.files[0]);
+            }}
+            className="col-span-1 border-2 h-10 rounded-xl border-gray-400"
+          />
+        </div>
         <label htmlFor="productName">Product Name :</label>
         <input
           type="text"
