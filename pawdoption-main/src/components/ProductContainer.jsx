@@ -5,7 +5,7 @@ function ProductContainer({ products }) {
     <NavLink to={`/singleproduct/${products.productId}`}>
       <div className="border-2 rounded-xl overflow-hidden flex flex-col gap-5 cursor-pointer hover:shadow-2xl">
         <img
-          src={products.productImg}
+          src={"http://127.0.0.1:8000" + products.productImg}
           alt="Items"
           className="w-[15rem] h-[15rem] transform hover:scale-110 transition-all duration-500 "
         />
