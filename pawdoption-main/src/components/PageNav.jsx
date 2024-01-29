@@ -10,6 +10,7 @@ function PageNav() {
   // console.log(token);
   const [btnState, setBtnState] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [smallDropDown, setSmallDropDown] = useState(false);
   const [sticky, setSticky] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +30,11 @@ function PageNav() {
   function handleDropdown() {
     setDropDown((dropDown) => !dropDown);
   }
+  function handleSmallDropdown() {
+    setSmallDropDown((smallDropDown) => !smallDropDown);
+  }
   let toggleClassDropdown = dropDown ? "" : "hidden";
+  let toggleClassSmallDropdown = smallDropDown ? "" : "hidden";
   let toggleClassOpen = btnState ? "open" : "";
   let toggleClassHidden = btnState ? "flex" : "hidden";
   return (
@@ -81,14 +86,23 @@ function PageNav() {
               <div
                 className={`${toggleClassDropdown} absolute left-[86.4%] top-[180%]  px-6 py-5 clip bg-[#c9a687] }`}
               >
-                <ul className="flex flex-col gap-3">
-                  <li>My Account</li>
-                  <li>My Orders</li>
-                  <li>
+                <ul className="flex flex-col gap-3 text-md">
+                  <li className="text-white hover:underline">
+                    <Link to="/seller">My Account</Link>
+                  </li>
+                  <li className="text-white hover:underline">
+                    <Link to="/seller">My Orders</Link>
+                  </li>
+                  <li className="text-white hover:underline">
                     <Link to="/seller">Seller</Link>
                   </li>
                   <li>
-                    <button onClick={handleLogout}>Log out</button>
+                    <button
+                      onClick={handleLogout}
+                      className="text-white hover:underline"
+                    >
+                      Log out
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -123,9 +137,56 @@ function PageNav() {
           <NavLink to="/quiz" className="hover:text-[#c9a687]">
             Quiz
           </NavLink>
-          <Link to="/login" className="button ">
-            Login
-          </Link>
+          {!token ? (
+            <div className=" hidden md:flex absolute left-[88%] top-[-20%]">
+              <Link to="/login" className="button ">
+                Login
+              </Link>
+            </div>
+          ) : (
+            <>
+              <div>
+                <button
+                  className="flex text-md  hover:text-[#c9a687] transition-all duration-500"
+                  onClick={handleSmallDropdown}
+                >
+                  <div className="flex items-center justify-center gap-3">
+                    <ion-icon name="person"></ion-icon>
+                    <h1 className="text-lg">ACCOUNT</h1>
+                  </div>
+                </button>
+
+                <div
+                  className={`${toggleClassSmallDropdown} flex flex-col items-center justify-center gap-2`}
+                >
+                  <div className="text-white hover:underline  mt-5">
+                    <Link to="/seller">My Account</Link>
+                  </div>
+                  <div className="text-white hover:underline">
+                    <Link to="/seller">My Orders</Link>
+                  </div>
+                  <div className="text-white hover:underline">
+                    <Link to="/seller">Seller</Link>
+                  </div>
+                  <div>
+                    <button
+                      onClick={handleLogout}
+                      className="text-white hover:underline"
+                    >
+                      LOG OUT
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <button className="flex  text-md  hover:text-[#c9a687] transition-all duration-500 ">
+                <div className="flex items-center  justify-center gap-3">
+                  <ion-icon name="cart"></ion-icon>
+                  <h1 className="text-lg">CART</h1>
+                </div>
+              </button>
+            </>
+          )}
         </menu>
       </nav>
     </div>
