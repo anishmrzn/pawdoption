@@ -4,6 +4,7 @@ import Loader from "../components/Loader";
 import Error from "../components/Error";
 import StartQuiz from "../components/StartQuiz";
 import Question from "../components/Question";
+import Footer from "../components/Footer";
 
 const initialState = {
   questions: [],
@@ -53,6 +54,7 @@ function Quiz() {
         {status === "ready" && <StartQuiz dispatch={dispatch} />}
         {status === "active" && <Question question={questions[index]} />}
       </div>
+      <Footer />
     </div>
   );
 }

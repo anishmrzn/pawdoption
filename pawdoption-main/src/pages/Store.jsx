@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import PageNav from "../components/PageNav";
 import ProductContainer from "../components/ProductContainer";
 import { useProductContext } from "../context/ProductContext";
@@ -48,6 +49,7 @@ function Store() {
         </ul>
       </div>
       <div className="col-span-4 h-screen">
+        <h1 className="text-center text-2xl font-bold mb-5">Products</h1>
         <div className="grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((products) => {
             return <ProductContainer products={products} />;

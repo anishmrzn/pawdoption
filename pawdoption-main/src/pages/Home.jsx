@@ -9,7 +9,9 @@ function Home() {
     <div className="flex flex-col gap-10  ">
       <Hero />
       <Adoption />
-
+      <h1 className="text-[#c9a687] font-bold text-xl text-center">
+        Featured Items
+      </h1>
       <FeaturedItems />
 
       <About />
