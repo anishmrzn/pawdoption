@@ -5,8 +5,11 @@ function ManageProducts() {
   const { products } = useProductContext();
 
   return (
-    <>
-      <div className="flex gap-10 flex-wrap justify-between">
+    <div className="flex flex-col items-center gap-10">
+      <h1 className="font-extrabold text-2xl">
+        Choose the product you want to update
+      </h1>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10  justify-between">
         {products?.map((product) => {
           // return <FeatureProducts product={product} key={product._id} />;
           return (
@@ -26,7 +29,7 @@ function ManageProducts() {
           );
         })}
       </div>
-    </>
+    </div>
   );
 }
 

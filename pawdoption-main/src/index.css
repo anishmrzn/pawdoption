@@ -59,6 +59,9 @@ body {
 .sticky {
   @apply fixed w-[96%] bg-white z-10 shadow-md pt-3 pb-7  px-3 transform translate-y-[-1.3rem];
 }
+input::file-selector-button {
+  @apply font-bold text-white text-sm lg:text-lg hover:shadow-2xl transition-all duration-500 bg-[#c9a687]  border-0 px-5 py-1 cursor-pointer hover:bg-[#dbaa81] mr-10;
+}
 
 /* hamburger menu */
 .hamburger {

@@ -64,9 +64,9 @@ function AddProduct() {
       );
 
       if (response.ok) {
-        toast.success("Product Added");
         navigate("/store");
         window.location.reload();
+        toast.success("Product Added");
       } else {
         toast.error("Unsuccessful");
       }
@@ -76,11 +76,11 @@ function AddProduct() {
   };
 
   return (
-    <div className="flex flex-col gap-10 ">
+    <div className="flex flex-col gap-10 border-2 px-16 py-10 rounded-2xl shadow-xl ">
       <h1 className="text-center font-extrabold text-2xl">
         Add your product here
       </h1>
-      <form className="grid grid-cols-3 gap-5">
+      <form className="grid grid-cols-3 gap-5 font-semibold">
         <label htmlFor="productImg">Product Image :</label>
         <input
           type="file"
@@ -89,7 +89,7 @@ function AddProduct() {
           onChange={(e) => {
             setProductImg(e.target.files[0]);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2  rounded-xl border-gray-400"
         />
         <label htmlFor="productName">Product Name :</label>
         <input
@@ -99,7 +99,7 @@ function AddProduct() {
             setProductName(e.target.value);
           }}
           value={productName}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productShortDes">Product shortDescription :</label>
         <input
@@ -110,7 +110,7 @@ function AddProduct() {
           }}
           value={shortDescription}
           maxLength="40"
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productDes">Product description :</label>
         <input
@@ -120,7 +120,7 @@ function AddProduct() {
           onChange={(e) => {
             setDescription(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productPrice">Product price :</label>
         <input
@@ -130,7 +130,7 @@ function AddProduct() {
           onChange={(e) => {
             setPrice(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productDis">Product discount :</label>
         <input
@@ -140,7 +140,7 @@ function AddProduct() {
           onChange={(e) => {
             setDiscount(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productCat">Product Categoty :</label>
         <select
@@ -149,7 +149,7 @@ function AddProduct() {
           onChange={(e) => {
             setCategory(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         >
           <option value="Accessories">Accessories</option>
           <option value="Pet Food">Pet Food</option>
@@ -162,7 +162,7 @@ function AddProduct() {
           onChange={(e) => {
             setAnimalCategory(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         >
           <option value="Dog">Dog</option>
           <option value="Cat">Cat</option>
@@ -175,7 +175,7 @@ function AddProduct() {
           onChange={(e) => {
             setStock(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="featured">Featured</label>
         <input
@@ -185,7 +185,7 @@ function AddProduct() {
           onChange={(e) => {
             setFeatured(e.target.checked);
           }}
-          className="col-span-2"
+          className="col-span-2 rounded-xl border-gray-300 py-1 px-5"
         />
         {/* <label htmlFor="seller">Seller:</label>
         <input
@@ -197,8 +197,10 @@ function AddProduct() {
           }}
           className="col-span-2 border-2"
         /> */}
-        <button onClick={handleSubmit}>Submit</button>
       </form>
+      <button onClick={handleSubmit} className="button ">
+        Submit
+      </button>
     </div>
   );
 }

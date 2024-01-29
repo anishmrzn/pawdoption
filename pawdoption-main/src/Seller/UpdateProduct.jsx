@@ -7,8 +7,6 @@ import { useProductContext } from "../context/ProductContext";
 const API = "http://127.0.0.1:8000/api/products/";
 
 function UpdateProduct() {
-  const navigate = useNavigate;
-
   const [productImg, setProductImg] = useState("");
   const [Description, setDescription] = useState("");
   const [productName, setProductName] = useState("");
@@ -92,6 +90,10 @@ function UpdateProduct() {
       //   console.log(error);
       //   toast.error("error deleting");
       // }
+      let answer = window.prompt(
+        "Are you sure you want to delete this product?"
+      );
+      if (!answer) return;
       const response = await fetch(`http://127.0.0.1:8000/api/delete/${id}/`, {
         method: "DELETE",
       });
@@ -106,8 +108,9 @@ function UpdateProduct() {
     }
   };
   return (
-    <div>
-      <form className="grid grid-cols-3 gap-5">
+    <div className="flex flex-col gap-10 items-center border-2 px-16 py-10 rounded-2xl shadow-xl ">
+      <h1 className=" font-extrabold text-2xl">Update your product </h1>
+      <form className="grid grid-cols-3 gap-5 font-semibold">
         <label htmlFor="productImg">Product Image :</label>
         <input
           type="file"
@@ -116,7 +119,7 @@ function UpdateProduct() {
           onChange={(e) => {
             setProductImg(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2  rounded-xl border-gray-400"
         />
         <label htmlFor="productName">Product Name :</label>
         <input
@@ -126,7 +129,7 @@ function UpdateProduct() {
             setProductName(e.target.value);
           }}
           value={productName}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2  rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productShortDes">Product shortDescription :</label>
         <input
@@ -137,7 +140,7 @@ function UpdateProduct() {
           }}
           value={shortDescription}
           maxLength="40"
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productDes">Product description :</label>
         <input
@@ -147,7 +150,7 @@ function UpdateProduct() {
           onChange={(e) => {
             setDescription(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productPrice">Product price :</label>
         <input
@@ -157,7 +160,7 @@ function UpdateProduct() {
           onChange={(e) => {
             setPrice(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productDis">Product discount :</label>
         <input
@@ -167,7 +170,7 @@ function UpdateProduct() {
           onChange={(e) => {
             setDiscount(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="productCat">Product Categoty :</label>
         <select
@@ -177,7 +180,7 @@ function UpdateProduct() {
           onChange={(e) => {
             setCategory(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         >
           <option value="Accessories">Accessories</option>
           <option value="Pet Food">Pet Food</option>
@@ -190,7 +193,7 @@ function UpdateProduct() {
           onChange={(e) => {
             setAnimalCategory(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         >
           <option value="Dog">Dog</option>
           <option value="Cat">Cat</option>
@@ -203,7 +206,7 @@ function UpdateProduct() {
           onChange={(e) => {
             setStock(e.target.value);
           }}
-          className="col-span-2 border-2"
+          className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
         <label htmlFor="featured">Featured</label>
         <input
@@ -213,15 +216,19 @@ function UpdateProduct() {
           onChange={(e) => {
             setFeatured(e.target.checked);
           }}
-          className="col-span-2"
+          className="col-span-2 rounded-xl border-gray-400 py-1 px-5"
         />
-
-        <button onClick={handleSubmit} className="col-span-1">
-          Update Product
-        </button>
-        <button onClick={handleDelete} className="col-span-1">
-          Delete Product
-        </button>
+        <div className="col-span-3 flex justify-between ">
+          <button onClick={handleSubmit} className="button">
+            Update Product
+          </button>
+          <button
+            onClick={handleDelete}
+            className=" px-5 py-1 rounded-xl text-white bg-red-500"
+          >
+            Delete Product
+          </button>
+        </div>
       </form>
     </div>
   );
