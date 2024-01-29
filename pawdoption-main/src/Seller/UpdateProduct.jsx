@@ -43,7 +43,7 @@ function UpdateProduct() {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append("prductImg", productImg);
+      formData.append("productImg", productImg);
       formData.append("Description", Description);
       formData.append("productName", productName);
       formData.append("price", price);
@@ -117,7 +117,7 @@ function UpdateProduct() {
           id="productImg"
           accept="image/*"
           onChange={(e) => {
-            setProductImg(e.target.value);
+            setProductImg(e.target.files[0]);
           }}
           className="col-span-2 border-2  rounded-xl border-gray-400"
         />

@@ -3,6 +3,7 @@ import Adoption from "../components/Adoption";
 import FeaturedItems from "../components/FeaturedItems";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
+import { useProductContext } from "../context/ProductContext";
 
 function Home() {
   return (
