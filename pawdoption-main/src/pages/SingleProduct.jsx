@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useProductContext } from "../context/ProductContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PageNav from "../components/PageNav";
 import Footer from "../components/Footer";
 import FeaturedItems from "../components/FeaturedItems";
@@ -10,16 +10,20 @@ function SingleProduct() {
   const { singleProduct, getSingleProduct } = useProductContext();
 
   const { id } = useParams();
+
   useEffect(() => {
     getSingleProduct(`${API}${id}/`);
   }, []);
+
+  // window.location.reload();
+
   return (
     <div className="flex flex-col gap-20 md:gap-[10rem]">
       <PageNav />
       <div className="flex flex-col md:flex-row gap-16 lg:gap-[10rem]">
         <div className="flex flex-col items-center ml-[8rem] md:ml-[0] w-[20rem] md:w-[40rem] border-2 px-5 py-5 rounded-xl">
           <img
-            src="/product.jpg"
+            src={"http://127.0.0.1:8000" + singleProduct.productImg}
             alt="product"
             className="w-[18rem] md:w-[45rem] rounded-xl transform hover:scale-105 transition-all duration-500"
           ></img>
@@ -58,10 +62,17 @@ function SingleProduct() {
           <h1>Category : {singleProduct.category}</h1>
         </div>
       </div>
+
       <div className="flex flex-col gap-10">
         <h1 className="text-[#c9a687] font-bold text-center">Other Products</h1>
-        <FeaturedItems />
+        <FeaturedItems
+        // isSingleProduct={true}
+        // featureProducts={featureProducts.filter(
+        //   (item) => item.productId !== singleProduct.productId
+        // )}
+        />
       </div>
+
       <Footer />
     </div>
   );
