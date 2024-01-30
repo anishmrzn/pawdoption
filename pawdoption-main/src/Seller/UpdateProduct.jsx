@@ -1,6 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { useProductContext } from "../context/ProductContext";
@@ -99,9 +98,9 @@ function UpdateProduct() {
       });
 
       if (response.ok) {
-        // navigate("/store");
         window.location.replace("http://localhost:5173/store");
         toast.success("Product deleted");
+        // navigate("/store");
       }
     } catch (error) {
       toast.error("Error");
@@ -110,6 +109,7 @@ function UpdateProduct() {
   return (
     <div className="flex flex-col gap-10 items-center border-2 px-16 py-10 rounded-2xl shadow-xl ">
       <h1 className=" font-extrabold text-2xl">Update your product </h1>
+
       <form className="grid grid-cols-3 gap-5 font-semibold">
         <img
           src={`http://127.0.0.1:8000/${singleProduct.productImg}`}
