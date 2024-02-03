@@ -1,14 +1,11 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from paws.models import Pets
-from .serializers import PetSerializer
+from .serializers import PetSerializer,CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
+from .email_utils import send
 
-
-from .serializers import CustomUserSerializer
 
 
 # Create your views here.
@@ -57,20 +54,38 @@ def customUserCreate(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# @api_view(['POST'])
+# def customUserLogin(request):
+#     if request.method == 'POST':
+#         username = request.data.get('username')
+#         password = request.data.get('password')
+
+#         user = authenticate(request, username=username, password=password)
+
+#         if user:
+#             refresh = RefreshToken.for_user(user)
+#             return Response({
+#                 'refresh': str(refresh),
+#                 'access': str(refresh.access_token),
+#             }, status=status.HTTP_200_OK)
+#         else:
+#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
 @api_view(['POST'])
-def customUserLogin(request):
-    if request.method == 'POST':
-        username = request.data.get('username')
-        password = request.data.get('password')
-
-        user = authenticate(request, username=username, password=password)
-
-        if user:
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            }, status=status.HTTP_200_OK)
+def send_email(request):
+        serializer = EmailSerializer(data=request.data)
+        if serializer.is_valid():
+            subject = serializer.validated_data.get('subject')
+            message = serializer.validated_data.get('message')
+            recipients = serializer.validated_data.get('recipients')
+            send(subject, message, recipients)
+            return Response({'Success':'Email Successfully Sent'},status=status.HTTP_200_OK)
         else:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+        
     

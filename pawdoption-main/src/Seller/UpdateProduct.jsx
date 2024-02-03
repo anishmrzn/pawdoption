@@ -179,7 +179,7 @@ function UpdateProduct() {
           }}
           className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
         />
-        <label htmlFor="productCat">Product Categoty :</label>
+        <label htmlFor="productCat">Product Category :</label>
         <select
           type="file"
           id="productCat"

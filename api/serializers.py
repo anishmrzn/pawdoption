@@ -1,7 +1,11 @@
 from rest_framework.serializers import ModelSerializer
 from paws.models import Pets
-from .models import CustomUser
+from .models import CustomUser 
 from rest_framework import serializers
+
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from .models import CustomUser
+from users.models import Seller
 
 class PetSerializer(ModelSerializer):
   class Meta:
@@ -15,7 +19,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'email', 'username', 'name', 'password', 'confirm_password')
+        fields = ( 'email', 'username', 'name', 'password', 'confirm_password')
         extra_kwargs = {
             'password': {'write_only': True}
             }
@@ -36,9 +40,37 @@ class CustomUserSerializer(serializers.ModelSerializer):
         
         if password and confirm_password is not None:
             instance.set_password(password)
-            instance.set_password(confirm_password)
+            
         instance.save()    
-        return instance
+        return instance 
     
     
+    
+class EmailSerializer(serializers.Serializer):
+    subject = serializers.CharField(max_length=255)
+    message = serializers.CharField()
+    recipients = serializers.ListField(child=serializers.EmailField())
+    
+    
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        credentials = {
+            'username': attrs.get('username'),
+            'password': attrs.get('password')
+        }
+
+        # Authenticate both CustomUser and Seller
+        user = CustomUser.objects.filter(username=credentials['username']).first()
+        if not user:
+            user = Seller.objects.filter(username=credentials['username']).first()
+
+        if user and user.check_password(credentials['password']):
+            refresh = self.get_token(user)
+            data = {'refresh': str(refresh), 'access': str(refresh.access_token)}
+            return data
+        else:
+            raise serializers.ValidationError("Unable to log in with provided credentials.")
+
     
