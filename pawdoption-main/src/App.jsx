@@ -11,6 +11,7 @@ import AddProduct from "./Seller/AddProduct";
 import UpdateProduct from "./Seller/UpdateProduct";
 import SingleProduct from "./pages/SingleProduct";
 import ManageProducts from "./Seller/ManageProducts";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="update/:id" element={<UpdateProduct />} />
           </Route>
           <Route path="singleproduct/:id" element={<SingleProduct />} />
+          <Route path="aboutus" element={<AboutUs />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

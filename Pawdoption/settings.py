@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
+    'users.apps.UsersConfig'
     # 'cloudinary',
     # 'cloudinary_storage'
 ]
@@ -102,8 +103,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pawdoption',
         'USER':'root',
-        # 'PASSWORD':'Or@ngePotion0',
-        'PASSWORD' : 'bluecupcake14',
+        'PASSWORD':'Or@ngePotion0',
+        # 'PASSWORD' : 'bluecupcake14',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
@@ -170,8 +171,8 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days= 4),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,
@@ -184,7 +185,7 @@ SIMPLE_JWT = {
 
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
-    'USER_ID_FIELD': 'id',
+    'USER_ID_FIELD': 'pk',
     'USER_ID_CLAIM': 'user_id',
     'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
 
@@ -199,8 +200,20 @@ SIMPLE_JWT = {
 }
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'pawdoption0@gmail.com'
+EMAIL_HOST_PASSWORD = 'aseb mpyi mpqt tajg'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
+
+
+
+AUTH_USER_MODEL = 'users.Seller'
 AUTH_USER_MODEL = 'api.CustomUser'
+    
 
 
 # Default primary key field type
@@ -221,7 +234,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 #     'API_KEY': '554852596428659',
 #     'API_SECRET' : 'mr7DiXiNtCngFiM6ZwwmvEKdKHU'
 # }
-
-
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 APPEND_SLASH = False

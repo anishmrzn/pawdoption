@@ -7,7 +7,7 @@ import { useFilterContext } from "../context/filterContext";
 function Store() {
   const navigate = useNavigate();
   const { filter_products } = useFilterContext();
-  console.log(filter_products);
+
   const {
     filters: { text },
     all_products,

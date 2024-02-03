@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 function Footer() {
+  const token = localStorage.getItem("token");
   return (
     <div className="bg-[#b98e6d]  px-10">
       <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4   pt-20 pb-10 gap-10 ">
@@ -11,12 +12,21 @@ function Footer() {
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when
           </p>
-          <Link
-            to="/login"
-            className="font-bold text-black border-2 border-[#a67b5b] text-lg hover:shadow-2xl transition-all duration-500 bg-[#b98e6d] px-10 py-3 rounded-xl"
-          >
-            Login
-          </Link>
+          {!token ? (
+            <Link
+              to="/login"
+              className="font-bold text-black border-2 border-[#a67b5b] text-lg hover:shadow-2xl transition-all duration-500 bg-[#b98e6d] px-10 py-3 rounded-xl"
+            >
+              Login
+            </Link>
+          ) : (
+            <Link
+              to="/aboutus"
+              className="font-bold text-black border-2 border-[#a67b5b] text-lg hover:shadow-2xl transition-all duration-500 bg-[#b98e6d] px-10 py-3 rounded-xl"
+            >
+              About Us
+            </Link>
+          )}
         </div>
         <div className="flex flex-col items-center  gap-10">
           <span className="text-black text-3xl font-bold">Contact</span>

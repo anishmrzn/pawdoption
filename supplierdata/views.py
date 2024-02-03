@@ -62,7 +62,7 @@ def products(request, pk=None):
         if pk:
             # Get a single product by ID
             try:
-                product = Products.objects.get(productId = pk)
+                product = Products.objects.get(productId = pk)  
                 serializer = ProductsSerializer(product)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Products.DoesNotExist:

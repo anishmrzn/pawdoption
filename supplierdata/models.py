@@ -1,12 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 import uuid
 # import cloudinary
 # import cloudinary.uploader
 # import cloudinary.api
 # from cloudinary.models import CloudinaryField
-
+from users.models import Seller
 
 # Create your models here.
+
+    
+    
 class Products(models.Model):
   
   productId = models.UUIDField(default=uuid.uuid4,unique=True,primary_key = True, editable = False)
@@ -21,7 +25,7 @@ class Products(models.Model):
   animalCategory = models.TextField(max_length = 200, blank = False, default = 'Dog')
   featured = models.BooleanField(default=0)
   created = models.DateTimeField(auto_now_add = True)
-    # supplierId= models.ForeignKey('Supplier',on_delete=models.CASCADE)
+  sellerId = models.ForeignKey(Seller,on_delete=models.CASCADE)
  
   def __str__(self):
     return self.productName

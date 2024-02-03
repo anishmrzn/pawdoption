@@ -26,6 +26,7 @@ function PageNav() {
     localStorage.removeItem("token");
     // setToken("");
     navigate("/");
+    window.location.reload();
   }
   function handleDropdown() {
     setDropDown((dropDown) => !dropDown);
