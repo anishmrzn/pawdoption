@@ -7,6 +7,7 @@ function Logo() {
         src="/logo.png"
         alt="Pawdoption logo"
         className="ml-2  h-auto w-[15rem]"
+        data-aos="fade-down"
       />
     </Link>
   );
