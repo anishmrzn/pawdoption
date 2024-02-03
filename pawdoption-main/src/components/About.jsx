@@ -1,6 +1,9 @@
 function About() {
   return (
-    <div className="flex flex-col items-center gap-16 border-2 px-10 py-5 rounded-xl">
+    <div
+      className="flex flex-col items-center gap-16 border-2 px-10 py-5 rounded-xl"
+      data-aos="fade-left"
+    >
       <h1 className="text-lg lg:text-2xl font-bold text-[#c9a687]">
         Why choose Pawdoption?
       </h1>

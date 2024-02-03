@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { LoginContext } from "../context/LoginContextProvider";
+import { useCartContext } from "../context/cartContext";
+// import { LoginContext } from "../context/LoginContextProvider";
 
 function PageNav() {
   // const { token, setToken } = React.useContext(LoginContext);
   const navigate = useNavigate();
+  const { total_item } = useCartContext();
 
   const token = localStorage.getItem("token");
   // console.log(token);
@@ -108,9 +110,14 @@ function PageNav() {
                 </ul>
               </div>
             </div>
-            <div className="hidden md:flex absolute left-[94%] top-[0%] text-lg border-2 rounded-full px-4 py-4 hover:text-[#c9a687] transition-all duration-500 ">
-              <ion-icon name="cart"></ion-icon>
-            </div>
+            <Link to="/cart">
+              <div className="hidden md:flex absolute left-[94%] top-[0%] text-lg border-2 rounded-full px-4 py-4 hover:text-[#c9a687] transition-all duration-500 ">
+                <ion-icon name="cart"></ion-icon>
+                <div className="bg-[#d9c0ab] flex rounded-full px-1 w-7 h-7 absolute top-[-20%] left-[50%] items-center justify-center text-sm">
+                  {total_item}
+                </div>
+              </div>
+            </Link>
           </>
         )}
 

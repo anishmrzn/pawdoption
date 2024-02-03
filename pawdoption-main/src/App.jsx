@@ -6,14 +6,22 @@ import Login from "./pages/Login";
 import Quiz from "./pages/Quiz";
 import Signup from "./pages/Signup";
 import Admin from "./Admin/Admin";
+import Aos from "aos";
+import "aos/dist/aos.css";
 import Seller from "./Seller/Seller";
 import AddProduct from "./Seller/AddProduct";
 import UpdateProduct from "./Seller/UpdateProduct";
 import SingleProduct from "./pages/SingleProduct";
 import ManageProducts from "./Seller/ManageProducts";
-import AboutUs from "./pages/AboutUs";
+
+import AddToCart from "./pages/AddToCart";
+import Cart from "./pages/Cart";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    Aos.init({ duration: 1000, once: true, mirror: true });
+  }, []);
   return (
     <div className=" container  ">
       <BrowserRouter>
@@ -24,6 +32,8 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="admin" element={<Admin />} />
+          <Route path="addtocart" element={<AddToCart />} />
+          <Route path="cart" element={<Cart />} />
           <Route path="seller" element={<Seller />}>
             <Route index element={<AddProduct />} />
             <Route path="add" element={<AddProduct />} />

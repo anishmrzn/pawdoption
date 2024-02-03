@@ -1,11 +1,9 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
 import PageNav from "../components/PageNav";
 import ProductContainer from "../components/ProductContainer";
 
 import { useFilterContext } from "../context/filterContext";
 
 function Store() {
-  const navigate = useNavigate();
   const { filter_products } = useFilterContext();
 
   const {

@@ -1,9 +1,11 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useProductContext } from "../context/ProductContext";
+
 import { useEffect, useState } from "react";
 import PageNav from "../components/PageNav";
 import Footer from "../components/Footer";
 import FeaturedItems from "../components/FeaturedItems";
+import AddToCart from "./AddToCart";
 const API = "http://127.0.0.1:8000/api/products/";
 
 function SingleProduct() {
@@ -51,13 +53,7 @@ function SingleProduct() {
           </div>
           <p className="text-lg">{singleProduct.Description}</p>
           <div className="flex gap-16">
-            <input
-              type="number"
-              className="w-[3rem] text-center ml-[3rem] border-black border-2 rounded-md"
-            ></input>
-            <button className="bg-red-500 px-5 py-3 rounded-xl">
-              ADD TO CART
-            </button>
+            <AddToCart product={singleProduct} />
           </div>
           <h1>Category : {singleProduct.category}</h1>
         </div>

@@ -7,8 +7,13 @@ function FeaturedItems({}) {
   const { featureProducts } = useProductContext();
 
   return (
+<<<<<<< HEAD
     <div className="flex flex-col items-center gap-10 ">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+=======
+    <div className="flex flex-col items-center gap-10 " data-aos="fade-right">
+      <div className="grid grid-cols-3 lg:grid-cols-4 gap-10">
+>>>>>>> 5e57326364d5f154eedd59397dd23214f25314fc
         {featureProducts.map((products) => {
           return (
             <ProductContainer products={products} key={products.productId} />
