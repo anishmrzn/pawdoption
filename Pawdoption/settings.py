@@ -102,11 +102,11 @@ DATABASES = {
         
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pawdoption',
-        'USER':'root',
-        'PASSWORD':'Or@ngePotion0',
+        'USER':'avnadmin',
+        'PASSWORD':'AVNS_-yD5mf9XltfRuxECo85',
         # 'PASSWORD' : 'bluecupcake14',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'HOST':'mysql-2db041c4-sagarmatha-eb96.a.aivencloud.com',
+        'PORT':'24673',
     }
 }
 
