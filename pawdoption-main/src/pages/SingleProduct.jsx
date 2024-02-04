@@ -6,6 +6,7 @@ import PageNav from "../components/PageNav";
 import Footer from "../components/Footer";
 import FeaturedItems from "../components/FeaturedItems";
 import AddToCart from "./AddToCart";
+import Login from "./Login";
 const API = "http://127.0.0.1:8000/api/products/";
 
 function SingleProduct() {
