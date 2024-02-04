@@ -104,7 +104,6 @@ DATABASES = {
         'NAME': 'pawdoption',
         'USER':'avnadmin',
         'PASSWORD':'AVNS_-yD5mf9XltfRuxECo85',
-        
         'HOST':'mysql-2db041c4-sagarmatha-eb96.a.aivencloud.com',
         'PORT':'24673',
     }
