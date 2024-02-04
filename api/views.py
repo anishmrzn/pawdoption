@@ -1,10 +1,11 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from paws.models import Pets
-from .serializers import PetSerializer,CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer
+from .serializers import PetSerializer,CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer, UserProfileSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from .email_utils import send
+from .models import CustomUser
 
 
 
@@ -32,9 +33,16 @@ def getPets(request):
   
 @api_view(['GET'])
 def getSinglePets(request,pk):
-  pets = Pets.objects.get(id = pk)
-  serializer = PetSerializer(pets, many = False)
-  return Response(serializer.data)  
+    pets = Pets.objects.get(id = pk)
+    serializer = PetSerializer(pets, many = False)
+    return Response(serializer.data)  
+
+
+@api_view(['GET'])
+def userProfile(request, pk):
+    users = CustomUser.objects.get(id = pk)
+    serializer = UserProfileSerializer(users, many = False)
+    return Response(serializer.data)
 
 
 

@@ -1,25 +1,28 @@
 from rest_framework import serializers
 from .models import Products
-# import cloudinary.uploader
+import cloudinary.uploader
 # import cloudinary.api
-# from cloudinary.models import CloudinaryField
+from cloudinary.models import CloudinaryField
 
 
 
 class ProductsSerializer(serializers.ModelSerializer):
+    
+    productImg = serializers.ImageField(write_only = True)
     class Meta:
         model = Products
         fields = '__all__'
         
-    # def create(self, validated_data):
+    def create(self, validated_data):
         
-    #     image_file = validated_data.pop('productImg', None)
+        productImgUrl = validated_data.pop('productImg', None)
         
-    #     product_instance = Products.objects.create(**validated_data)
+        product = Products.objects.create(**validated_data)
        
-    #     if image_file:
-    #         product_instance.productImg = image_file
-    #         product_instance.save()
+        if productImgUrl:
+            cloudinary_response = cloudinary.uploader.upload(productImgUrl)
+            product.productImgUrl = cloudinary_response['secure_url']
+            product.save()
 
-    #     return product_instance
+        return product
         
