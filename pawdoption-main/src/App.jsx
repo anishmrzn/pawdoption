@@ -17,6 +17,7 @@ import ManageProducts from "./Seller/ManageProducts";
 import AddToCart from "./pages/AddToCart";
 import Cart from "./pages/Cart";
 import { useEffect } from "react";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   useEffect(() => {
