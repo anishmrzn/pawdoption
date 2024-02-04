@@ -45,6 +45,13 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return instance 
     
     
+class UserProfileSerializer(ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'name', 'email', 'username', 'userImg', 'date_joined']
+        # fields = '__all__'
+    
+    
     
 class EmailSerializer(serializers.Serializer):
     subject = serializers.CharField(max_length=255)

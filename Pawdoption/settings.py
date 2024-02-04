@@ -15,9 +15,9 @@ from datetime import timedelta
 from pathlib import Path
 import os
 
-# import cloudinary
-# import cloudinary.uploader
-# import cloudinary.api
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'users.apps.UsersConfig'
     # 'cloudinary',
-    # 'cloudinary_storage'
 ]
 
 MIDDLEWARE = [
@@ -222,17 +221,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-
-# CLOUDINARY_URL = "cloudinary://<554852596428659>:<mr7DiXiNtCngFiM6ZwwmvEKdKHU>@<djzfsffst>"
-
-# # CLOUDINARY_URL="cloudinary://554852596428659:554852596428659@djzfsffst"
-
-
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': 'djzfsffst',
-#     'API_KEY': '554852596428659',
-#     'API_SECRET' : 'mr7DiXiNtCngFiM6ZwwmvEKdKHU'
-# }
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 APPEND_SLASH = False
+
+cloudinary.config(
+    cloud_name="djzfsffst",
+    api_key="554852596428659",
+    api_secret="mr7DiXiNtCngFiM6ZwwmvEKdKHU",
+    secure=True,
+)

@@ -1,6 +1,6 @@
 from django.urls import path,include
 from . import views
-from .views import customUserCreate, send_email,CustomTokenObtainPairView
+from .views import customUserCreate, send_email,CustomTokenObtainPairView, userProfile
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -22,7 +22,8 @@ urlpatterns = [
     path('products/', products, name = 'products'),
     path('products/<str:pk>/', products, name = 'products'),
     path('send-email/', send_email, name='send_email'),
-    path('seller/', include('users.urls') )
+    path('seller/', include('users.urls')),
+    path('user-profile/<str:pk>/',userProfile, name = 'show_user_profile')
     
 
 ]
