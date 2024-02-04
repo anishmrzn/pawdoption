@@ -20,7 +20,7 @@ function ManageProducts() {
               <div className="flex  flex-col gap-4 border p-4 rounded-3xl shadow-md">
                 <img
                   className="w-52 h-60 object-cover rounded-3xl"
-                  src={"http://127.0.0.1:8000/" + product.productImg}
+                  src={product.productImgUrl}
                   alt="item"
                 />
                 <div className="font-bold">{product.productName}</div>
