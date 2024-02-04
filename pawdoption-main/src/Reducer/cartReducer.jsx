@@ -1,6 +1,6 @@
 const cartReducer = (state, action) => {
   if (action.type === "ADD_TO_CART") {
-    let { productId, productName, productImg, price, stock, product } =
+    let { productId, productName, productImgUrl, price, stock, product } =
       action.payload;
 
     let existingProduct = state.cart.find(
@@ -15,7 +15,7 @@ const cartReducer = (state, action) => {
         productId,
         productName,
         price: product.price,
-        productImg,
+        productImgUrl,
         stock,
         discount: product.discount,
         amount: 1,
