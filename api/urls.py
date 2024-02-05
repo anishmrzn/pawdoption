@@ -1,11 +1,12 @@
 from django.urls import path,include
 from . import views
-from .views import customUserCreate, send_email,CustomTokenObtainPairView, userProfile
+from .views import customUserCreate, send_email,CustomTokenObtainPairView, getUserProfile,updateUserProfile,deleteUserProfile
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from supplierdata.urls import createProduct,getSingleProduct,getProduct,updateProduct,deleteProduct,products
+from supplierdata.urls import (createProduct,getSingleProduct,getSingleProductSeller,getProduct
+,getProductSeller,updateProduct,deleteProduct,products)
 
 urlpatterns = [
     path('', views.getRoutes, name = 'routes'),
@@ -23,7 +24,9 @@ urlpatterns = [
     path('products/<str:pk>/', products, name = 'products'),
     path('send-email/', send_email, name='send_email'),
     path('seller/', include('users.urls')),
-    path('user-profile/<str:pk>/',userProfile, name = 'show_user_profile')
-    
-
+    path('user-profile/<str:pk>/',getUserProfile, name = 'show_user_profile'),
+    path('get-product-seller/<str:pk>/',getProductSeller, name = 'get-product-seller'),
+    path('single-product-seller/<str:pk>/', getSingleProductSeller, name = 'single-product-seller'),
+    path('update-user-profile/<str:pk>/', updateUserProfile, name= 'update-user-profile'),
+    path('delete-user-profile/<str:pk>/', deleteUserProfile, name= 'Delete-user-profile'),
 ]

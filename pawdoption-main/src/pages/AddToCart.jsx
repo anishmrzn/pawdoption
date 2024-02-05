@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useCartContext } from "../context/cartContext";
 
 function AddToCart({ product }) {
-  const { productId, productName, productImg, price, stock } = product;
+  const { productId, productName, productImgUrl, price, stock } = product;
   const { addtToCart } = useCartContext();
   const token = localStorage.getItem("token");
   return (
@@ -21,7 +21,7 @@ function AddToCart({ product }) {
             addtToCart(
               productId,
               productName,
-              productImg,
+              productImgUrl,
               price,
 
               stock,
