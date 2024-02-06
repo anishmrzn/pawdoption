@@ -58,7 +58,7 @@ function Store() {
         })}
       </div>
 
-      <div className="col-span-3 flex   md:flex-row items-center  justify-end lg:mr-16">
+      <div className="col-span-3 flex   md:flex-row items-center  justify-end lg:mr-16 ">
         <form onSubmit={(e) => e.preventDefault()}>
           <input
             type="text"
@@ -70,7 +70,7 @@ function Store() {
           ></input>
         </form>
       </div>
-      <div className="col-span-1 h-screen flex flex-col items-center justify-start">
+      <div className="col-span-1 h-screen flex flex-col items-center justify-start ">
         <h1 className="text-md font-extrabold mb-5 md:text-lg lg:text-2xl">
           Categories
         </h1>
