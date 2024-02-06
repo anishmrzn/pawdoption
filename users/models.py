@@ -8,6 +8,10 @@ class Seller(AbstractUser):
     name = models.CharField(max_length = 50)
     username = models.CharField(max_length = 50, unique = True)
     email = models.EmailField(max_length = 50, unique = True)
+    pan_number = models.CharField(max_length = 9,blank = True)
+    contact = models.CharField(max_length = 10, blank = True)
+    sellerImgUrl = models.URLField(default = 'https://res.cloudinary.com/djzfsffst/image/upload/v1707144245/user-default_macios.png', blank = True)
+    store_location = models.TextField(default = True, null = True)
     password = models.CharField(max_length = 255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -18,5 +22,5 @@ class Seller(AbstractUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
     
-    def _str_(self):
+    def __str__(self):
         return self.username

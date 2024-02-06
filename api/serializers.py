@@ -6,6 +6,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import CustomUser
 from users.models import Seller
+import cloudinary.uploader
 
 class PetSerializer(ModelSerializer):
   class Meta:
@@ -46,10 +47,24 @@ class CustomUserSerializer(serializers.ModelSerializer):
     
     
 class UserProfileSerializer(ModelSerializer):
+    
+    UserImg = serializers.ImageField(write_only = True)
     class Meta:
         model = CustomUser
-        fields = ['id', 'name', 'email', 'username', 'userImg', 'date_joined']
-        # fields = '__all__'
+        fields = '__all__'
+        
+    def create(self, validated_data):
+        
+        userImgUrl = validated_data.pop('UserImg', None)
+        
+        photo = CustomUser.objects.create(**validated_data)
+       
+        if userImgUrl:
+            cloudinary_response = cloudinary.uploader.upload(userImgUrl)
+            photo.userImgUrl = cloudinary_response['secure_url']
+            photo.save()
+
+        return photo
     
     
     

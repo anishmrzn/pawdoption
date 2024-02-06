@@ -4,12 +4,15 @@ from rest_framework import status
 from .serializers import ProductsSerializer
 from .models import Products
 from rest_framework.permissions import IsAuthenticated
+import cloudinary.uploader
 
 # Create your views here.
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def createProduct(request):
+    request.data['sellerId'] = request.user.id
+    
     serializer = ProductsSerializer(data=request.data)
     if serializer.is_valid():
       serializer.save()
@@ -18,8 +21,19 @@ def createProduct(request):
 
 
 @api_view(['GET'])
-def getProduct(request):  
-    products = Products.objects.all()
+def getProduct(request):
+  
+  products = Products.objects.all()
+  serializer = ProductsSerializer(products, many = True)
+  return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getProductSeller(request):  
+  
+    products = Products.objects.filter(sellerId = request.user)
     serializer = ProductsSerializer(products, many = True)
     return Response(serializer.data)
   
@@ -31,15 +45,36 @@ def getSingleProduct(request, pk):
   return Response(serializer.data)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getSingleProductSeller(request, pk):
+  product = Products.objects.get(productId = pk, sellerId = request.user)
+  serializer = ProductsSerializer(product)
+  return Response(serializer.data)
+
+
 @api_view(['PUT'])
+@permission_classes([IsAuthenticated])
 def updateProduct(request, pk):
   try:
-    product = Products.objects.get(productId = pk)
+    product = Products.objects.get(productId = pk ,sellerId = request.user)
   except Products.DoesNotExist:
     return Response({"message":"Product not found"}, status= status.HTTP_404_NOT_FOUND)
   
+  request.data['sellerId'] = request.user.id
+  
   serializer = ProductsSerializer(product, data= request.data)
   if serializer.is_valid():
+    
+    existing = product.productImgUrl
+    new = request.data.get('productImg')
+    
+    if new:
+      cloudinary_response = cloudinary.uploader.upload(new)
+      
+      serializer.validated_data['productImgUrl'] = cloudinary_response['secure_url']
+      
+    
     serializer.save()
     return Response(serializer.data)
   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -47,9 +82,10 @@ def updateProduct(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def deleteProduct(request, pk):
     try:
-        product = Products.objects.get(productId=pk)
+        product = Products.objects.get(productId=pk, seller = request.data)
         product.delete()
         return Response({"message": "Product deleted successfully"}, status = status.HTTP_200_OK)
     except Products.DoesNotExist:

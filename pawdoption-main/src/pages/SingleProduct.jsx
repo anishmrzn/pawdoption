@@ -26,7 +26,7 @@ function SingleProduct() {
       <div className="flex flex-col md:flex-row gap-16 lg:gap-[10rem]">
         <div className="flex flex-col items-center ml-[8rem] md:ml-[0] w-[20rem] md:w-[40rem] border-2 px-5 py-5 rounded-xl">
           <img
-            src={"http://127.0.0.1:8000" + singleProduct.productImg}
+            src={singleProduct.productImgUrl}
             alt="product"
             className="w-[18rem] md:w-[45rem] rounded-xl transform hover:scale-105 transition-all duration-500"
           ></img>

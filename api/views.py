@@ -1,11 +1,13 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.permissions import IsAuthenticated
 from paws.models import Pets
 from .serializers import PetSerializer,CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer, UserProfileSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from .email_utils import send
 from .models import CustomUser
+import cloudinary.uploader
 
 
 
@@ -38,11 +40,6 @@ def getSinglePets(request,pk):
     return Response(serializer.data)  
 
 
-@api_view(['GET'])
-def userProfile(request, pk):
-    users = CustomUser.objects.get(id = pk)
-    serializer = UserProfileSerializer(users, many = False)
-    return Response(serializer.data)
 
 
 
@@ -78,6 +75,51 @@ def customUserCreate(request):
 #             }, status=status.HTTP_200_OK)
 #         else:
 #             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getUserProfile(request, pk):
+    users = CustomUser.objects.get(id = pk)
+    serializer = UserProfileSerializer(users, many = False)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateUserProfile(request,pk):
+    try:
+        profile = CustomUser.objects.get(id = pk)
+    except CustomUser.DoesNotExist:
+        return Response({'message':'User Not Found'}, status= status.HTTP_404_NOT_FOUND)
+    
+    serializer = UserProfileSerializer(profile, data= request.data)
+    if serializer.is_valid():
+        
+        existing = profile.userImgUrl
+        new = request.data.get('UserImg')
+        
+        if new:
+            cloudinary_response = cloudinary.uploader.upload(new)
+            
+            serializer.validated_data['userImgUrl'] = cloudinary_response['secure_url']
+            
+        serializer.save()
+        
+        return Response(serializer.data)
+    return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteUserProfile(request,pk):
+    try:
+        profile = CustomUser.objects.get(id = pk)
+        profile.delete()
+        return Response({'message':'User deleted successfully'},status= status.HTTP_200_OK)
+    except CustomUser.DoesNotExist:
+        return Response({'message':'User not found'}, status= status.HTTP_404_NOT_FOUND)
+
 
 
 @api_view(['POST'])

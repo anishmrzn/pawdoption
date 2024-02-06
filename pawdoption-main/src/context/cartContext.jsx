@@ -22,7 +22,7 @@ const CartProvider = ({ children }) => {
   const addtToCart = (
     productId,
     productName,
-    productImg,
+    productImgUrl,
     price,
     stock,
 
@@ -33,7 +33,7 @@ const CartProvider = ({ children }) => {
       payload: {
         productId,
         productName,
-        productImg,
+        productImgUrl,
         price,
         stock,
 
