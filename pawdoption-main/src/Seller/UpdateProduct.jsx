@@ -112,7 +112,7 @@ function UpdateProduct() {
 
       <form className="grid grid-cols-3 gap-5 font-semibold">
         <img
-          src={singleProduct.productImgUrl}
+          src={`${singleProduct.productImgUrl}`}
           alt="singleProduct"
           className="col-span-1 border-2 rounded-2xl border-gray-500"
         />

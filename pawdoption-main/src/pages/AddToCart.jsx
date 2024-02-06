@@ -10,7 +10,7 @@ function AddToCart({ product }) {
     <div className="flex gap-6">
       {!token ? (
         <Link to="/login">
-          <button className="bg-red-500 px-5 py-3 rounded-xl">
+          <button className="bg-red-500 px-5 py-3 rounded-xl text-white font-bold">
             Add to cart
           </button>
         </Link>
@@ -29,7 +29,7 @@ function AddToCart({ product }) {
             )
           }
         >
-          <button className="bg-red-500 px-5 py-3 rounded-xl">
+          <button className="bg-[#4f8549] px-5 py-3 rounded-xl text-white font-bold">
             Add to cart
           </button>
         </Link>

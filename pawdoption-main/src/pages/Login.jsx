@@ -67,7 +67,7 @@ function Login() {
       <div className="border-2 border-[#c9a687]  flex flex-col lg:flex-row   gap-5  justify-center  absolute top-[70%] left-[50%]  translate-x-[-50%] translate-y-[-50%] rounded-xl">
         <div
           className={`w-[20rem] md:w-[23rem] flex flex-col items-center justify-center gap-3
-          h-[10rem] lg:h-[28rem] bg-[linear-gradient(to_right_bottom,rgba(211,183,159,0.3),rgba(222,201,183,0.3)),url('/login.png')] bg-cover bg-center border-b-[10px] border-r-0 lg:border-r-[10px] lg:border-b-0 border-[#c9a687]`}
+          h-[10rem] lg:h-[30rem] bg-[linear-gradient(to_right_bottom,rgba(211,183,159,0.3),rgba(222,201,183,0.3)),url('/login.png')] bg-cover bg-center border-b-[10px] border-r-0 lg:border-r-[10px] lg:border-b-0 border-[#c9a687]`}
         >
           <h1 className=" font-extrabold text-2xl ">Welcome</h1>
           <p className="text-center font-semibold lg:w-60">
@@ -114,6 +114,12 @@ function Login() {
           <p className="text-center mt-8">
             Not signd up yet?{" "}
             <Link to="/signup" className="font-bold hover:underline">
+              Sign up
+            </Link>
+          </p>
+          <p className="text-center ">
+            Become a Seller{" "}
+            <Link to="/sellersignup" className="font-bold hover:underline">
               Sign up
             </Link>
           </p>
