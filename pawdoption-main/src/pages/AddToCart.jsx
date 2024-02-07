@@ -24,7 +24,6 @@ function AddToCart({ product }) {
               productName,
               productImgUrl,
               price,
-
               stock,
               product
             )
