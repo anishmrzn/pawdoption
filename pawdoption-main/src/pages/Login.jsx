@@ -7,6 +7,7 @@ import { LoginContext } from "../context/LoginContextProvider";
 function Login() {
   // const { setToken } = useContext(LoginContext);
   const navigate = useNavigate();
+
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
@@ -23,12 +24,17 @@ function Login() {
       [e.target.name]: e.target.value,
     });
   };
-  const submitHandler = (e) => {
+  const submitHandler = (e, userType) => {
+    const apiUrl =
+      userType === "seller"
+        ? "http://127.0.0.1:8000/api/seller/token/"
+        : "http://127.0.0.1:8000/api/token/";
+
     const formData = new FormData();
     formData.append("username", loginFormData.username);
     formData.append("password", loginFormData.password);
 
-    fetch("http://127.0.0.1:8000/api/token/", {
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +48,8 @@ function Login() {
       .then((data) => {
         // console.log("DATA:", data.access);
         if (data.access) {
-          localStorage.setItem("token", data.access);
+          const tokenName = userType === "seller" ? "sellerToken" : "userToken";
+          localStorage.setItem(tokenName, data.access);
           // setToken(data.access);
           navigate("/");
           toast.success("Successfully Loged in");
@@ -74,7 +81,7 @@ function Login() {
             Join the pawdoption family and explore more!
           </p>
         </div>
-        <div className="px-10 lg:px-20 py-5 lg:py-10">
+        <div className="px-10 lg:px-20 py-5 lg:py-10 w-[28rem]">
           <div className="flex items-center justify-center gap-2">
             <img src="/paw.png" alt="paw" className="h-10" />
             <h1 className=" text-2xl font-bold">Login</h1>
@@ -102,14 +109,24 @@ function Login() {
               placeholder="*******"
               className="border-2 border-black rounded-md px-2 py-1"
             ></input>
-            <button
-              type="button"
-              disabled={!buttonEnabled}
-              onClick={submitHandler}
-              className="button"
-            >
-              Login
-            </button>
+            <div className="flex gap-5 ">
+              <button
+                type="button"
+                disabled={!buttonEnabled}
+                onClick={(e) => submitHandler(e, "user")}
+                className="text-sm bg-[#c9a687] rounded-xl px-4 py-3 text-white font-bold hover:shadow-xl"
+              >
+                Login as User
+              </button>
+              <button
+                type="button"
+                disabled={!buttonEnabled}
+                onClick={(e) => submitHandler(e, "seller")}
+                className="text-sm bg-[#c9a687] rounded-xl px-4 py-3 text-white font-bold hover:shadow-xl"
+              >
+                Login as Seller
+              </button>
+            </div>
           </form>
           <p className="text-center mt-8">
             Not signd up yet?{" "}

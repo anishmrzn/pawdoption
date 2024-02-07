@@ -8,7 +8,8 @@ function PageNav() {
   const navigate = useNavigate();
   const { total_item } = useCartContext();
 
-  const token = localStorage.getItem("token");
+  const sellerToken = localStorage.getItem("sellerToken");
+  const userToken = localStorage.getItem("userToken");
   // console.log(token);
   const [btnState, setBtnState] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -25,7 +26,8 @@ function PageNav() {
     setBtnState((btnState) => !btnState);
   }
   function handleLogout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("sellerToken");
+    localStorage.removeItem("userToken");
     // setToken("");
     navigate("/");
     window.location.reload();
@@ -71,7 +73,7 @@ function PageNav() {
             </li>
           </div>
         </ul>
-        {!token ? (
+        {!(sellerToken || userToken) ? (
           <div className=" hidden md:flex absolute left-[88%] top-[-20%]">
             <Link to="/login" className="button ">
               Login
@@ -96,9 +98,13 @@ function PageNav() {
                   <li className="text-white hover:underline">
                     <Link to="/seller">My Orders</Link>
                   </li>
-                  <li className="text-white hover:underline">
-                    <Link to="/seller">Seller</Link>
-                  </li>
+                  {!sellerToken ? (
+                    <div></div>
+                  ) : (
+                    <li className="text-white hover:underline">
+                      <Link to="/seller">Seller</Link>
+                    </li>
+                  )}
                   <li>
                     <button
                       onClick={handleLogout}
@@ -145,8 +151,8 @@ function PageNav() {
           <NavLink to="/quiz" className="hover:text-[#c9a687]">
             Quiz
           </NavLink>
-          {!token ? (
-            <div className=" hidden md:flex absolute left-[88%] top-[-20%]">
+          {!(sellerToken || userToken) ? (
+            <div className=" flex ">
               <Link to="/login" className="button ">
                 Login
               </Link>
@@ -173,9 +179,13 @@ function PageNav() {
                   <div className="text-white hover:underline">
                     <Link to="/seller">My Orders</Link>
                   </div>
-                  <div className="text-white hover:underline">
-                    <Link to="/seller">Seller</Link>
-                  </div>
+                  {!sellerToken ? (
+                    <div></div>
+                  ) : (
+                    <div className="text-white hover:underline">
+                      <Link to="/seller">Seller</Link>
+                    </div>
+                  )}
                   <div>
                     <button
                       onClick={handleLogout}

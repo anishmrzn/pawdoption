@@ -7,18 +7,21 @@ import { ToastContainer } from "react-toastify";
 import { AppProvider } from "./context/ProductContext.jsx";
 import { FilterContextProvider } from "./context/filterContext.jsx";
 import { CartProvider } from "./context/cartContext.jsx";
+import { UpdateProvider } from "./context/SellerUpdateContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AppProvider>
-      <FilterContextProvider>
-        <CartProvider>
-          {/* <LoginContextProvider> */}
-          <ToastContainer />
-          <App />
-          {/* </LoginContextProvider> */}
-        </CartProvider>
-      </FilterContextProvider>
+      <UpdateProvider>
+        <FilterContextProvider>
+          <CartProvider>
+            {/* <LoginContextProvider> */}
+            <ToastContainer />
+            <App />
+            {/* </LoginContextProvider> */}
+          </CartProvider>
+        </FilterContextProvider>
+      </UpdateProvider>
     </AppProvider>
   </React.StrictMode>
 );
