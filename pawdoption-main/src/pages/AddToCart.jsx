@@ -5,10 +5,11 @@ import { useCartContext } from "../context/cartContext";
 function AddToCart({ product }) {
   const { productId, productName, productImgUrl, price, stock } = product;
   const { addtToCart } = useCartContext();
-  const token = localStorage.getItem("token");
+  const userToken = localStorage.getItem("userToken");
+  const sellerToken = localStorage.getItem("sellerToken");
   return (
     <div className="flex gap-6">
-      {!token ? (
+      {!(userToken || sellerToken) ? (
         <Link to="/login">
           <button className="bg-red-500 px-5 py-3 rounded-xl text-white font-bold">
             Add to cart

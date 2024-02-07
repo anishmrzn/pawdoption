@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { toast } from "react-toastify";
-import { useProductContext } from "../context/ProductContext";
+import { useUpdateContext } from "../context/SellerUpdateContext";
 const API = "http://127.0.0.1:8000/api/get-product-seller/";
 
 function UpdateProduct() {
@@ -18,7 +18,7 @@ function UpdateProduct() {
   const [supplierId, setSupplierId] = useState("");
   const [animalCategory, setAnimalCategory] = useState("");
 
-  const { singleProduct, getSingleProduct } = useProductContext();
+  const { singleProduct, getSingleProduct } = useUpdateContext();
   const { id } = useParams();
   useEffect(() => {
     getSingleProduct(`${API}${id}/`);
@@ -61,7 +61,7 @@ function UpdateProduct() {
       // } catch (err) {
       //   console.log(err);
       // }
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("sellerToken");
       const response = await fetch(`http://127.0.0.1:8000/api/update/${id}/`, {
         method: "PUT",
         headers: {
