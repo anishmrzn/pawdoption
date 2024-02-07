@@ -1,11 +1,17 @@
 from rest_framework.response import Response
+from django.shortcuts import redirect, render
 from rest_framework.decorators import api_view
+from django.http import JsonResponse
 from paws.models import Pets
 from .serializers import PetSerializer,CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer, UserProfileSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from .email_utils import send
 from .models import CustomUser
+import requests
+import json
+
+
 
 
 
@@ -96,4 +102,62 @@ def send_email(request):
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
         
+
+
+
+# def verify_payment(request):
+#    data = request.POST
+#    product_id = data['product_identity']
+#    token = data['token']
+#    amount = data['amount']
+
+#    url = "https://khalti.com/api/v2/payment/verify/"
+#    payload = {
+#    "token": token,
+#    "amount": amount
+#    }
+#    headers = {
+#    "Authorization": "Key test_secret_key_c406db1d5d0e425a991d6de296d329e3"
+#    }
+   
+
+#    response = requests.post(url, payload, headers = headers)
+   
+#    response_data = json.loads(response.text)
+#    status_code = str(response.status_code)
+
+#    if status_code == '400':
+#       response = JsonResponse({'status':'false','message':response_data['detail']}, status=500)
+#       return response
+
+#    import pprint 
+#    pp = pprint.PrettyPrinter(indent=4)
+#    pp.pprint(response_data)
+   
+#    return JsonResponse(f"Payment Done !! With IDX. {response_data['user']['idx']}",safe=False)
     
+    import requests
+import json
+def verify_payment(request):
+    url = "https://a.khalti.com/api/v2/epayment/initiate/"
+
+    payload = json.dumps({
+        "return_url": "http://example.com/",
+        "website_url": "https://example.com/",
+        "amount": "1000",
+        "purchase_order_id": "Order01",
+        "purchase_order_name": "test",
+        "customer_info": {
+        "name": "Ram Bahadur",
+        "email": "test@khalti.com",
+        "phone": "9800000001"
+        }
+})
+headers = {
+    'Authorization': 'key live_secret_key_68791341fdd94846a146f0457ff7b455',
+    'Content-Type': 'application/json',
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)

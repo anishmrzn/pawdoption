@@ -74,6 +74,8 @@ def products(request, pk=None):
             return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+
 
 
 

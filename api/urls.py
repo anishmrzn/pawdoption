@@ -5,7 +5,9 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+
 from supplierdata.urls import createProduct,getSingleProduct,getProduct,updateProduct,deleteProduct,products
+
 
 urlpatterns = [
     path('', views.getRoutes, name = 'routes'),
@@ -23,7 +25,7 @@ urlpatterns = [
     path('products/<str:pk>/', products, name = 'products'),
     path('send-email/', send_email, name='send_email'),
     path('seller/', include('users.urls')),
-    path('user-profile/<str:pk>/',userProfile, name = 'show_user_profile')
-    
-
+    path('user-profile/<str:pk>/',userProfile, name = 'show_user_profile'),
+    path('verify_payment/',views.verify_payment,name='verify_payment')
+   
 ]
