@@ -11,7 +11,8 @@ import cloudinary.uploader
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createProduct(request):
-    request.data['sellerId'] = request.user.id
+
+    request.data['sellerId'] = request.user.sellerId
     
     serializer = ProductsSerializer(data=request.data)
     if serializer.is_valid():
@@ -28,14 +29,23 @@ def getProduct(request):
   return Response(serializer.data)
 
 
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def getProductSeller(request):  
-  
-    products = Products.objects.filter(sellerId = request.user)
-    serializer = ProductsSerializer(products, many = True)
+def getProductSeller(request, pk=None):
+  seller_id = request.user.sellerId
+    
+  if pk:
+      
+    product = Products.objects.get(productId=pk, sellerId=seller_id)
+    serializer = ProductsSerializer(product, many = False)
     return Response(serializer.data)
+  else:
+      
+    products = Products.objects.filter(sellerId=seller_id)
+    serializer = ProductsSerializer(products, many=True)
+    return Response(serializer.data)
+
+
   
  
 @api_view(['GET'])
@@ -45,23 +55,16 @@ def getSingleProduct(request, pk):
   return Response(serializer.data)
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def getSingleProductSeller(request, pk):
-  product = Products.objects.get(productId = pk, sellerId = request.user)
-  serializer = ProductsSerializer(product)
-  return Response(serializer.data)
-
-
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateProduct(request, pk):
   try:
-    product = Products.objects.get(productId = pk ,sellerId = request.user)
+    seller_id = request.user.sellerId
+    product = Products.objects.get(productId = pk ,sellerId = seller_id)
   except Products.DoesNotExist:
     return Response({"message":"Product not found"}, status= status.HTTP_404_NOT_FOUND)
   
-  request.data['sellerId'] = request.user.id
+  request.data['sellerId'] = request.user.sellerId
   
   serializer = ProductsSerializer(product, data= request.data)
   if serializer.is_valid():
