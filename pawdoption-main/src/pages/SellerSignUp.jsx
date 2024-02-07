@@ -9,6 +9,7 @@ function SellerSignup() {
   const [formData, setFormData] = useState({
     name: "",
     username: "",
+    pan_number: "",
     email: "",
     password: "",
     confirm_password: "",
@@ -25,7 +26,7 @@ function SellerSignup() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/signup/", {
+      const response = await fetch("http://127.0.0.1:8000/api/seller/signup/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,6 +99,17 @@ function SellerSignup() {
                 ></input>
               </div>
             </div>
+            <label htmlFor="pan_number" className="font-bold">
+              🐾Pan Number
+            </label>
+            <input
+              type="text"
+              name={"pan_number"}
+              value={formData.pan_number}
+              onChange={handleChange}
+              className="border-2 border-black rounded-md px-2 py-1"
+              placeholder="123456789"
+            ></input>
             <label htmlFor="email" className="font-bold">
               🐾E-mail
             </label>

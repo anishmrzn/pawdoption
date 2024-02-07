@@ -24,7 +24,7 @@ class Products(models.Model):
   animalCategory = models.TextField(max_length = 200, blank = False, default = 'Dog')
   featured = models.BooleanField(default=0)
   created = models.DateTimeField(auto_now_add = True)
-  sellerId = models.ForeignKey(Seller,on_delete=models.CASCADE, null = True, blank = True)
+  sellerId = models.ForeignKey(Seller,on_delete=models.CASCADE, blank = True, null = True)
  
   def __str__(self):
     return self.productName

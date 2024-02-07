@@ -5,14 +5,15 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from supplierdata.urls import (createProduct,getSingleProduct,getSingleProductSeller,getProduct
+from supplierdata.urls import (createProduct,getSingleProduct,getProduct
 ,getProductSeller,updateProduct,deleteProduct,products)
 
 urlpatterns = [
     path('', views.getRoutes, name = 'routes'),
     path('pets/', views.getPets, name= 'get_pets'),
     path('pets/<str:pk>/', views.getSinglePets, name= 'get_single_pet'),
-    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('user/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('seller/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('signup/', customUserCreate, name='create_user'),
     path('create-product/', createProduct, name = 'create-product'),
@@ -25,8 +26,8 @@ urlpatterns = [
     path('send-email/', send_email, name='send_email'),
     path('seller/', include('users.urls')),
     path('user-profile/<str:pk>/',getUserProfile, name = 'show_user_profile'),
-    path('get-product-seller/<str:pk>/',getProductSeller, name = 'get-product-seller'),
-    path('single-product-seller/<str:pk>/', getSingleProductSeller, name = 'single-product-seller'),
+    path('get-product-seller/',getProductSeller, name = 'get-product-seller'),
+    path('get-product-seller/<str:pk>/', getProductSeller, name = 'single-product-seller'),
     path('update-user-profile/<str:pk>/', updateUserProfile, name= 'update-user-profile'),
     path('delete-user-profile/<str:pk>/', deleteUserProfile, name= 'Delete-user-profile'),
 ]

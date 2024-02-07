@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { useProductContext } from "../context/ProductContext";
-const API = "http://127.0.0.1:8000/api/products/";
+const API = "http://127.0.0.1:8000/api/get-product-seller/";
 
 function UpdateProduct() {
   const [productImg, setProductImg] = useState("");
@@ -61,8 +61,12 @@ function UpdateProduct() {
       // } catch (err) {
       //   console.log(err);
       // }
+      const token = localStorage.getItem("token");
       const response = await fetch(`http://127.0.0.1:8000/api/update/${id}/`, {
         method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
