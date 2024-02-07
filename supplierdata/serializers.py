@@ -17,6 +17,7 @@ class ProductsSerializer(serializers.ModelSerializer):
         
         productImgUrl = validated_data.pop('productImg', None)
         
+        
         product = Products.objects.create(**validated_data)
        
         if productImgUrl:
