@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useFilterContext } from "../context/filterContext";
+
 
 function ProductContainer({ products }) {
   return (

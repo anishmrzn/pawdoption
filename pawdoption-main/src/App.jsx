@@ -19,6 +19,7 @@ import Cart from "./pages/Cart";
 import { useEffect } from "react";
 import AboutUs from "./pages/AboutUs";
 import SellerSignup from "./pages/SellerSignUp";
+import Account from "./pages/Account";
 
 function App() {
   useEffect(() => {
@@ -35,6 +36,7 @@ function App() {
           <Route path="signup" element={<Signup />} />
           <Route path="sellersignup" element={<SellerSignup />} />
           <Route path="admin" element={<Admin />} />
+          <Route path="account" element={<Account />} />
           <Route path="addtocart" element={<AddToCart />} />
           <Route path="cart" element={<Cart />} />
           <Route path="aboutus" element={<AboutUs />} />

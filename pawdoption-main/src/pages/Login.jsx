@@ -1,30 +1,23 @@
 import { Link, useNavigate } from "react-router-dom";
 import PageNav from "../components/PageNav";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { LoginContext } from "../context/LoginContextProvider";
 
 function Login() {
   // const { setToken } = useContext(LoginContext);
   const navigate = useNavigate();
-
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
   });
 
-  const pressKey = (e) => {
-    if (e.key === "Enter") {
-      submitHandler();
-    }
-  };
   const inputHandler = (e) => {
     setLoginFormData({
       ...loginFormData,
       [e.target.name]: e.target.value,
     });
   };
-  const submitHandler = (e, userType) => {
+  const submitHandler = (userType) => {
     const apiUrl =
       userType === "seller"
         ? "http://127.0.0.1:8000/api/seller/token/"
@@ -48,6 +41,11 @@ function Login() {
       .then((data) => {
         // console.log("DATA:", data.access);
         if (data.access) {
+          // setAuth({
+          //   ...auth
+          //   user: data.access.user,
+          //   token: data.access.token,
+          // });
           const tokenName = userType === "seller" ? "sellerToken" : "userToken";
           localStorage.setItem(tokenName, data.access);
           // setToken(data.access);
