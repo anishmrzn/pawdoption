@@ -38,6 +38,7 @@ function PageNav() {
   function handleSmallDropdown() {
     setSmallDropDown((smallDropDown) => !smallDropDown);
   }
+
   let toggleClassDropdown = dropDown ? "" : "hidden";
   let toggleClassSmallDropdown = smallDropDown ? "" : "hidden";
   let toggleClassOpen = btnState ? "open" : "";
@@ -93,7 +94,9 @@ function PageNav() {
               >
                 <ul className="flex flex-col gap-3 text-md">
                   <li className="text-white hover:underline">
-                    <Link to="/seller">My Account</Link>
+                    <Link to="/account" onClick={window.location.reload}>
+                      My Account
+                    </Link>
                   </li>
                   <li className="text-white hover:underline">
                     <Link to="/seller">My Orders</Link>

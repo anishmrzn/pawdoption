@@ -9,19 +9,23 @@ import { FilterContextProvider } from "./context/filterContext.jsx";
 import { CartProvider } from "./context/cartContext.jsx";
 import { UpdateProvider } from "./context/SellerUpdateContext.jsx";
 
+import { UserProvider } from "./context/UserContext.jsx";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AppProvider>
-      <UpdateProvider>
-        <FilterContextProvider>
-          <CartProvider>
-            {/* <LoginContextProvider> */}
-            <ToastContainer />
-            <App />
-            {/* </LoginContextProvider> */}
-          </CartProvider>
-        </FilterContextProvider>
-      </UpdateProvider>
-    </AppProvider>
+    <UserProvider>
+      <AppProvider>
+        <UpdateProvider>
+          <FilterContextProvider>
+            <CartProvider>
+              {/* <LoginContextProvider> */}
+              <ToastContainer />
+              <App />
+              {/* </LoginContextProvider> */}
+            </CartProvider>
+          </FilterContextProvider>
+        </UpdateProvider>
+      </AppProvider>
+    </UserProvider>
   </React.StrictMode>
 );
