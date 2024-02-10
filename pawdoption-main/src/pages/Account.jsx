@@ -95,12 +95,12 @@ function Account() {
             <span className="font-bold">Contact :</span> <h1>{user.contact}</h1>
           </h1>
         </div>
-        <div className="rounded-[100%] px-6 border-2 border-black overflow-hidden mb-[10rem]">
+        <div className="rounded-full px-6 border-2 border-black overflow-hidden mb-[10rem]">
           <img
             src={user.userImgUrl}
             // src="/product.jpg"
             alt="userimage"
-            className="h-[10rem]"
+            className="h-[10rem] w-full object-cover"
           />
         </div>
       </div>
