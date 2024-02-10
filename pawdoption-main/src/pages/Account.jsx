@@ -68,6 +68,32 @@ function Account() {
       toast.error("Error");
     }
   };
+  const handleDelete = async () => {
+    try {
+      let answer = window.prompt(
+        "Are you sure you want to delete this product?"
+      );
+      if (!answer) return;
+      const token = localStorage.getItem("userToken");
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/delete-user-profile/`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        localStorage.removeItem("userToken");
+        toast.success("User deleted");
+        // navigate("/store");
+      }
+    } catch (error) {
+      toast.error("Error");
+    }
+  };
   return (
     <div className="relative">
       <div>
@@ -174,12 +200,20 @@ function Account() {
             value={contact}
             className="col-span-2 border-2  rounded-xl border-gray-400 py-1 px-5"
           />
-          <button onClick={handleSubmit} className="button ml-10 mt-10">
-            Update Profile
-          </button>
+          <div className="col-span-3 flex justify-between ">
+            <button onClick={handleSubmit} className="button">
+              Update Profile
+            </button>
+            <button
+              onClick={handleDelete}
+              className=" px-5 py-1 rounded-xl text-white bg-red-500"
+            >
+              Delete Profile
+            </button>
+          </div>
         </form>
       </div>
-      <div className="flex items-center justify-end mr-[15rem] mb-10">
+      <div className="flex items-center justify-end mr-[15rem] my-10">
         <button
           className={`${toggleClassHidden} button`}
           onClick={handleUpdate}
