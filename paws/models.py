@@ -8,6 +8,7 @@ class Pets(models.Model):
   name = models.TextField(max_length = 200)
   age = models.TextField(max_length = 50, blank= True)
   breed = models.CharField(max_length = 200, blank = True, null = True)
+  gender = models.CharField(max_length = 10, blank = True)
   created = models.DateTimeField(auto_now_add = True)
   
   
