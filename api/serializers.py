@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from paws.models import Pets
 from .models import CustomUser 
 from rest_framework import serializers
-
+from django.contrib.auth import authenticate
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import CustomUser
 from users.models import Seller
@@ -82,8 +82,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             'username': attrs.get('username'),
             'password': attrs.get('password')
         }
-
-        # Authenticate both CustomUser and Seller
+        
         user = CustomUser.objects.filter(username=credentials['username']).first()
         if not user:
             user = Seller.objects.filter(username=credentials['username']).first()
@@ -96,3 +95,14 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             raise serializers.ValidationError("Unable to log in with provided credentials.")
 
     
+        # user = MultiModelBackend().authenticate(request=self.context.get('request'), username=credentials['username'], password=credentials['password'])
+
+        # # if not user:
+        # #     user = MultiModelBackend.authenticate(request=self.context.get('request'), username=credentials['username'], password=credentials['password'])
+
+        # if user:
+        #     refresh = self.get_token(user)
+        #     data = {'refresh': str(refresh), 'access': str(refresh.access_token)}
+        #     return data
+        # else:
+        #     raise serializers.ValidationError("Unable to log in with provided credentials.")

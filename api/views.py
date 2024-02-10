@@ -79,9 +79,10 @@ def customUserCreate(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def getUserProfile(request, pk):
-    users = CustomUser.objects.get(id = pk)
-    serializer = UserProfileSerializer(users, many = False)
+def getUserProfile(request):
+    
+    users = request.user
+    serializer = UserProfileSerializer(users)
     return Response(serializer.data)
 
 
