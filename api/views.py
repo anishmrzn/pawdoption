@@ -88,9 +88,9 @@ def getUserProfile(request):
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def updateUserProfile(request,pk):
+def updateUserProfile(request):
     try:
-        profile = CustomUser.objects.get(id = pk)
+        profile = request.user
     except CustomUser.DoesNotExist:
         return Response({'message':'User Not Found'}, status= status.HTTP_404_NOT_FOUND)
     
@@ -113,9 +113,9 @@ def updateUserProfile(request,pk):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def deleteUserProfile(request,pk):
+def deleteUserProfile(request):
     try:
-        profile = CustomUser.objects.get(id = pk)
+        profile = request.user
         profile.delete()
         return Response({'message':'User deleted successfully'},status= status.HTTP_200_OK)
     except CustomUser.DoesNotExist:
