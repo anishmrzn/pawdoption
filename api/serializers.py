@@ -48,7 +48,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     
 class UserProfileSerializer(ModelSerializer):
     
-    UserImg = serializers.ImageField(write_only = True)
+    UserImg = serializers.ImageField(write_only = True,default = 'https://res.cloudinary.com/djzfsffst/image/upload/v1707144245/user-default_macios.png' )
     class Meta:
         model = CustomUser
         fields = '__all__'

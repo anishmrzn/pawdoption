@@ -39,7 +39,7 @@ class SellerSerializer(serializers.ModelSerializer):
     
 class SellerProfileSerializer(ModelSerializer):
     
-    sellerImg = serializers.ImageField(write_only = True)
+    sellerImg = serializers.ImageField(write_only = True, default = 'https://res.cloudinary.com/djzfsffst/image/upload/v1707144245/user-default_macios.png')
     
     class Meta:
         model = Seller

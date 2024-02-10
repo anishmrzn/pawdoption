@@ -26,18 +26,18 @@ def customSellerCreate(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def getSellerProfile(request, pk):
-    users = Seller.objects.get(sellerId = pk)
-    serializer = SellerProfileSerializer(users, many = False)
+def getSellerProfile(request):
+    users = request.user
+    serializer = SellerProfileSerializer(users)
     return Response(serializer.data)      
 
 
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def updateSellerProfile(request,pk):
+def updateSellerProfile(request):
     try:
-        profile = Seller.objects.get(sellerId = pk)
+        profile = request.user
     except Seller.DoesNotExist:
         return Response({'message':'User Not Found'}, status= status.HTTP_404_NOT_FOUND)
     
@@ -60,9 +60,9 @@ def updateSellerProfile(request,pk):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def deleteSellerProfile(request,pk):
+def deleteSellerProfile(request):
     try:
-        profile = Seller.objects.get(sellerId = pk)
+        profile = request.user
         profile.delete()
         return Response({'message':'User deleted successfully'},status= status.HTTP_200_OK)
     except Seller.DoesNotExist:

@@ -7,8 +7,8 @@ from .views import customSellerCreate,getSellerProfile,updateSellerProfile,delet
 
 urlpatterns = [
     path('signup/', customSellerCreate, name = 'create_seller'),
-    path('get-seller-profile/<str:pk>/', getSellerProfile, name= 'get-seller-profile'),
-    path('update-seller-profile/<str:pk>/', updateSellerProfile, name= 'update-seller-profile'),
-    path('delete-seller-profile/<str:pk>/', deleteSellerProfile, name= 'delete-seller-profile'),
+    path('profile/', getSellerProfile, name= 'get-seller-profile'),
+    path('update-profile/', updateSellerProfile, name= 'update-seller-profile'),
+    path('delete-profile/', deleteSellerProfile, name= 'delete-seller-profile'),
     
 ]
