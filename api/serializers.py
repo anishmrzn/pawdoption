@@ -1,5 +1,4 @@
 from rest_framework.serializers import ModelSerializer
-from paws.models import Pets
 from .models import CustomUser 
 from rest_framework import serializers
 from django.contrib.auth import authenticate
@@ -7,13 +6,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import CustomUser
 from users.models import Seller
 import cloudinary.uploader
-
-class PetSerializer(ModelSerializer):
-  class Meta:
-    model = Pets
-    fields = '__all__'
-    
-    
 
 class CustomUserSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True, required=False)
@@ -51,7 +43,7 @@ class UserProfileSerializer(ModelSerializer):
     UserImg = serializers.ImageField(write_only = True,default = 'https://res.cloudinary.com/djzfsffst/image/upload/v1707144245/user-default_macios.png' )
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = ['email', 'username', 'name', 'contact', 'userImgUrl', 'address', 'UserImg']
         
     def create(self, validated_data):
         
