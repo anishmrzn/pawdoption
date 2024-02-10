@@ -25,7 +25,7 @@ urlpatterns = [
     path('products/<str:pk>/', products, name = 'products'),
     path('send-email/', send_email, name='send_email'),
     path('seller/', include('users.urls')),
-    path('user-profile/<str:pk>/',getUserProfile, name = 'show_user_profile'),
+    path('user-profile/',getUserProfile, name = 'show_user_profile'),
     path('get-product-seller/',getProductSeller, name = 'get-product-seller'),
     path('get-product-seller/<str:pk>/', getProductSeller, name = 'single-product-seller'),
     path('update-user-profile/<str:pk>/', updateUserProfile, name= 'update-user-profile'),
