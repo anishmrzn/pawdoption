@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 function Login() {
   // const { setToken } = useContext(LoginContext);
   const navigate = useNavigate();
+
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
@@ -17,7 +18,7 @@ function Login() {
       [e.target.name]: e.target.value,
     });
   };
-  const submitHandler = (userType) => {
+  const submitHandler = (e, userType) => {
     const apiUrl =
       userType === "seller"
         ? "http://127.0.0.1:8000/api/seller/token/"

@@ -55,7 +55,7 @@ function AddProduct() {
       formData.append("featured", featured);
       formData.append("animalCategory", animalCategory);
 
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("sellerToken");
       const response = await fetch(
         "http://127.0.0.1:8000/api/create-product/",
         {
