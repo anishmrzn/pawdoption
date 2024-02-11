@@ -1,9 +1,10 @@
 from django.urls import path
-from . import views
+from .views import addPets, getPets
 
 
 
 urlpatterns = [
-  path('get-pets/', views.getPets, name= 'get_pets'),
-  path('get-single-pet/<str:pk>/', views.getSinglePets, name= 'get_single_pet'),
+  path('add-pets/', addPets, name= 'add_pets'),
+  path('get-pets/', getPets, name= 'get_pets'),
+  path('get-single-pet/<str:pk>/', getPets, name= 'get_single_pet'),
 ]
