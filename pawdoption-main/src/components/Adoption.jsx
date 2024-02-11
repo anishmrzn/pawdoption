@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Adoption() {
   return (
     <div
@@ -6,7 +8,9 @@ function Adoption() {
     >
       <div className="flex flex-col items-center justify-center gap-5">
         <h1 className="text-[#c9a687] font-bold">Put up for Adoption</h1>
-        <button className="button">I want to rehome my Pet</button>
+        <Link to="/rehome" className="button">
+          I want to rehome my Pet
+        </Link>
       </div>
       <div className="flex flex-col items-center justify-center gap-5">
         <h1 className="text-[#c9a687] font-bold">Adopt a Pet</h1>
