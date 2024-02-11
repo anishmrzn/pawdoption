@@ -8,6 +8,15 @@ from .email_utils import send
 from .models import CustomUser
 import cloudinary.uploader
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import joblib
+import pandas as pd
+import json
+
+# Load the trained model
+loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 
 # Create your views here.
@@ -118,8 +127,34 @@ def send_email(request):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        
+@csrf_exempt
+@api_view(['POST'])
+def predict_dog_breed(request):
+    # print(request.body)
+    try:
+        # Get user responses from the request
+        data = json.loads(request.body)
+        user_responses = data.get('user_responses', [])
+
+        # Convert user responses to DataFrame
+        user_df = pd.DataFrame(user_responses)
+        # user_df = pd.get_dummies(user_df)
+        # print(user_responses)
+        # print(user_df.columns.to_list())
+        print(user_df)
+        # Predict the dog breed
+        prediction = loaded_model.predict(user_df)
+        print("----------------------------------",prediction)
+        recommended_breed = prediction[0]
+
+        return Response({"recommended_breed": recommended_breed})
+
+    except Exception as e:
+        return Response({"error": str(e)})     
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+
         
     
