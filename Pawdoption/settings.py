@@ -211,7 +211,11 @@ EMAIL_USE_SSL = False
 
 AUTH_USER_MODEL = 'users.Seller'
 AUTH_USER_MODEL = 'api.CustomUser'
+
+#secret key for poyment integration using stripe
+STRIPE_SECRET_KEY = 'sk_test_51OiKR0HRxrEnXWBt5FNsTFMcYRS3nl40vfr7EWKR7pVNuiOckyuHb1wx9zKqgrNJ6pZQoCvAqhL0mYJMm0GYkRSg00KWaJqVvt'
     
+SITE_URL = 'http://localhost:5173/'
 
 
 # Default primary key field type

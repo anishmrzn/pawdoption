@@ -1,6 +1,6 @@
 from django.urls import path,include
-from . import views
-from .views import customUserCreate, send_email,CustomTokenObtainPairView, userProfile
+from . import views 
+from .views import customUserCreate, send_email,CustomTokenObtainPairView, userProfile, StripeCheckoutView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -26,6 +26,9 @@ urlpatterns = [
     path('send-email/', send_email, name='send_email'),
     path('seller/', include('users.urls')),
     path('user-profile/<str:pk>/',userProfile, name = 'show_user_profile'),
-    path('verify_payment/',views.verify_payment,name='verify_payment')
-   
+    
+    
+    path('create-checkout-session', StripeCheckoutView.as_view())
 ]
+
+

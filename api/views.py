@@ -1,6 +1,8 @@
+from django.conf import settings
 from rest_framework.response import Response
 from django.shortcuts import redirect, render
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from django.http import JsonResponse
 from paws.models import Pets
 from .serializers import PetSerializer,CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer, UserProfileSerializer
@@ -8,8 +10,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from .email_utils import send
 from .models import CustomUser
-import requests
-import json
+
+
 
 
 
@@ -86,7 +88,6 @@ def customUserCreate(request):
 #             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-@api_view(['POST'])
 def send_email(request):
         serializer = EmailSerializer(data=request.data)
         if serializer.is_valid():
@@ -103,61 +104,30 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
         
 
+import stripe
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
-# def verify_payment(request):
-#    data = request.POST
-#    product_id = data['product_identity']
-#    token = data['token']
-#    amount = data['amount']
+class StripeCheckoutView(APIView):
+    def post(self, request):
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                line_items=[
+                    {
+                        'price': 'price_1Oie9XHRxrEnXWBtq8aqWoSX',
+                        'quantity': 1,
+                    },
+                ],
+                payment_method_types=['card',],
+                mode='payment',
+                success_url=settings.SITE_URL + '/?success=true&session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=settings.SITE_URL + '/?canceled=true',
+            )
 
-#    url = "https://khalti.com/api/v2/payment/verify/"
-#    payload = {
-#    "token": token,
-#    "amount": amount
-#    }
-#    headers = {
-#    "Authorization": "Key test_secret_key_c406db1d5d0e425a991d6de296d329e3"
-#    }
-   
+            return redirect(checkout_session.url)
+        except:
+            return Response(
+                {'error': 'Something went wrong when creating stripe checkout session'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
-#    response = requests.post(url, payload, headers = headers)
-   
-#    response_data = json.loads(response.text)
-#    status_code = str(response.status_code)
-
-#    if status_code == '400':
-#       response = JsonResponse({'status':'false','message':response_data['detail']}, status=500)
-#       return response
-
-#    import pprint 
-#    pp = pprint.PrettyPrinter(indent=4)
-#    pp.pprint(response_data)
-   
-#    return JsonResponse(f"Payment Done !! With IDX. {response_data['user']['idx']}",safe=False)
-    
-    import requests
-import json
-def verify_payment(request):
-    url = "https://a.khalti.com/api/v2/epayment/initiate/"
-
-    payload = json.dumps({
-        "return_url": "http://example.com/",
-        "website_url": "https://example.com/",
-        "amount": "1000",
-        "purchase_order_id": "Order01",
-        "purchase_order_name": "test",
-        "customer_info": {
-        "name": "Ram Bahadur",
-        "email": "test@khalti.com",
-        "phone": "9800000001"
-        }
-})
-headers = {
-    'Authorization': 'key live_secret_key_68791341fdd94846a146f0457ff7b455',
-    'Content-Type': 'application/json',
-}
-
-response = requests.request("POST", url, headers=headers, data=payload)
-
-print(response.text)
