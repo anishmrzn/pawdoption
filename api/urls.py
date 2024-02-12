@@ -10,8 +10,12 @@ from supplierdata.urls import (createProduct,getSingleProduct,getProduct
 
 urlpatterns = [
     path('', views.getRoutes, name = 'routes'),
+
     path('pets/', include('paws.urls')),
     path('predict/', predict_dog_breed, name='predict_dog_breed'),
+
+    path('', include('paws.urls')),
+
     path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('seller/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
