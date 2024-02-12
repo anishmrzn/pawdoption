@@ -32,15 +32,19 @@ def getPets(request,pk = None):
   if pk:
     #get single pet
     try:
-      pets = Pets.objects.get(id = pk)
-      serializer = PetSerializer(pets)
-      return Response(serializer.data, status= status.HTTP_200_OK)
+      pet = Pets.objects.get(id = pk)
+      if pet.is_approved:
+        serializer = PetSerializer(pet)
+        return Response(serializer.data, status= status.HTTP_200_OK)
+    
+      else:
+        return Response({'error': 'Pet not approved'}, status= status.HTTP_403_FORBIDDEN)
     except Pets.DoesNotExist:
       return Response({'error': 'Pet not found'}, status=status.HTTP_404_NOT_FOUND)
   
   else:
     #get all pets
-    pets = Pets.objects.all()
+    pets = Pets.objects.filter(is_approved = True)
     serializer = PetSerializer(pets, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
     
