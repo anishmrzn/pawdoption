@@ -93,21 +93,20 @@ function PageNav() {
                 className={`${toggleClassDropdown} absolute left-[86.4%] top-[180%]  px-6 py-5 clip bg-[#c9a687] }`}
               >
                 <ul className="flex flex-col gap-3 text-md">
-                  <li className="text-white hover:underline">
-                    <Link to="/account" onClick={window.location.reload}>
-                      My Account
-                    </Link>
-                  </li>
-                  <li className="text-white hover:underline">
-                    <Link to="/seller">My Orders</Link>
-                  </li>
                   {!sellerToken ? (
-                    <div></div>
+                    <li className="text-white hover:underline">
+                      <Link to="/account" onClick={window.location.reload}>
+                        My Account
+                      </Link>
+                    </li>
                   ) : (
                     <li className="text-white hover:underline">
                       <Link to="/seller">Seller</Link>
                     </li>
                   )}
+                  <li className="text-white hover:underline">
+                    <Link to="/seller">My Orders</Link>
+                  </li>
                   <li>
                     <button
                       onClick={handleLogout}
