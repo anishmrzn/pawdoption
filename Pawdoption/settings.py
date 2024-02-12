@@ -209,15 +209,7 @@ EMAIL_USE_SSL = False
 
 
 AUTH_USER_MODEL = 'api.CustomUser'
-<<<<<<< HEAD
-
-#secret key for poyment integration using stripe
-STRIPE_SECRET_KEY = 'sk_test_51OiKR0HRxrEnXWBt5FNsTFMcYRS3nl40vfr7EWKR7pVNuiOckyuHb1wx9zKqgrNJ6pZQoCvAqhL0mYJMm0GYkRSg00KWaJqVvt'
-    
-SITE_URL = 'http://localhost:5173/'
-=======
 # AUTH_USER_MODEL = 'users.Seller'
->>>>>>> e6ec64f0360c721552e147dc42a00524666624f2
 
 
 # Default primary key field type
@@ -235,3 +227,8 @@ cloudinary.config(
     api_secret="mr7DiXiNtCngFiM6ZwwmvEKdKHU",
     secure=True,
 )
+
+#secret key for poyment integration using stripe
+STRIPE_SECRET_KEY = 'sk_test_51OiKR0HRxrEnXWBt5FNsTFMcYRS3nl40vfr7EWKR7pVNuiOckyuHb1wx9zKqgrNJ6pZQoCvAqhL0mYJMm0GYkRSg00KWaJqVvt'
+    
+SITE_URL = 'http://localhost:5173/'

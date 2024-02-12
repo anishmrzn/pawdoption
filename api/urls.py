@@ -37,7 +37,7 @@ urlpatterns = [
     path('get-product-seller/<str:pk>/', getProductSeller, name = 'single-product-seller'),
     path('update-user-profile/', updateUserProfile, name= 'update-user-profile'),
     path('delete-user-profile/', deleteUserProfile, name= 'Delete-user-profile'),
-    path('create-checkout-session/<pk>/', StripeCheckoutView.as_view(), name='checkout_session')
+    path('create-checkout-session/<str:pk>/', StripeCheckoutView.as_view(), name='checkout_session')
 
 ]
 
