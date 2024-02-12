@@ -9,6 +9,7 @@ function CartItem({
   stock,
   amount,
   price,
+  discount,
 }) {
   const { removeItem, setIncrease, setDecrease } = useCartContext();
   // const [amount, setAmount] = useState(1);
@@ -27,14 +28,16 @@ function CartItem({
           <p>{productName}</p>
         </div>
 
-        <div className="flex items-center justify-center">Rs {price}</div>
+        <div className="flex items-center justify-center">
+          Rs {(price - (price * discount) / 100).toFixed(2)}
+        </div>
         <CartCounter
           amount={amount}
           setDecrease={() => setDecrease(productId)}
           setIncrease={() => setIncrease(productId)}
         />
         <div className="flex items-center justify-center">
-          Rs {price * amount}
+          Rs {(price - (price * discount) / 100).toFixed(2) * amount}
         </div>
         <button
           className="flex items-center justify-center text-red-700 text-xl"
