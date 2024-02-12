@@ -21,10 +21,10 @@ function SingleProduct() {
   // window.location.reload();
 
   return (
-    <div className="flex flex-col gap-20 md:gap-[10rem]">
+    <div className="flex flex-col gap-20 md:gap-[10rem] ">
       <PageNav />
-      <div className="flex flex-col md:flex-row gap-16 lg:gap-[10rem]">
-        <div className="flex flex-col items-center ml-[8rem] md:ml-[0] w-[20rem] md:w-[40rem] border-2 px-5 py-5 rounded-xl">
+      <div className="flex flex-col md:flex-row gap-16 lg:gap-16">
+        <div className="flex flex-col items-center ml-[8rem] md:ml-[0] w-[20rem] md:w-[40rem] border-2 border-black px-5 py-5 rounded-xl">
           <img
             src={singleProduct.productImgUrl}
             alt="product"
@@ -43,7 +43,7 @@ function SingleProduct() {
                 singleProduct.price * (singleProduct.discount / 100)
               ).toFixed(2)}
             </h1>
-            <div className=" flex items-center gap-3 px-5  py-2 bg-green-500 rounded-xl">
+            <div className=" flex items-center gap-3 px-5  py-2 bg-[#1cadd9] rounded-xl">
               <h1 className="text-white font-bold">
                 {singleProduct.discount}% off
               </h1>
@@ -52,7 +52,7 @@ function SingleProduct() {
               </h1>
             </div>
           </div>
-          <p className="text-lg">{singleProduct.Description}</p>
+          <p className="text-lg w-[30rem]">{singleProduct.Description}</p>
           <div className="flex gap-16">
             <AddToCart product={singleProduct} />
           </div>

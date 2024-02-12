@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from .models import Seller
 from rest_framework import serializers
+import cloudinary.uploader
 
 
 
@@ -9,7 +10,7 @@ class SellerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Seller
-        fields = ('email', 'username', 'name', 'password', 'confirm_password')
+        fields = '__all__'
         extra_kwargs = {
             'password': {'write_only': True}
             }
@@ -33,5 +34,30 @@ class SellerSerializer(serializers.ModelSerializer):
             
         instance.save()    
         return instance    
+    
+    
+    
+class SellerProfileSerializer(ModelSerializer):
+    
+    sellerImg = serializers.ImageField(write_only = True, default = 'https://res.cloudinary.com/djzfsffst/image/upload/v1707144245/user-default_macios.png')
+    
+    class Meta:
+        model = Seller
+        fields = ['email', 'username', 'name', 'contact', 'userImgUrl', 'address', 'UserImg']
+        
+    def create(self, validated_data):
+        
+        sellerImgUrl = validated_data.pop('sellerImg', None)
+        
+        photo = Seller.objects.create(**validated_data)
+       
+        if sellerImgUrl:
+            cloudinary_response = cloudinary.uploader.upload(sellerImgUrl)
+            photo.sellerImgUrl = cloudinary_response['secure_url']
+            photo.save()
+
+        return photo
+        
+        
     
     

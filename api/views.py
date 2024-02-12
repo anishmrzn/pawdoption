@@ -1,15 +1,22 @@
 from django.conf import settings
 from rest_framework.response import Response
+<<<<<<< HEAD
 from django.shortcuts import redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from django.http import JsonResponse
 from paws.models import Pets
 from .serializers import PetSerializer,CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer, UserProfileSerializer
+=======
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.permissions import IsAuthenticated
+from .serializers import CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer, UserProfileSerializer
+>>>>>>> e6ec64f0360c721552e147dc42a00524666624f2
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from .email_utils import send
 from .models import CustomUser
+<<<<<<< HEAD
 from supplierdata.models import Products
 import cloudinary.uploader
 
@@ -24,7 +31,19 @@ import json
 # loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 
+=======
+import cloudinary.uploader
+>>>>>>> e6ec64f0360c721552e147dc42a00524666624f2
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import joblib
+import pandas as pd
+import json
+
+# Load the trained model
+loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 
 # Create your views here.
@@ -77,6 +96,56 @@ def customUserCreate(request):
 #             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+<<<<<<< HEAD
+=======
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getUserProfile(request):
+    
+    users = request.user
+    serializer = UserProfileSerializer(users)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateUserProfile(request):
+    try:
+        profile = request.user
+    except CustomUser.DoesNotExist:
+        return Response({'message':'User Not Found'}, status= status.HTTP_404_NOT_FOUND)
+    
+    serializer = UserProfileSerializer(profile, data= request.data)
+    if serializer.is_valid():
+        
+        existing = profile.userImgUrl
+        new = request.data.get('UserImg')
+        
+        if new:
+            cloudinary_response = cloudinary.uploader.upload(new)
+            
+            serializer.validated_data['userImgUrl'] = cloudinary_response['secure_url']
+            
+        serializer.save()
+        
+        return Response(serializer.data)
+    return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteUserProfile(request):
+    try:
+        profile = request.user
+        profile.delete()
+        return Response({'message':'User deleted successfully'},status= status.HTTP_200_OK)
+    except CustomUser.DoesNotExist:
+        return Response({'message':'User not found'}, status= status.HTTP_404_NOT_FOUND)
+
+
+
+@api_view(['POST'])
+>>>>>>> e6ec64f0360c721552e147dc42a00524666624f2
 def send_email(request):
         serializer = EmailSerializer(data=request.data)
         if serializer.is_valid():
@@ -117,6 +186,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
+<<<<<<< HEAD
         
 
 import stripe
@@ -178,4 +248,6 @@ class StripeCheckoutView(APIView):
             return redirect(checkout_session.url)
         except Exception as e:
             return Response({'msg':'something went wrong while creating stripe session','error':str(e)}, status=500)
+=======
+>>>>>>> e6ec64f0360c721552e147dc42a00524666624f2
         

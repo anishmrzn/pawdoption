@@ -1,18 +1,11 @@
 from rest_framework.serializers import ModelSerializer
-from paws.models import Pets
 from .models import CustomUser 
 from rest_framework import serializers
-
+from django.contrib.auth import authenticate
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import CustomUser
 from users.models import Seller
-
-class PetSerializer(ModelSerializer):
-  class Meta:
-    model = Pets
-    fields = '__all__'
-    
-    
+import cloudinary.uploader
 
 class CustomUserSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True, required=False)
@@ -46,10 +39,24 @@ class CustomUserSerializer(serializers.ModelSerializer):
     
     
 class UserProfileSerializer(ModelSerializer):
+    
+    UserImg = serializers.ImageField(write_only = True,default = 'https://res.cloudinary.com/djzfsffst/image/upload/v1707144245/user-default_macios.png' )
     class Meta:
         model = CustomUser
-        fields = ['id', 'name', 'email', 'username', 'userImg', 'date_joined']
-        # fields = '__all__'
+        fields = ['email', 'username', 'name', 'contact', 'userImgUrl', 'address', 'UserImg']
+        
+    def create(self, validated_data):
+        
+        userImgUrl = validated_data.pop('UserImg', None)
+        
+        photo = CustomUser.objects.create(**validated_data)
+       
+        if userImgUrl:
+            cloudinary_response = cloudinary.uploader.upload(userImgUrl)
+            photo.userImgUrl = cloudinary_response['secure_url']
+            photo.save()
+
+        return photo
     
     
     
@@ -67,8 +74,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             'username': attrs.get('username'),
             'password': attrs.get('password')
         }
-
-        # Authenticate both CustomUser and Seller
+        
         user = CustomUser.objects.filter(username=credentials['username']).first()
         if not user:
             user = Seller.objects.filter(username=credentials['username']).first()
@@ -81,3 +87,14 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             raise serializers.ValidationError("Unable to log in with provided credentials.")
 
     
+        # user = MultiModelBackend().authenticate(request=self.context.get('request'), username=credentials['username'], password=credentials['password'])
+
+        # # if not user:
+        # #     user = MultiModelBackend.authenticate(request=self.context.get('request'), username=credentials['username'], password=credentials['password'])
+
+        # if user:
+        #     refresh = self.get_token(user)
+        #     data = {'refresh': str(refresh), 'access': str(refresh.access_token)}
+        #     return data
+        # else:
+        #     raise serializers.ValidationError("Unable to log in with provided credentials.")

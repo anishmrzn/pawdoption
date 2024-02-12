@@ -5,10 +5,11 @@ import CartCounter from "./CartCounter";
 function CartItem({
   productId,
   productName,
-  productImg,
+  productImgUrl,
   stock,
   amount,
   price,
+  discount,
 }) {
   const { removeItem, setIncrease, setDecrease } = useCartContext();
   // const [amount, setAmount] = useState(1);
@@ -23,22 +24,20 @@ function CartItem({
     <>
       <div className="grid grid-cols-5 gap-10 justify-items-center mt-5">
         <div className="flex items-center justify-center gap-5">
-          <img
-            src={"http://127.0.0.1:8000" + productImg}
-            alt="product"
-            className="w-20"
-          />
+          <img src={productImgUrl} alt="product" className="w-20" />
           <p>{productName}</p>
         </div>
 
-        <div className="flex items-center justify-center">Rs {price}</div>
+        <div className="flex items-center justify-center">
+          Rs {(price - (price * discount) / 100).toFixed(2)}
+        </div>
         <CartCounter
           amount={amount}
           setDecrease={() => setDecrease(productId)}
           setIncrease={() => setIncrease(productId)}
         />
         <div className="flex items-center justify-center">
-          Rs {price * amount}
+          Rs {(price - (price * discount) / 100).toFixed(2) * amount}
         </div>
         <button
           className="flex items-center justify-center text-red-700 text-xl"

@@ -1,13 +1,20 @@
 from django.urls import path,include
 from . import views
+<<<<<<< HEAD
 from .views import customUserCreate, send_email,CustomTokenObtainPairView, getUserProfile,updateUserProfile,deleteUserProfile,predict_dog_breed, StripeCheckoutView
+=======
+from .views import customUserCreate, send_email,CustomTokenObtainPairView, getUserProfile,updateUserProfile,deleteUserProfile,predict_dog_breed
+>>>>>>> e6ec64f0360c721552e147dc42a00524666624f2
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
 from supplierdata.urls import (createProduct,getSingleProduct,getProduct
 ,getProductSeller,updateProduct,deleteProduct,products)
+<<<<<<< HEAD
 
+=======
+>>>>>>> e6ec64f0360c721552e147dc42a00524666624f2
 
 urlpatterns = [
     path('', views.getRoutes, name = 'routes'),
@@ -35,7 +42,10 @@ urlpatterns = [
     path('get-product-seller/<str:pk>/', getProductSeller, name = 'single-product-seller'),
     path('update-user-profile/', updateUserProfile, name= 'update-user-profile'),
     path('delete-user-profile/', deleteUserProfile, name= 'Delete-user-profile'),
+<<<<<<< HEAD
     path('create-checkout-session/<pk>/', StripeCheckoutView.as_view(), name='checkout_session')
+=======
+>>>>>>> e6ec64f0360c721552e147dc42a00524666624f2
 ]
 
 
