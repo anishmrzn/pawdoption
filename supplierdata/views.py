@@ -107,13 +107,14 @@ def products(request, pk=None):
         return Response(serializer.data, status=status.HTTP_200_OK)
       except Products.DoesNotExist:
         return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
-    else:
-            # Get all products
-      products = Products.objects.all()
-      serializer = ProductsSerializer(products, many=True)
-      return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    # Get all products
+    products = Products.objects.all()
+    serializer = ProductsSerializer(products, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
   else:
     return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 
 

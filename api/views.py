@@ -1,4 +1,7 @@
+from django.conf import settings
 from rest_framework.response import Response
+from django.shortcuts import redirect, render
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers import CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer, UserProfileSerializer
@@ -6,6 +9,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from .email_utils import send
 from .models import CustomUser
+from supplierdata.models import Products
 import cloudinary.uploader
 
 from django.http import JsonResponse
@@ -14,6 +18,8 @@ from django.views.decorators.http import require_POST
 import joblib
 import pandas as pd
 import json
+
+# loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 # Load the trained model
 loaded_model = joblib.load('dog_breed_classifier_model.joblib')
@@ -67,6 +73,7 @@ def customUserCreate(request):
 #             }, status=status.HTTP_200_OK)
 #         else:
 #             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 
 @api_view(['GET'])
@@ -156,5 +163,68 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
+
         
-    
+
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+# class StripeCheckoutView(APIView):
+#     def post(self, request):
+#         try:
+#             checkout_session = stripe.checkout.Session.create(
+#                 line_items=[
+#                     {
+#                         'price': 'price_1Oie9XHRxrEnXWBtq8aqWoSX',
+#                         'quantity': 1,
+#                     },
+#                 ],
+#                 payment_method_types=['card',],
+#                 mode='payment',
+#                 success_url=settings.SITE_URL + '/?success=true&session_id={CHECKOUT_SESSION_ID}',
+#                 cancel_url=settings.SITE_URL + '/?canceled=true',
+#             )
+
+#             return redirect(checkout_session.url)
+#         except:
+#             return Response(
+#                 {'error': 'Something went wrong when creating stripe checkout session'},
+#                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
+#             )
+
+
+class StripeCheckoutView(APIView):
+    def post(self, request, *args, **kwargs):
+        prod_id=Products.productId
+        try:
+            product=Products.objects.get(id=prod_id)
+            checkout_session = stripe.checkout.Session.create(
+                line_items=[
+                    {
+                        # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                        'price_data': {
+                            'currency':'usd',
+                             'unit_amount':int(Products.price) * 100,
+                             'product_data':{
+                                 'name':Products.productName,
+                                 
+
+                             }
+                        },
+                        'quantity': 1,
+                    },
+                ],
+                metadata={
+                    "product_id":Products.productId
+                },
+                mode='payment',
+                success_url=settings.SITE_URL + '?success=true',
+                cancel_url=settings.SITE_URL + '?canceled=true',
+            )
+            return redirect(checkout_session.url)
+        except Exception as e:
+            return Response({'msg':'something went wrong while creating stripe session','error':str(e)}, status=500)
+
+
+        
