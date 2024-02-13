@@ -8,15 +8,13 @@ from .email_utils import send
 from .models import CustomUser
 import cloudinary.uploader
 
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
 import joblib
 import pandas as pd
 import json
 
 # Load the trained model
-loaded_model = joblib.load('dog_breed_classifier_model.joblib')
+loaded_model = joblib.load('filename.joblib')
 
 
 # Create your views here.
