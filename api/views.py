@@ -211,7 +211,7 @@ class StripeCheckoutView(APIView):
             )
             # print(session)
             print(f'Stripe API Response: {session}')
-            return redirect({'url':session.url})
+            return Response({'url':session.url})
         except Exception as e:
             print(f"Error: {str(e)}")
             return Response({'error': str(e)}, status=500)
