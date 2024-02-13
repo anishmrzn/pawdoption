@@ -167,65 +167,58 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         
 
 import stripe
+from django.shortcuts import get_object_or_404
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-# class StripeCheckoutView(APIView):
-#     def post(self, request):
-#         try:
-#             checkout_session = stripe.checkout.Session.create(
-#                 line_items=[
-#                     {
-#                         'price': 'price_1Oie9XHRxrEnXWBtq8aqWoSX',
-#                         'quantity': 1,
-#                     },
-#                 ],
-#                 payment_method_types=['card',],
-#                 mode='payment',
-#                 success_url=settings.SITE_URL + '/?success=true&session_id={CHECKOUT_SESSION_ID}',
-#                 cancel_url=settings.SITE_URL + '/?canceled=true',
-#             )
 
-#             return redirect(checkout_session.url)
-#         except:
-#             return Response(
-#                 {'error': 'Something went wrong when creating stripe checkout session'},
-#                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
-#             )
+
 
 
 class StripeCheckoutView(APIView):
-    def post(self, request, pk,*args, **kwargs):
-        prod_id=request.data.get('productId')
+    def post(self, request,pk, *args, **kwargs):
         try:
-            product=Products.objects.get(productId = pk)
-            print(product)
-            checkout_session = stripe.checkout.Session.create(
-                line_items=[
-                    {
-                        # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                        'price_data': {
-                            'currency':'usd',
-                             'unit_amount':int(float(request.data.get('price')) * 100),
-                             'product_data':{
-                                 'name':request.data.get('productName'),
-                                 
+            # Get selected product IDs from the request data
+            selected_product_ids = request.data.get('productId', [])  # Assuming the frontend sends selected product IDs
 
-                             }
+
+            products = Products.objects.filter(productId=pk)
+
+           
+            line_items = []
+            for product in products:
+                line_items.append({
+                    'price_data': {
+                        'currency': 'usd',
+                        'unit_amount': int(product.price * 100),  # Convert price to cents
+                        'product_data': {
+                            'name': product.productName,
                         },
-                        'quantity': 1,
                     },
-                ],
-                # metadata={
-                #     "product_id":prod_id
-                # },
+
+                    'quantity': 1,
+                })
+                
+            # for item in line_items:
+            #     price_data = item.get('price_data', {})
+            #     unit_amount = price_data.get('unit_amount', 0)
+            #     currency = price_data.get('currency', '')
+            #     print(f"Unit Amount: {unit_amount}, Currency: {currency}")
+            # Create checkout session
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=line_items,
+
                 mode='payment',
                 success_url=settings.SITE_URL + '?success=true',
                 cancel_url=settings.SITE_URL + '?canceled=true',
             )
-            return redirect(checkout_session.url)
+            # print(session)
+            
+            return Response({'message': 'Checkout session created successfully'})
         except Exception as e:
-            return Response({'msg':'something went wrong while creating stripe session','error':str(e)}, status=500)
+            return Response({'error': str(e)}, status=500)
 
+      
 
-        
+     
