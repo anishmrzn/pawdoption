@@ -14,7 +14,6 @@ import UpdateProduct from "./Seller/UpdateProduct";
 import SingleProduct from "./pages/SingleProduct";
 import SinglePet from "./pages/SinglePet";
 import ManageProducts from "./Seller/ManageProducts";
-
 import AddToCart from "./pages/AddToCart";
 import Cart from "./pages/Cart";
 import { useEffect } from "react";
@@ -23,6 +22,7 @@ import SellerSignup from "./pages/SellerSignUp";
 import Account from "./pages/Account";
 
 import AdoptPet from "./pet/AdoptPet";
+import RehomePet from "./pet/RehomePet";
 
 function App() {
   useEffect(() => {
@@ -40,12 +40,11 @@ function App() {
           <Route path="sellersignup" element={<SellerSignup />} />
           <Route path="admin" element={<Admin />} />
           <Route path="account" element={<Account />} />
-
+          <Route path="rehome" element={<RehomePet />} />
           <Route path="adopt" element={<AdoptPet />} />
           <Route path="addtocart" element={<AddToCart />} />
           <Route path="cart" element={<Cart />} />
           <Route path="aboutus" element={<AboutUs />} />
-
           <Route path="seller" element={<Seller />}>
             <Route index element={<AddProduct />} />
             <Route path="add" element={<AddProduct />} />
