@@ -8,7 +8,7 @@ function PetProvider({ children }) {
   const initialState = {
     isLoading: false,
     isError: false,
-    user: [],
+    pets: [],
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -44,7 +44,7 @@ function PetProvider({ children }) {
     getPet(API);
   }, []);
   return (
-    <PetContext.Provider value={{ ...state, getSinglePet }}>
+    <PetContext.Provider value={{ ...state, getPet, getSinglePet }}>
       {children}
     </PetContext.Provider>
   );

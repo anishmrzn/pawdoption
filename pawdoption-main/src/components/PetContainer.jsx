@@ -19,7 +19,7 @@ function PetContainer({ pets }) {
 
             <p className="text-center">{pets.description}</p>
           </div>
-          <div>{pets.ownerId}</div>
+          <div>{pets.username}</div>
         </div>
       </div>
     </Link>

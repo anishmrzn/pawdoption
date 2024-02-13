@@ -23,18 +23,24 @@ function SinglePet() {
       <PageNav />
       <div className="flex flex-col md:flex-row gap-16 lg:gap-16">
         <div className="flex flex-col items-center ml-[8rem] md:ml-[0] w-[20rem] md:w-[40rem] border-2 border-black px-5 py-5 rounded-xl">
-          <img
-            src={singlePet.petImgUrl}
-            alt="product"
-            className="w-[18rem] md:w-[45rem] rounded-xl transform hover:scale-105 transition-all duration-500"
-          ></img>
+          {singlePet && (
+            <img
+              src={singlePet.petImgUrl}
+              alt="product"
+              className="w-[18rem] md:w-[45rem] rounded-xl transform hover:scale-105 transition-all duration-500"
+            ></img>
+          )}
         </div>
         <div className="flex flex-col gap-6 lg:mt-[5rem]">
-          <h1 className="text-2xl lg:text-3xl font-extrabold">
-            {singlePet.name}
-          </h1>
+          {singlePet && (
+            <h1 className="text-2xl lg:text-3xl font-extrabold">
+              {singlePet.name}
+            </h1>
+          )}
 
-          <p className="text-lg w-[30rem]">{singlePet.description}</p>
+          {singlePet && (
+            <p className="text-lg w-[30rem]">{singlePet.description}</p>
+          )}
         </div>
       </div>
 
