@@ -32,7 +32,7 @@ def getPets(request,pk = None):
   if pk:
     #get single pet
     try:
-      pet = Pets.objects.get(id = pk)
+      pet = Pets.objects.get(petId = pk)
       if pet.is_approved:
         serializer = PetSerializer(pet)
         return Response(serializer.data, status= status.HTTP_200_OK)
