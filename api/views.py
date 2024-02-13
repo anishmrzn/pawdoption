@@ -12,9 +12,7 @@ from .models import CustomUser
 from supplierdata.models import Products
 import cloudinary.uploader
 
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
 import joblib
 import pandas as pd
 import json
@@ -22,7 +20,7 @@ import json
 # loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 # Load the trained model
-loaded_model = joblib.load('dog_breed_classifier_model.joblib')
+loaded_model = joblib.load('MLquiz\breedquiz.joblib')
 
 
 # Create your views here.
