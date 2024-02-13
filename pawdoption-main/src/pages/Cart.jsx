@@ -2,9 +2,28 @@ import PageNav from "../components/PageNav";
 import { useCartContext } from "../context/cartContext";
 import CartItem from "../components/CartItem";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Cart() {
   const { cart, clearCart, total_amount } = useCartContext();
+  const handleCheckout = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/create-checkout-session/692e5734-f1c5-429d-98f4-5c1e875aa428/",
+        {
+          method: "POST",
+        }
+      );
+      if (response.ok) {
+        toast.success("Success");
+      } else {
+        toast.error("Unsuccessful");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (cart.length === 0) {
     return (
@@ -48,7 +67,9 @@ function Cart() {
           <p className="text-xl font-extrabold">Total Price :</p>
           <p className="text-xl font-extrabold">Rs {total_amount.toFixed(2)}</p>
         </div>
-        <button className="button flex justify-end">Place Order</button>
+        <button onClick={handleCheckout} className="button flex justify-end">
+          Place Order
+        </button>
       </div>
     </div>
   );

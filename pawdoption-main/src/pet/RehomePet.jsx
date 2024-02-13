@@ -4,7 +4,6 @@ function RehomePet() {
   return (
     <div>
       <PageNav />
-      Rehome
     </div>
   );
 }

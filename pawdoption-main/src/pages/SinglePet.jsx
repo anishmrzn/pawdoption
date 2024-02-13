@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
-
 import { useEffect } from "react";
 import PageNav from "../components/PageNav";
 import Footer from "../components/Footer";
-
 import { usePetContext } from "../context/petContext";
 const API = "http://127.0.0.1:8000/api/get-pets/";
 
