@@ -13,7 +13,9 @@ from .models import Pets
 
 def addPets(request):
   
+
   mutable = request.data.copy()
+
   
   mutable['owner'] = request.user.id
   mutable['email'] = request.user.email

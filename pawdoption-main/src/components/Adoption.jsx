@@ -14,7 +14,9 @@ function Adoption() {
       </div>
       <div className="flex flex-col items-center justify-center gap-5">
         <h1 className="text-[#c9a687] font-bold">Adopt a Pet</h1>
-        <button className="button">I want to adopt a Pet</button>
+        <button className="button">
+          <Link to="/adopt">I want to adopt a Pet</Link>
+        </button>
       </div>
     </div>
   );

@@ -15,7 +15,9 @@ class Pets(models.Model):
   description = models.TextField(blank = True, null = True)
   petImgUrl = models.URLField(blank = True)
   email = models.EmailField(null = True)
+
   username = models.CharField(max_length = 50, null = True)
+
   is_approved = models.BooleanField(default = False)
   is_rejected = models.BooleanField(default = False)
   created = models.DateTimeField(auto_now_add = True)

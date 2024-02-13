@@ -10,22 +10,25 @@ import { CartProvider } from "./context/cartContext.jsx";
 import { UpdateProvider } from "./context/SellerUpdateContext.jsx";
 
 import { UserProvider } from "./context/UserContext.jsx";
+import { PetProvider } from "./context/petContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <UserProvider>
-      <AppProvider>
-        <UpdateProvider>
-          <FilterContextProvider>
-            <CartProvider>
-              {/* <LoginContextProvider> */}
-              <ToastContainer />
-              <App />
-              {/* </LoginContextProvider> */}
-            </CartProvider>
-          </FilterContextProvider>
-        </UpdateProvider>
-      </AppProvider>
+      <PetProvider>
+        <AppProvider>
+          <UpdateProvider>
+            <FilterContextProvider>
+              <CartProvider>
+                {/* <LoginContextProvider> */}
+                <ToastContainer />
+                <App />
+                {/* </LoginContextProvider> */}
+              </CartProvider>
+            </FilterContextProvider>
+          </UpdateProvider>
+        </AppProvider>
+      </PetProvider>
     </UserProvider>
   </React.StrictMode>
 );
