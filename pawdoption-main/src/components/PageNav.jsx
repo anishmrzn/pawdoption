@@ -105,7 +105,7 @@ function PageNav() {
                     </li>
                   )}
                   <li className="text-white hover:underline">
-                    <Link to="/seller">My Orders</Link>
+                    <Link to="/orders">My Orders</Link>
                   </li>
                   <li>
                     <button

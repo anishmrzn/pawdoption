@@ -32,9 +32,11 @@ function Cart() {
 
       // Redirect the user to the Stripe checkout page
       window.location.href = checkoutUrl;
+      if ((response.data.success = true)) {
+      }
     } catch (error) {
       // Handle errors from the backend
-      setError(error.response.data.error || "An error occurred");
+      toast.error("Unsuccessfull");
     }
 
     setIsLoading(false);
