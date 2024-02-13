@@ -195,19 +195,20 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class StripeCheckoutView(APIView):
-    def post(self, request, *args, **kwargs):
-        prod_id=Products.productId
+    def post(self, request, pk,*args, **kwargs):
+        prod_id=request.data.get('productId')
         try:
-            product=Products.objects.get(id=prod_id)
+            product=Products.objects.get(productId = pk)
+            print(product)
             checkout_session = stripe.checkout.Session.create(
                 line_items=[
                     {
                         # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
                         'price_data': {
                             'currency':'usd',
-                             'unit_amount':int(Products.price) * 100,
+                             'unit_amount':int(float(request.data.get('price')) * 100),
                              'product_data':{
-                                 'name':Products.productName,
+                                 'name':request.data.get('productName'),
                                  
 
                              }
@@ -215,9 +216,9 @@ class StripeCheckoutView(APIView):
                         'quantity': 1,
                     },
                 ],
-                metadata={
-                    "product_id":Products.productId
-                },
+                # metadata={
+                #     "product_id":prod_id
+                # },
                 mode='payment',
                 success_url=settings.SITE_URL + '?success=true',
                 cancel_url=settings.SITE_URL + '?canceled=true',
