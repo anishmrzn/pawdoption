@@ -1,4 +1,7 @@
+from django.conf import settings
 from rest_framework.response import Response
+from django.shortcuts import redirect, render
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers import CustomUserSerializer,EmailSerializer,CustomTokenObtainPairSerializer, UserProfileSerializer
@@ -6,12 +9,15 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from .email_utils import send
 from .models import CustomUser
+from supplierdata.models import Products
 import cloudinary.uploader
 
 from django.views.decorators.csrf import csrf_exempt
 import joblib
 import pandas as pd
 import json
+
+# loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 # Load the trained model
 loaded_model = joblib.load('filename.joblib')
@@ -65,6 +71,7 @@ def customUserCreate(request):
 #             }, status=status.HTTP_200_OK)
 #         else:
 #             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 
 @api_view(['GET'])
@@ -154,5 +161,62 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
+
         
-    
+
+import stripe
+from django.shortcuts import get_object_or_404
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+
+
+
+class StripeCheckoutView(APIView):
+    def post(self, request,pk, *args, **kwargs):
+        try:
+            # Get selected product IDs from the request data
+            selected_product_ids = request.data.get('productId', [])  # Assuming the frontend sends selected product IDs
+
+
+            products = Products.objects.filter(productId=pk)
+
+           
+            line_items = []
+            for product in products:
+                line_items.append({
+                    'price_data': {
+                        'currency': 'usd',
+                        'unit_amount': int(product.price * 100),  # Convert price to cents
+                        'product_data': {
+                            'name': product.productName,
+                        },
+                    },
+
+                    'quantity': 1,
+                })
+                
+            # for item in line_items:
+            #     price_data = item.get('price_data', {})
+            #     unit_amount = price_data.get('unit_amount', 0)
+            #     currency = price_data.get('currency', '')
+            #     print(f"Unit Amount: {unit_amount}, Currency: {currency}")
+            # Create checkout session
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=line_items,
+
+                mode='payment',
+                success_url=settings.SITE_URL + '?success=true',
+                cancel_url=settings.SITE_URL + '?canceled=true',
+            )
+            # print(session)
+            
+            return Response({'message': 'Checkout session created successfully'})
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
+
+      
+
+     

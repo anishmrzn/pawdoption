@@ -13,10 +13,15 @@ from .models import Pets
 
 def addPets(request):
   
-  request.data['owner'] = request.user.id
-  request.data['email'] = request.user.email
+
+  mutable = request.data.copy()
+
   
-  serializer = PetSerializer(data=request.data)
+  mutable['owner'] = request.user.id
+  mutable['email'] = request.user.email
+  mutable['username'] = request.user.username
+  
+  serializer = PetSerializer(data=mutable)
   if serializer.is_valid():
     
     serializer.save()
@@ -32,7 +37,7 @@ def getPets(request,pk = None):
   if pk:
     #get single pet
     try:
-      pet = Pets.objects.get(id = pk)
+      pet = Pets.objects.get(petId = pk)
       if pet.is_approved:
         serializer = PetSerializer(pet)
         return Response(serializer.data, status= status.HTTP_200_OK)
