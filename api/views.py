@@ -11,6 +11,8 @@ from .email_utils import send
 from .models import CustomUser
 from supplierdata.models import Products
 import cloudinary.uploader
+import stripe
+from django.shortcuts import get_object_or_404
 
 from django.views.decorators.csrf import csrf_exempt
 import joblib
@@ -53,25 +55,6 @@ def customUserCreate(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# @api_view(['POST'])
-# def customUserLogin(request):
-#     if request.method == 'POST':
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-
-#         user = authenticate(request, username=username, password=password)
-
-#         if user:
-#             refresh = RefreshToken.for_user(user)
-#             return Response({
-#                 'refresh': str(refresh),
-#                 'access': str(refresh.access_token),
-#             }, status=status.HTTP_200_OK)
-#         else:
-#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
 
 
 @api_view(['GET'])
@@ -161,22 +144,11 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
-
-        
-
-import stripe
-from django.shortcuts import get_object_or_404
-
 stripe.api_key = settings.STRIPE_SECRET_KEY
-
-
-
-
-
 class StripeCheckoutView(APIView):
     def post(self, request, *args, **kwargs):
         try:
-            # Get selected product IDs from the request data
+
             selected_product_ids = request.data.get('productId', [])  
 
             products = Products.objects.filter(productId__in = selected_product_ids)
@@ -195,12 +167,6 @@ class StripeCheckoutView(APIView):
                     'quantity': 1,
                 })
                 
-            # for item in line_items:
-            #     price_data = item.get('price_data', {})
-            #     unit_amount = price_data.get('unit_amount', 0)
-            #     currency = price_data.get('currency', '')
-            #     print(f"Unit Amount: {unit_amount}, Currency: {currency}")
-            # Create checkout session
             session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 line_items=line_items,
@@ -211,11 +177,8 @@ class StripeCheckoutView(APIView):
             )
             # print(session)
             print(f'Stripe API Response: {session}')
-            return Response({'url':session.url})
+            return Response({'success_url': settings.SITE_URL ,
+                             'url':session.url})
         except Exception as e:
             print(f"Error: {str(e)}")
             return Response({'error': str(e)}, status=500)
-
-      
-
-     
