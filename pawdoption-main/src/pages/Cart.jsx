@@ -6,17 +6,27 @@ import { toast } from "react-toastify";
 
 function Cart() {
   const { cart, clearCart, total_amount } = useCartContext();
+
   const handleCheckout = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/create-checkout-session/692e5734-f1c5-429d-98f4-5c1e875aa428/",
+        "http://127.0.0.1:8000/api/create-checkout-session/",
         {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            total_amount: total_amount.toFixed(2),
+            productId: cart.map((item) => item.productId),
+          }),
         }
       );
       if (response.ok) {
-        toast.success("Success");
+        const responseData = await response.json();
+        // Redirect the user to the Stripe checkout page using the returned session ID
+        window.location.href = responseData.url;
       } else {
         toast.error("Unsuccessful");
       }
