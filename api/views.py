@@ -20,7 +20,7 @@ import json
 # loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 # Load the trained model
-loaded_model = joblib.load('filename.joblib')
+loaded_model = joblib.load('MLquiz\breedquiz.joblib')
 
 
 # Create your views here.
