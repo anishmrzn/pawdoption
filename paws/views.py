@@ -13,7 +13,8 @@ from .models import Pets
 
 def addPets(request):
   
-  request.data['owner'] = request.user.id
+  request.data['ownerId'] = request.user.id
+  request.data['owner'] = request.user.name
   request.data['email'] = request.user.email
   
   serializer = PetSerializer(data=request.data)

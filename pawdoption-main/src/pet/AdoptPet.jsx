@@ -1,4 +1,5 @@
 import PageNav from "../components/PageNav";
+import PetContainer from "../components/PetContainer";
 import { usePetContext } from "../context/petContext";
 function AdoptPet() {
   const { pets } = usePetContext();
@@ -6,7 +7,11 @@ function AdoptPet() {
   return (
     <div>
       <PageNav />
-      AdoptPet
+      <div>
+        {pets.map((pets) => {
+          return <PetContainer pets={pets} />;
+        })}
+      </div>
     </div>
   );
 }

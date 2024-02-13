@@ -12,6 +12,7 @@ import Seller from "./Seller/Seller";
 import AddProduct from "./Seller/AddProduct";
 import UpdateProduct from "./Seller/UpdateProduct";
 import SingleProduct from "./pages/SingleProduct";
+import SinglePet from "./pages/SinglePet";
 import ManageProducts from "./Seller/ManageProducts";
 
 import AddToCart from "./pages/AddToCart";
@@ -52,6 +53,7 @@ function App() {
             <Route path="update/:id" element={<UpdateProduct />} />
           </Route>
           <Route path="singleproduct/:id" element={<SingleProduct />} />
+          <Route path="singlepet/:id" element={<SinglePet />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

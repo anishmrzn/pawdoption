@@ -15,10 +15,11 @@ class Pets(models.Model):
   description = models.TextField(blank = True, null = True)
   petImgUrl = models.URLField(blank = True)
   email = models.EmailField(null = True)
+  owner = models.TextField(null = True)
   is_approved = models.BooleanField(default = False)
   is_rejected = models.BooleanField(default = False)
   created = models.DateTimeField(auto_now_add = True)
-  owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank= True,null = True)
+  ownerId = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank= True,null = True)
   
   
   def __str__(self):
