@@ -20,8 +20,8 @@ import { useEffect } from "react";
 import AboutUs from "./pages/AboutUs";
 import SellerSignup from "./pages/SellerSignUp";
 import Account from "./pages/Account";
-import RehomePet from "../pet/RehomePet";
-import PetQuiz from "../pet/petQuiz";
+
+import AdoptPet from "./pet/AdoptPet";
 
 function App() {
   useEffect(() => {
@@ -39,10 +39,12 @@ function App() {
           <Route path="sellersignup" element={<SellerSignup />} />
           <Route path="admin" element={<Admin />} />
           <Route path="account" element={<Account />} />
+
+          <Route path="adopt" element={<AdoptPet />} />
           <Route path="addtocart" element={<AddToCart />} />
           <Route path="cart" element={<Cart />} />
           <Route path="aboutus" element={<AboutUs />} />
-          <Route path="rehome" element={<RehomePet />} />
+
           <Route path="seller" element={<Seller />}>
             <Route index element={<AddProduct />} />
             <Route path="add" element={<AddProduct />} />
