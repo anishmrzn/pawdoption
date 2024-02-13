@@ -176,21 +176,19 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class StripeCheckoutView(APIView):
-    def post(self, request,pk, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         try:
             # Get selected product IDs from the request data
-            selected_product_ids = request.data.get('productId', [])  # Assuming the frontend sends selected product IDs
+            selected_product_ids = request.data.get('productId', [])  
 
-
-            products = Products.objects.filter(productId=pk)
-
-           
+            products = Products.objects.filter(productId__in = selected_product_ids)
+ 
             line_items = []
             for product in products:
                 line_items.append({
                     'price_data': {
-                        'currency': 'usd',
-                        'unit_amount': int(product.price * 100),  # Convert price to cents
+                        'currency': 'NPR.',
+                        'unit_amount': int(product.price * 100),  
                         'product_data': {
                             'name': product.productName,
                         },
@@ -215,7 +213,7 @@ class StripeCheckoutView(APIView):
             )
             # print(session)
             
-            return Response({'message': 'Checkout session created successfully'})
+            return redirect(session.url)
         except Exception as e:
             return Response({'error': str(e)}, status=500)
 
