@@ -195,42 +195,6 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 #             )
 
 
-# class StripeCheckoutView(APIView):
-#     def post(self, request,pk, *args, **kwargs):
-#         # prod_id = request.data.get('productId')  # Assuming you're sending productId in the request data
-#         try:
-#             # product=Products.objects.get(productId=prod_id)
-#             product = get_object_or_404(Products, productId=pk)
-#             print(product.productName)
-            
-#             checkout_session = stripe.checkout.Session.create(
-#                 line_items=[
-#                     {
-#                         # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-#                         'price_data': {
-#                             'currency':'usd',
-#                              'unit_amount':int(product.price)*100,
-#                              'product_data':{
-#                                  'name':product.productName,
-                                 
-
-#                              }
-                             
-#                         } ,
-#                         'quantity': 1,
-#                     },
-#                 ],
-        
-#                 mode='payment',
-#                 success_url=settings.SITE_URL + '?success=true',
-#                 cancel_url=settings.SITE_URL + '?canceled=true',
-#             )
-            
-#             return redirect(checkout_session.url)
-#         except Products.DoesNotExist:
-#             return Response({'error': 'Product not found'},status=404)
-#         except Exception as e:
-#             return Response({'msg':'something went wrong while creating stripe session','error':str(e)}, status=500)
 
 
 
@@ -254,6 +218,7 @@ class StripeCheckoutView(APIView):
                             'name': product.productName,
                         },
                     },
+
                     'quantity': 1,
                 })
             # for item in line_items:
@@ -265,6 +230,7 @@ class StripeCheckoutView(APIView):
             session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 line_items=line_items,
+
                 mode='payment',
                 success_url=settings.SITE_URL + '?success=true',
                 cancel_url=settings.SITE_URL + '?canceled=true',
