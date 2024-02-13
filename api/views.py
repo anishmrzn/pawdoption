@@ -20,7 +20,7 @@ import json
 # loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 # Load the trained model
-loaded_model = joblib.load('MLquiz\breedquiz.joblib')
+loaded_model = joblib.load(r'MLquiz\breedquiz.joblib')
 
 
 # Create your views here.
@@ -185,7 +185,7 @@ class StripeCheckoutView(APIView):
             for product in products:
                 line_items.append({
                     'price_data': {
-                        'currency': 'NPR.',
+                        'currency': 'usd',
                         'unit_amount': int(product.price * 100),  
                         'product_data': {
                             'name': product.productName,
@@ -210,9 +210,10 @@ class StripeCheckoutView(APIView):
                 cancel_url=settings.SITE_URL + '?canceled=true',
             )
             # print(session)
-            
-            return redirect(session.url)
+            print(f'Stripe API Response: {session}')
+            return redirect({'url':session.url})
         except Exception as e:
+            print(f"Error: {str(e)}")
             return Response({'error': str(e)}, status=500)
 
       
