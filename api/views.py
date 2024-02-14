@@ -1,6 +1,5 @@
 from django.conf import settings
 from rest_framework.response import Response
-from django.shortcuts import redirect, render
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -11,7 +10,7 @@ from .email_utils import send
 from .models import CustomUser
 from supplierdata.models import Products
 import cloudinary.uploader
-
+import stripe
 from django.views.decorators.csrf import csrf_exempt
 import joblib
 import pandas as pd
@@ -20,7 +19,7 @@ import json
 # loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 # Load the trained model
-loaded_model = joblib.load('MLquiz\breedquiz.joblib')
+loaded_model = joblib.load(r'MLquiz\breedquiz.joblib')
 
 
 # Create your views here.
@@ -53,25 +52,6 @@ def customUserCreate(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# @api_view(['POST'])
-# def customUserLogin(request):
-#     if request.method == 'POST':
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-
-#         user = authenticate(request, username=username, password=password)
-
-#         if user:
-#             refresh = RefreshToken.for_user(user)
-#             return Response({
-#                 'refresh': str(refresh),
-#                 'access': str(refresh.access_token),
-#             }, status=status.HTTP_200_OK)
-#         else:
-#             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
 
 
 @api_view(['GET'])
@@ -161,60 +141,47 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
-
-        
-
-import stripe
-from django.shortcuts import get_object_or_404
-
 stripe.api_key = settings.STRIPE_SECRET_KEY
-
-
-
-
-
 class StripeCheckoutView(APIView):
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         try:
-            # Get selected product IDs from the request data
-            selected_product_ids = request.data.get('productId', [])  
 
-            products = Products.objects.filter(productId__in = selected_product_ids)
- 
+            selected_products = request.data.get('products', [])  
+            
             line_items = []
-            for product in products:
+            total_amount = 0
+            
+            for item in selected_products:
+                
+                product_id = item.get('productId')
+                quantity = item.get('quantity')
+                
+                product = Products.objects.get(productId = product_id)
+                
+                line_item_price = int(product.price * 100)
+                total_amount += line_item_price * quantity
+                
                 line_items.append({
                     'price_data': {
-                        'currency': 'NPR.',
-                        'unit_amount': int(product.price * 100),  
+                        'currency': 'usd',
+                        'unit_amount': line_item_price,  
                         'product_data': {
                             'name': product.productName,
                         },
                     },
 
-                    'quantity': 1,
+                    'quantity': quantity,
                 })
                 
-            # for item in line_items:
-            #     price_data = item.get('price_data', {})
-            #     unit_amount = price_data.get('unit_amount', 0)
-            #     currency = price_data.get('currency', '')
-            #     print(f"Unit Amount: {unit_amount}, Currency: {currency}")
-            # Create checkout session
             session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 line_items=line_items,
 
                 mode='payment',
-                success_url=settings.SITE_URL + '?success=true',
+                success_url=settings.SITE_URL + 'orders',
                 cancel_url=settings.SITE_URL + '?canceled=true',
             )
-            # print(session)
-            
-            return redirect(session.url)
+            return Response({'success_url': settings.SITE_URL ,
+                             'url':session.url})
         except Exception as e:
             return Response({'error': str(e)}, status=500)
-
-      
-
-     
