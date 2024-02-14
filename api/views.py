@@ -213,9 +213,10 @@ class StripeCheckoutView(APIView):
                 success_url=settings.SITE_URL + '?success=true',
                 cancel_url=settings.SITE_URL + '?canceled=true',
             )
-            # print(session)
+            print(session)
             
-            return Response({'message': 'Checkout session created successfully'})
+            # return Response({'message': 'Checkout session created successfully'})
+            return Response({'sessionId': session.id})
         except Exception as e:
             return Response({'error': str(e)}, status=500)
 
