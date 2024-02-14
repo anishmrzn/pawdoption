@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Products
+from .models import Products, Orders
 import cloudinary.uploader
 # import cloudinary.api
 from cloudinary.models import CloudinaryField
@@ -26,4 +26,11 @@ class ProductsSerializer(serializers.ModelSerializer):
             product.save()
 
         return product
+    
+    
+    
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Orders
+        fields = '__all__'
         

@@ -1,248 +1,129 @@
-// import { toast } from "react-toastify";
-// import PageNav from "../src/components/PageNav";
-// import { useEffect, useState } from "react";
-// import { useUpdateContext } from "../src/context/SellerUpdateContext";
-// import { useParams } from "react-router-dom";
-// const API = "http://127.0.0.1:8000/api/get-pets/";
+import { useState } from "react";
 
-// function RehomePet() {
-//   const [petImg, setPetImg] = useState("");
-//   const [name, setName] = useState("");
-//   const [age, setAge] = useState("");
-//   const [breed, setBreed] = useState();
-//   const [gender, setGender] = useState();
-//   const [description, setDescription] = useState("");
-//   const [category, setCategory] = useState("");
-//   const [email, setEmail] = useState("");
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import PageNav from "../components/PageNav";
 
-//   const { singleProduct, getSingleProduct } = useUpdateContext();
-//   const { id } = useParams();
-//   useEffect(() => {
-//     getSingleProduct(`${API}`);
-//   }, []);
+function RehomePet() {
+  const navigate = useNavigate();
+  const [petImg, setPetImg] = useState("");
+  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [age, setAge] = useState(1);
+  const [breed, setBreed] = useState("");
+  const [gender, setGender] = useState("");
 
-//   useEffect(() => {
-//     if (singleProduct) {
-//       setProductImg(singleProduct.productImg || "");
-//       setDescription(singleProduct.Description || "");
-//       setProductName(singleProduct.productName || "");
-//       setPrice(singleProduct.price || "");
-//       setDiscount(singleProduct.discount || "");
-//       setStock(singleProduct.stock || "");
-//       setCategory(singleProduct.category || "");
-//       setShortDescription(singleProduct.shortDescription || "");
-//       setFeatured(singleProduct.featured || "");
-//       setAnimalCategory(singleProduct.animalCategory || "");
-//     }
-//   }, [singleProduct]);
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const formData = new FormData();
-//       formData.append("productImg", productImg);
-//       formData.append("Description", Description);
-//       formData.append("productName", productName);
-//       formData.append("price", price);
-//       formData.append("discount", discount);
-//       formData.append("stock", stock);
-//       formData.append("category", category);
-//       formData.append("shortDescription", shortDescription);
-//       formData.append("featured", featured);
-//       formData.append("supplierId", supplierId);
-//       formData.append("animalCategory", animalCategory);
-//       //   const { data } = await axios.put(
-//       //     `http://127.0.0.1:8000/update/${id}/`,
-//       //     formData,
-//       //     { headers: { "Content-Type": "multipart/form-data" } }
-//       //   );
-//       // } catch (err) {
-//       //   console.log(err);
-//       // }
-//       const token = localStorage.getItem("sellerToken");
-//       const response = await fetch(`http://127.0.0.1:8000/api/update/${id}/`, {
-//         method: "PUT",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//         body: formData,
-//       });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-//       if (response.ok) {
-//         toast.success("Product Updated");
-//         window.location.replace("http://localhost:5173/store");
-//       }
-//     } catch (error) {
-//       toast.error("Error");
-//     }
-//   };
-//   const handleDelete = async () => {
-//     try {
-//       // let answer = window.prompt(
-//       //   "Are you sure you want to delete this product?"
-//       // );
-//       // if (!answer) return;
-//       //   const { data } = await axios.delete(
-//       //     `http://127.0.0.1:8000/delete/${id}/`
-//       //   );
-//       //   toast.success("product deleted successfully");
-//       //   navigate("/seller");
-//       // } catch (error) {
-//       //   console.log(error);
-//       //   toast.error("error deleting");
-//       // }
-//       let answer = window.prompt(
-//         "Are you sure you want to delete this product?"
-//       );
-//       if (!answer) return;
-//       const response = await fetch(`http://127.0.0.1:8000/api/delete/${id}/`, {
-//         method: "DELETE",
-//       });
+    try {
+      const formData = new FormData();
+      formData.append("petImg", petImg);
+      formData.append("description", description);
+      formData.append("name", name);
+      formData.append("age", age);
+      formData.append("breed", breed);
+      formData.append("gender", gender);
 
-//       if (response.ok) {
-//         window.location.replace("http://localhost:5173/store");
-//         toast.success("Product deleted");
-//         // navigate("/store");
-//       }
-//     } catch (error) {
-//       toast.error("Error");
-//     }
-//   };
-//   return (
-//     <>
-//       <PageNav />
-//       <div className="mt-10  flex flex-col gap-10 items-center border-2 px-14 py-10 rounded-2xl shadow-xl ">
-//         <h1 className=" font-extrabold text-2xl">Update your product </h1>
+      const token = localStorage.getItem("userToken");
+      const response = await fetch("http://127.0.0.1:8000/api/add-pets/", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
 
-//         <form className="grid grid-cols-3 gap-5 font-semibold">
-//           <img
-//             src={`${singleProduct.productImgUrl}`}
-//             alt="singleProduct"
-//             className="col-span-1 border-2 rounded-2xl border-gray-500"
-//           />
-//           <div className="col-span-2 flex gap-3 items-center">
-//             <label htmlFor="productImg">Product Image :</label>
-//             <input
-//               type="file"
-//               id="productImg"
-//               accept="image/*"
-//               onChange={(e) => {
-//                 setProductImg(e.target.files[0]);
-//               }}
-//               className="col-span-1 border-2 h-10 rounded-xl border-gray-400"
-//             />
-//           </div>
-//           <label htmlFor="productName">Product Name :</label>
-//           <input
-//             type="text"
-//             id="productName"
-//             onChange={(e) => {
-//               setProductName(e.target.value);
-//             }}
-//             value={productName}
-//             className="col-span-2 border-2  rounded-xl border-gray-400 py-1 px-5"
-//           />
-//           <label htmlFor="productShortDes">Product shortDescription :</label>
-//           <input
-//             type="text"
-//             id="productShortDes"
-//             onChange={(e) => {
-//               setShortDescription(e.target.value);
-//             }}
-//             value={shortDescription}
-//             maxLength="40"
-//             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
-//           />
-//           <label htmlFor="productDes">Product description :</label>
-//           <input
-//             type="text"
-//             id="productDes"
-//             value={Description}
-//             onChange={(e) => {
-//               setDescription(e.target.value);
-//             }}
-//             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
-//           />
-//           <label htmlFor="productPrice">Product price :</label>
-//           <input
-//             type="text"
-//             id="productPrice"
-//             value={price}
-//             onChange={(e) => {
-//               setPrice(e.target.value);
-//             }}
-//             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
-//           />
-//           <label htmlFor="productDis">Product discount :</label>
-//           <input
-//             type="text"
-//             id="productDis"
-//             value={discount}
-//             onChange={(e) => {
-//               setDiscount(e.target.value);
-//             }}
-//             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
-//           />
-//           <label htmlFor="productCat">Product Category :</label>
-//           <select
-//             type="file"
-//             id="productCat"
-//             value={category}
-//             onChange={(e) => {
-//               setCategory(e.target.value);
-//             }}
-//             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
-//           >
-//             <option value="Accessories">Accessories</option>
-//             <option value="Pet Food">Pet Food</option>
-//             <option value="Grooming">Grooming</option>
-//           </select>
-//           <label htmlFor="animal">Animal Category :</label>
-//           <select
-//             id="animal"
-//             value={animalCategory}
-//             onChange={(e) => {
-//               setAnimalCategory(e.target.value);
-//             }}
-//             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
-//           >
-//             <option value="Dog">Dog</option>
-//             <option value="Cat">Cat</option>
-//           </select>
-//           <label htmlFor="stock">Stock:</label>
-//           <input
-//             type="number"
-//             id="stock"
-//             value={stock}
-//             onChange={(e) => {
-//               setStock(e.target.value);
-//             }}
-//             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
-//           />
-//           <label htmlFor="featured">Featured</label>
-//           <input
-//             type="checkbox"
-//             id="featured"
-//             checked={featured}
-//             onChange={(e) => {
-//               setFeatured(e.target.checked);
-//             }}
-//             className="col-span-2 rounded-xl border-gray-400 py-1 px-5"
-//           />
-//           <div className="col-span-3 flex justify-between ">
-//             <button onClick={handleSubmit} className="button">
-//               Update Product
-//             </button>
-//             <button
-//               onClick={handleDelete}
-//               className=" px-5 py-1 rounded-xl text-white bg-red-500"
-//             >
-//               Delete Product
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     </>
-//   );
-// }
+      if (response.ok) {
+        navigate("/adopt");
+        window.location.reload();
+        toast.success("Wiat till the form gets approved");
+      } else {
+        toast.error("Unsuccessful");
+      }
+    } catch (error) {
+      toast.error("Error");
+    }
+  };
 
-// export default RehomePet;
+  return (
+    <>
+      <PageNav />
+      <div className="flex flex-col mt-16 gap-10 border-2 px-16 py-10 rounded-2xl shadow-xl ">
+        <h1 className="text-center font-extrabold text-2xl">
+          Fill the following Form
+        </h1>
+        <form className="grid grid-cols-3 gap-5 font-semibold">
+          <label htmlFor="petImg">Pet Image :</label>
+          <input
+            type="file"
+            id="petImg"
+            accept="image/*"
+            onChange={(e) => {
+              setPetImg(e.target.files[0]);
+            }}
+            className="col-span-2 border-2  rounded-xl border-gray-400"
+          />
+          <label htmlFor="petName">Pet Name :</label>
+          <input
+            type="text"
+            id="name"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            value={name}
+            className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
+          />
+          <label htmlFor="productShortDes">Pet Description :</label>
+          <input
+            type="text"
+            id="productShortDes"
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+            value={description}
+            maxLength="40"
+            className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
+          />
+          <label htmlFor="age">Age :</label>
+          <input
+            type="number"
+            id="age"
+            value={age}
+            onChange={(e) => {
+              setAge(e.target.value);
+            }}
+            className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
+          />
+          <label htmlFor="gender">Gender :</label>
+          <select
+            type="text"
+            id="gender"
+            value={gender}
+            onChange={(e) => {
+              setGender(e.target.value);
+            }}
+            className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
+          >
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <label htmlFor="breed">Breed :</label>
+          <input
+            type="text"
+            id="breed"
+            value={breed}
+            onChange={(e) => {
+              setBreed(e.target.value);
+            }}
+            className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
+          />
+        </form>
+        <button onClick={handleSubmit} className="button ">
+          Submit
+        </button>
+      </div>
+    </>
+  );
+}
+export default RehomePet;

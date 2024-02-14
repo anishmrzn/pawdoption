@@ -5,7 +5,6 @@ function PetContainer({ pets }) {
   return (
     <Link to={`/singlepet/${pets.petId}`}>
       <div className="mt-10">
-        <h1 className="text-center">Select the pet you want to adopt</h1>
         <div className="border-2 rounded-xl overflow-hidden flex flex-col gap-5 cursor-pointer hover:shadow-2xl w-[15rem] h-[25rem]">
           <div className="justify-center align-center flex w-full">
             <img
