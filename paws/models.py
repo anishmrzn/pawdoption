@@ -15,11 +15,13 @@ class Pets(models.Model):
   description = models.TextField(blank = True, null = True)
   petImgUrl = models.URLField(blank = True)
   email = models.EmailField(null = True)
-
+  vaccinated = models.CharField(max_length = 10, blank = True)
+  medicalDescription = models.TextField(blank = True, null = True)
   username = models.CharField(max_length = 50, null = True)
 
   is_approved = models.BooleanField(default = False)
   is_rejected = models.BooleanField(default = False)
+  email_sent = models.BooleanField(default = False)
   created = models.DateTimeField(auto_now_add = True)
   owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank= True,null = True)
   

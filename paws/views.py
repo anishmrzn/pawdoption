@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view,permission_classes
@@ -52,6 +54,41 @@ def getPets(request,pk = None):
     pets = Pets.objects.filter(is_approved = True)
     serializer = PetSerializer(pets, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+  
+  
+  
+@api_view(['POST'])
+def send_approval_rejection_emails(request):
+
+    pets = Pets.objects.filter(is_approved=True, is_rejected=True, email_sent=False)
+
+    for pet in pets:
+
+        if pet.is_approved:
+            send_mail(
+                subject='Congratulations!',
+                message='Your pet form has been approved. Thank you!',
+                from_email=settings.EMAIL_HOST_USER, 
+                recipient_list=[pet.email], 
+                fail_silently=False,
+            )
+        
+
+        if pet.is_rejected:
+            send_mail(
+                subject='Sorry!',
+                message='Your pet form has been rejected. Please contact us for more information.',
+                from_email=settings.EMAIL_HOST_USER,  
+                recipient_list=[pet.email], 
+                fail_silently=False,
+            )
+
+
+        pet.email_sent = True
+        pet.save()
+
+    return Response({'message': 'Emails sent successfully'}, status=status.HTTP_200_OK)
+
     
   
   
