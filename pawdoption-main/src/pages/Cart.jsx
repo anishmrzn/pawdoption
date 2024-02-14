@@ -10,8 +10,9 @@ function Cart() {
   const { cart, clearCart, total_amount } = useCartContext();
   const checkoutItems = cart.map((item) => ({
     productId: item.productId,
-    quantity: item.amount, // Assuming 'amount' represents quantity in each cart item
+    quantity: item.amount,
   }));
+  console.log(checkoutItems);
 
   const handleCheckout = async () => {
     try {
@@ -19,8 +20,7 @@ function Cart() {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/create-checkout-session/",
         {
-          items: checkoutItems,
-          totalAmount: total_amount.toFixed(2),
+          products: checkoutItems,
         }
       );
 

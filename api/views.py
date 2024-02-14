@@ -147,7 +147,7 @@ class StripeCheckoutView(APIView):
         try:
 
             selected_products = request.data.get('products', [])  
-
+            
             line_items = []
             total_amount = 0
             
