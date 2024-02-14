@@ -1,10 +1,7 @@
 from django.db import models
 import uuid
-# import cloudinary
-# import cloudinary.uploader
-# import cloudinary.api
-# from cloudinary.models import CloudinaryField
 from users.models import Seller
+from api.models import CustomUser
 
 # Create your models here.
 
@@ -28,4 +25,24 @@ class Products(models.Model):
  
   def __str__(self):
     return self.productName
+  
+  
+class Orders(models.Model):
+    
+  DELIVERY = [
+      ('delivered', 'Delivered'),
+      ('pending', 'Pending'),
+  ]
+     
+  orderId = models.UUIDField(default = uuid.uuid4, unique = True, primary_key = True, editable = False)
+  products = models.ManyToManyField(Products)
+  total_amount = models.DecimalField(max_digits = 10, decimal_places = 2)
+  quantity = models.PositiveIntegerField()
+  delivery_status = models.CharField(max_length = 10, choices = DELIVERY, default = 'pending')
+  created = models.DateTimeField(auto_now_add = True)
+  user = models.ForeignKey(CustomUser, on_delete = models.CASCADE)
+    
+  def __str__(self):
+    return f'Created: {self.created.strftime("%Y-%m-%d %H:%M:%S")} - Status: {self.delivery_status}'
+      
    

@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from supplierdata.urls import (createProduct,getSingleProduct,getProduct
-,getProductSeller,updateProduct,deleteProduct,products)
+,getProductSeller,updateProduct,deleteProduct,products,orders)
 
 
 urlpatterns = [
@@ -37,7 +37,8 @@ urlpatterns = [
     path('get-product-seller/<str:pk>/', getProductSeller, name = 'single-product-seller'),
     path('update-user-profile/', updateUserProfile, name= 'update-user-profile'),
     path('delete-user-profile/', deleteUserProfile, name= 'Delete-user-profile'),
-    path('create-checkout-session/', StripeCheckoutView.as_view(), name='checkout_session')
+    path('create-checkout-session/', StripeCheckoutView.as_view(), name='checkout_session'),
+    path('get-orders/', orders, name= 'get-orders')
 
 ]
 

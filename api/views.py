@@ -8,7 +8,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from .email_utils import send
 from .models import CustomUser
-from supplierdata.models import Products
+from supplierdata.models import Products ,Orders
+from decimal import Decimal
 import cloudinary.uploader
 import stripe
 from django.views.decorators.csrf import csrf_exempt
@@ -142,6 +143,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+@permission_classes([IsAuthenticated])
 class StripeCheckoutView(APIView):
     def post(self, request):
         try:
@@ -155,12 +158,11 @@ class StripeCheckoutView(APIView):
                 
                 product_id = item.get('productId')
                 quantity = item.get('quantity')
-                
                 product = Products.objects.get(productId = product_id)
-                
                 line_item_price = int(product.price * 100)
                 total_amount += line_item_price * quantity
                 
+
                 line_items.append({
                     'price_data': {
                         'currency': 'usd',
@@ -181,7 +183,27 @@ class StripeCheckoutView(APIView):
                 success_url=settings.SITE_URL + 'orders',
                 cancel_url=settings.SITE_URL + '?canceled=true',
             )
+            
+            total_amount_dollars = Decimal(session.amount_total) / 100
+            total_amount_dollars = total_amount_dollars.quantize(Decimal('0.01'))
+            
+            user_id = request.user
+            order = Orders.objects.create(
+                user = user_id,
+                total_amount = total_amount_dollars,
+                quantity = sum(item['quantity'] for item in selected_products )
+            )
+            
+            for item in selected_products:
+                product_id = item.get('productId')
+                quantity = item.get('quantity')
+                product = Products.objects.get(productId = product_id)
+                order.products.add(product)
+            
+            
             return Response({'success_url': settings.SITE_URL ,
-                             'url':session.url})
+                             'url':session.url,
+                             })
+            
         except Exception as e:
             return Response({'error': str(e)}, status=500)
