@@ -1,6 +1,5 @@
 from django.conf import settings
 from rest_framework.response import Response
-from django.shortcuts import redirect, render
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -12,8 +11,6 @@ from .models import CustomUser
 from supplierdata.models import Products
 import cloudinary.uploader
 import stripe
-from django.shortcuts import get_object_or_404
-
 from django.views.decorators.csrf import csrf_exempt
 import joblib
 import pandas as pd
@@ -146,25 +143,34 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 class StripeCheckoutView(APIView):
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         try:
 
-            selected_product_ids = request.data.get('productId', [])  
+            selected_products = request.data.get('products', [])  
 
-            products = Products.objects.filter(productId__in = selected_product_ids)
- 
             line_items = []
-            for product in products:
+            total_amount = 0
+            
+            for item in selected_products:
+                
+                product_id = item.get('productId')
+                quantity = item.get('quantity')
+                
+                product = Products.objects.get(productId = product_id)
+                
+                line_item_price = int(product.price * 100)
+                total_amount += line_item_price * quantity
+                
                 line_items.append({
                     'price_data': {
                         'currency': 'usd',
-                        'unit_amount': int(product.price * 100),  
+                        'unit_amount': line_item_price,  
                         'product_data': {
                             'name': product.productName,
                         },
                     },
 
-                    'quantity': 1,
+                    'quantity': quantity,
                 })
                 
             session = stripe.checkout.Session.create(
@@ -172,13 +178,10 @@ class StripeCheckoutView(APIView):
                 line_items=line_items,
 
                 mode='payment',
-                success_url=settings.SITE_URL + '?success=true',
+                success_url=settings.SITE_URL + 'orders',
                 cancel_url=settings.SITE_URL + '?canceled=true',
             )
-            # print(session)
-            print(f'Stripe API Response: {session}')
             return Response({'success_url': settings.SITE_URL ,
                              'url':session.url})
         except Exception as e:
-            print(f"Error: {str(e)}")
             return Response({'error': str(e)}, status=500)
