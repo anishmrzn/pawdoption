@@ -116,18 +116,42 @@ def products(request, pk=None):
     return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def orders(request):
+#   try:
+#     user_id = request.user.id
+#     orders = Orders.objects.filter(user = user_id)
+    
+#     serializer = OrderSerializer(orders, many = True)
+    
+#     return Response(serializer.data, status= status.HTTP_200_OK)
+  
+#   except:
+#     return Response(serializer.errors, status= status.HTTP_404_NOT_FOUND)
+
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def orders(request):
-  try:
-    user_id = request.user.id
-    orders = Orders.objects.filter(user = user_id)
-    
-    serializer = OrderSerializer(orders, many = True)
-    
-    return Response(serializer.data, status= status.HTTP_200_OK)
-  
-  except:
-    return Response(serializer.errors, status= status.HTTP_404_NOT_FOUND)
-
- 
+    try:
+        user_id = request.user.id
+        orders = Orders.objects.filter(user=user_id)
+        
+        order_data = []
+        for order in orders:
+            serializer = OrderSerializer(order)
+            order_details = serializer.data
+            
+            # Include product details within each order
+            products = [{'productName': product.productName, 'price': product.price} for product in order.products.all()]
+            order_details['products'] = products
+            
+            order_data.append(order_details)
+        
+        return Response(order_data, status=status.HTTP_200_OK)
+    except Orders.DoesNotExist:
+        return Response({'error': 'Orders not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
