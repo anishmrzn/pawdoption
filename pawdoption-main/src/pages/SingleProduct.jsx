@@ -69,7 +69,8 @@ function SingleProduct() {
             <span>Estimated Delivery: 3-5 days</span>
           </div>
           <div className="flex items-center gap-3 text-gray-700 justify-center">
-            <span>Seller: {singleProduct.sellerId}</span>
+            <span>Seller: {singleProduct.seller}</span>
+            <span>Seller: {singleProduct.contact}</span>
           </div>
         </div>
       </div>
