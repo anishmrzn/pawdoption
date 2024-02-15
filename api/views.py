@@ -160,7 +160,7 @@ class StripeCheckoutView(APIView):
                 product_id = item.get('productId')
                 quantity = item.get('quantity')
                 product = Products.objects.get(productId = product_id)
-                line_item_price = int(product.price * 100)
+                line_item_price = int(product.discounted * 100)
                 total_amount += line_item_price * quantity
                 total_quantity += quantity
 
@@ -199,7 +199,7 @@ class StripeCheckoutView(APIView):
                 product_id = item.get('productId')
                 quantity = item.get('quantity')
                 product = Products.objects.get(productId = product_id)
-                order.products.add(product, through_defaults={'quantity': quantity})
+                order.products.add(product)
             
             
             return Response({'success_url': settings.SITE_URL ,

@@ -13,6 +13,8 @@ import cloudinary.uploader
 def createProduct(request):
 
     request.data['sellerId'] = request.user.sellerId
+    request.data['seller'] = request.user.username
+    request.data['contact'] = request.user.contact
     
     serializer = ProductsSerializer(data=request.data)
     if serializer.is_valid():
@@ -145,7 +147,7 @@ def orders(request):
             order_details = serializer.data
             
             # Include product details within each order
-            products = [{'productName': product.productName, 'price': product.price} for product in order.products.all()]
+            products = [{'productName': product.productName, 'discounted': product.discounted} for product in order.products.all()]
             order_details['products'] = products
             
             order_data.append(order_details)
