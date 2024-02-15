@@ -51,7 +51,7 @@ function Login() {
           localStorage.setItem(tokenName, data.access);
           // setToken(data.access);
           navigate("/");
-          toast.success("Successfully Loged in");
+          toast.success("Successfully Logged in");
         } else {
           toast.error("Username OR password did not work");
         }
