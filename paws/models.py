@@ -9,6 +9,7 @@ class Pets(models.Model):
   petId = models.UUIDField(
     default = uuid.uuid4, unique = True, primary_key = True, editable = False)
   name = models.TextField(max_length = 200)
+  animal = models.CharField(max_length = 10, default = True, null = True)
   age = models.TextField(max_length = 50, blank= True)
   breed = models.CharField(max_length = 50, blank = True, null = True)
   gender = models.CharField(max_length = 10, blank = True)
