@@ -21,14 +21,14 @@ function ProductContainer({ products }) {
           <div className="flex justify-between items-center mb-2">
             <div className="flex gap-2">
               <span className="text-green-600 font-bold">
-                Rs.
+                $
                 {(
                   products.price -
                   products.price * (products.discount / 100)
                 ).toFixed(2)}
               </span>
               <span className="line-through text-gray-500">
-                Rs.{products.price}
+                $.{products.price}
               </span>
             </div>
           </div>
