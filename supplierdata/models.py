@@ -25,8 +25,7 @@ class Products(models.Model):
  
   def __str__(self):
     return self.productName
-  
-  
+      
 class Orders(models.Model):
     
   DELIVERY = [
