@@ -49,6 +49,7 @@ function AddProduct() {
       formData.append("productName", productName);
       formData.append("price", price);
       formData.append("discount", discount);
+
       formData.append("stock", stock);
       formData.append("category", category);
       formData.append("shortDescription", shortDescription);

@@ -12,6 +12,8 @@ function RehomePet() {
   const [age, setAge] = useState(1);
   const [breed, setBreed] = useState("");
   const [gender, setGender] = useState("");
+  const [vaccinated, setVaccinated] = useState("");
+  const [medicalDescription, setMedicalDescription] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +26,8 @@ function RehomePet() {
       formData.append("age", age);
       formData.append("breed", breed);
       formData.append("gender", gender);
+      formData.append("vaccinated", vaccinated);
+      formData.append("medicalDescription", medicalDescription);
 
       const token = localStorage.getItem("userToken");
       const response = await fetch("http://127.0.0.1:8000/api/add-pets/", {
@@ -74,10 +78,10 @@ function RehomePet() {
             value={name}
             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
           />
-          <label htmlFor="productShortDes">Pet Description :</label>
+          <label htmlFor="ShortDes">Pet Description :</label>
           <input
             type="text"
-            id="productShortDes"
+            id="ShortDes"
             onChange={(e) => {
               setDescription(e.target.value);
             }}
@@ -116,6 +120,31 @@ function RehomePet() {
             onChange={(e) => {
               setBreed(e.target.value);
             }}
+            className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
+          />
+          <label htmlFor="vaccinated">Vacination :</label>
+          <select
+            type="text"
+            id="gender"
+            value={vaccinated}
+            onChange={(e) => {
+              setVaccinated(e.target.value);
+            }}
+            className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
+          >
+            <option value="Vaccinated">Vaccinated</option>
+            <option value="NotVaccinated">Not Vaccinated</option>
+          </select>
+
+          <label htmlFor="medicaldesc">Medical Description :</label>
+          <input
+            type="text"
+            id="medicaldesc"
+            onChange={(e) => {
+              setMedicalDescription(e.target.value);
+            }}
+            value={medicalDescription}
+            maxLength="40"
             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
           />
         </form>
