@@ -12,7 +12,6 @@ function Cart() {
     productId: item.productId,
     quantity: item.amount,
   }));
-  console.log(checkoutItems);
 
   const handleCheckout = async () => {
     try {
@@ -24,12 +23,11 @@ function Cart() {
         }
       );
 
-      // Extract the checkout URL from the response data
       const checkoutUrl = response.data.url;
 
-      // Redirect the user to the Stripe checkout page
       window.location.href = checkoutUrl;
       if ((response.data.success = true)) {
+        localStorage.removeItem("pawcart");
       }
     } catch (error) {
       // Handle errors from the backend
