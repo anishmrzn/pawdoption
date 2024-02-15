@@ -43,7 +43,7 @@ class SellerProfileSerializer(ModelSerializer):
     
     class Meta:
         model = Seller
-        fields = ['email', 'username', 'name', 'contact', 'userImgUrl', 'address', 'UserImg']
+        fields = ['email', 'username', 'name', 'contact', 'sellerImgUrl', 'store_location', 'sellerImg']
         
     def create(self, validated_data):
         
