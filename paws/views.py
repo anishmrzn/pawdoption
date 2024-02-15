@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view,permission_classes
@@ -60,7 +61,7 @@ def getPets(request,pk = None):
 @api_view(['POST'])
 def send_approval_rejection_emails(request):
 
-    pets = Pets.objects.filter(is_approved=True, is_rejected=True, email_sent=False)
+    pets = Pets.objects.filter(Q(is_approved=True) | Q(is_rejected=True), email_sent=False)
 
     for pet in pets:
 

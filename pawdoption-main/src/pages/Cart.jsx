@@ -16,10 +16,17 @@ function Cart() {
   const handleCheckout = async () => {
     try {
       // Make a POST request to your backend API endpoint
+      const token = localStorage.getItem("userToken");
       const response = await axios.post(
         "http://127.0.0.1:8000/api/create-checkout-session/",
+
         {
           products: checkoutItems,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
