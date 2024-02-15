@@ -89,7 +89,9 @@ const cartReducer = (state, action) => {
       // const price = item.discount
       //   ? item.price - (item.price * item.discount) / 100
       //   : item.price;
-      return total + item.amount * item.price;
+      return (
+        total + item.amount * (item.price - (item.price * item.discount) / 100)
+      );
     }, 0);
 
     return {

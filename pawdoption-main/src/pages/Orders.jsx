@@ -23,7 +23,7 @@ function Orders() {
     (acc, order) =>
       acc +
       order.products.reduce(
-        (productAcc, product) => productAcc + product.price,
+        (productAcc, product) => productAcc + product.discounted,
         0
       ),
     0
@@ -64,7 +64,9 @@ function Orders() {
                   </td>
                   <td className="py-4 px-6 border-r text-center border-gray-300">
                     {order.products.map((product) => (
-                      <div key={product.productName}>$ {product.price}</div>
+                      <div key={product.productName}>
+                        $ {product.discounted}
+                      </div>
                     ))}
                   </td>
                   <td className="py-4 px-6 border-r text-center border-gray-300">

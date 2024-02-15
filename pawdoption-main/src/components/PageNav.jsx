@@ -15,6 +15,7 @@ function PageNav() {
   const [dropDown, setDropDown] = useState(false);
   const [smallDropDown, setSmallDropDown] = useState(false);
   const [sticky, setSticky] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setSticky(window.scrollY > 400);
@@ -121,7 +122,7 @@ function PageNav() {
             <Link to="/cart">
               <div className="hidden md:flex absolute left-[94%] top-[0%] text-lg border-2 rounded-full px-4 py-4 hover:text-[#c9a687] transition-all duration-500 ">
                 <ion-icon name="cart"></ion-icon>
-                <div className="bg-[#d9c0ab] flex rounded-full px-1 w-7 h-7 absolute top-[-20%] left-[50%] items-center justify-center text-sm">
+                <div className="bg-[#d9c0ab] flex rounded-full px-1 w-7 h-7 absolute top-[-20%] left-[50%] items-center justify-center text-sm bounce">
                   {total_item}
                 </div>
               </div>
