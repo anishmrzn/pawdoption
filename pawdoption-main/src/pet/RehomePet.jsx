@@ -11,6 +11,7 @@ function RehomePet() {
   const [name, setName] = useState("");
   const [age, setAge] = useState(1);
   const [breed, setBreed] = useState("");
+  const [animal, setAnimal] = useState("");
   const [gender, setGender] = useState("");
   const [vaccinated, setVaccinated] = useState("");
   const [medicalDescription, setMedicalDescription] = useState("");
@@ -25,6 +26,7 @@ function RehomePet() {
       formData.append("name", name);
       formData.append("age", age);
       formData.append("breed", breed);
+      formData.append("animal", animal);
       formData.append("gender", gender);
       formData.append("vaccinated", vaccinated);
       formData.append("medicalDescription", medicalDescription);
@@ -40,8 +42,8 @@ function RehomePet() {
 
       if (response.ok) {
         navigate("/adopt");
-        window.location.reload();
-        toast.success("Wiat till the form gets approved");
+
+        toast.success("Wait till the form gets approved");
       } else {
         toast.error("Unsuccessful");
       }
@@ -89,6 +91,19 @@ function RehomePet() {
             maxLength="40"
             className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
           />
+          <label htmlFor="animal">Animal :</label>
+          <select
+            type="text"
+            id="gender"
+            value={animal}
+            onChange={(e) => {
+              setAnimal(e.target.value);
+            }}
+            className="col-span-2 border-2 rounded-xl border-gray-400 py-1 px-5"
+          >
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+          </select>
           <label htmlFor="age">Age :</label>
           <input
             type="number"

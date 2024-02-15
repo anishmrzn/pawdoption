@@ -3,44 +3,70 @@ import { useEffect } from "react";
 import PageNav from "../components/PageNav";
 import Footer from "../components/Footer";
 import { usePetContext } from "../context/petContext";
+import { FaPaw } from "react-icons/fa"; // You may need to install this library for the paw icon
+
 const API = "http://127.0.0.1:8000/api/get-pets/";
 
 function SinglePet() {
   const { singlePet, getSinglePet } = usePetContext();
-
   const { id } = useParams();
 
   useEffect(() => {
     getSinglePet(`${API}${id}/`);
-  }, []);
-
-  // window.location.reload();
+  }, [singlePet]);
 
   return (
-    <div className="flex flex-col gap-20 md:gap-[10rem] ">
+    <div className="container mx-auto p-8 bg-white shadow-lg rounded-lg">
       <PageNav />
-      <div className="flex flex-col md:flex-row gap-16 lg:gap-16">
-        <div className="flex flex-col items-center ml-[8rem] md:ml-[0] w-[20rem] md:w-[40rem] border-2 border-black px-5 py-5 rounded-xl">
-          {singlePet && (
+
+      {singlePet && (
+        <div className="flex flex-col items-center lg:flex-row gap-8 lg:mt-5">
+          <div className="w-full lg:w-1/2">
             <img
               src={singlePet.petImgUrl}
-              alt="product"
-              className="w-[18rem] md:w-[45rem] rounded-xl transform hover:scale-105 transition-all duration-500"
-            ></img>
-          )}
-        </div>
-        <div className="flex flex-col gap-6 lg:mt-[5rem]">
-          {singlePet && (
-            <h1 className="text-2xl lg:text-3xl font-extrabold">
+              alt={`${singlePet.name} - ${singlePet.breed}`}
+              className="w-full h-auto rounded-xl object-cover shadow-lg hover:shadow-xl transition-all duration-500"
+            />
+          </div>
+
+          <div className="flex flex-col items-center lg:items-start gap-6 lg:w-1/2 text-center lg:text-left">
+            <h1 className="text-4xl font-extrabold text-gray-800 mb-2">
               {singlePet.name}
             </h1>
-          )}
 
-          {singlePet && (
-            <p className="text-lg w-[30rem]">{singlePet.description}</p>
-          )}
+            <p className="text-lg text-gray-700 max-w-md">
+              {singlePet.description}
+            </p>
+
+            <div className="flex items-center text-gray-700 mt-4">
+              <FaPaw className="text-xl mr-2" />
+              <span className="text-sm">Adoptable {singlePet.animal}</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mt-4 text-center lg:text-left text-gray-700">
+              <div>
+                <strong className="text-gray-800">Age:</strong> {singlePet.age}
+              </div>
+              <div>
+                <strong className="text-gray-800">Breed:</strong>{" "}
+                {singlePet.breed}
+              </div>
+              <div>
+                <strong className="text-gray-800">Gender:</strong>{" "}
+                {singlePet.gender}
+              </div>
+              <div>
+                <strong className="text-gray-800">Vaccinated:</strong>{" "}
+                {singlePet.vaccinated ? "Yes" : "No"}
+              </div>
+              <div colSpan={2}>
+                <strong className="text-gray-800">Medical Description:</strong>{" "}
+                {singlePet.medicalDescription || "Not available"}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
       <Footer />
     </div>
