@@ -65,8 +65,8 @@ function Store() {
             name="text"
             value={text}
             onChange={updateFilterValue}
-            className="border-2 border-black rounded-xl px-3 w-[12rem] "
-            placeholder="Search..."
+            className="border border-gray-300 p-3 rounded-xl w-64  ml-2 mr-10"
+            placeholder="Search Products"
           ></input>
         </form>
       </div>
