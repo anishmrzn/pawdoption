@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 function ProductContainer({ products }) {
   return (
-    <Link to={`/singleproduct/${products.productId}`}>
-      <div className="border rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 bg-white">
+    <Link to={`/singleproduct/${products.productId}`} className="h-full">
+      <div className="border rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 bg-white h-full flex flex-col">
         <div className="relative overflow-hidden h-48">
           <img
             src={products.productImgUrl}
@@ -14,7 +14,7 @@ function ProductContainer({ products }) {
             <p className="text-white font-bold text-lg">View Details</p>
           </div>
         </div>
-        <div className="p-4">
+        <div className="p-4 flex-grow">
           <h3 className="text-xl font-semibold mb-2 text-gray-800">
             {products.productName}
           </h3>

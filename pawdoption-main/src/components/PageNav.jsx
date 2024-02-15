@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { useCartContext } from "../context/cartContext";
-// import { LoginContext } from "../context/LoginContextProvider";
 
 function PageNav() {
-  // const { token, setToken } = React.useContext(LoginContext);
+  const location = useLocation();
   const navigate = useNavigate();
   const { total_item } = useCartContext();
 
   const sellerToken = localStorage.getItem("sellerToken");
   const userToken = localStorage.getItem("userToken");
-  // console.log(token);
   const [btnState, setBtnState] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [smallDropDown, setSmallDropDown] = useState(false);
@@ -22,14 +20,18 @@ function PageNav() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  });
+  }, []);
+
+  useEffect(() => {
+    setSticky(false);
+  }, [location.pathname]);
   function handleClick() {
     setBtnState((btnState) => !btnState);
   }
   function handleLogout() {
     localStorage.removeItem("sellerToken");
     localStorage.removeItem("userToken");
-    // setToken("");
+
     navigate("/");
     window.location.reload();
   }
@@ -44,8 +46,11 @@ function PageNav() {
   let toggleClassSmallDropdown = smallDropDown ? "" : "hidden";
   let toggleClassOpen = btnState ? "open" : "";
   let toggleClassHidden = btnState ? "flex" : "hidden";
+
+  const stickyClass = sticky && location.pathname === "/" ? "sticky" : "";
+
   return (
-    <div className={`${sticky ? "sticky" : ""} `}>
+    <div className={stickyClass}>
       <nav className=" relative">
         <ul className=" hidden md:flex flex-col items-center ">
           <div className="flex gap-20">

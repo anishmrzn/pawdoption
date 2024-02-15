@@ -7,7 +7,7 @@ function FeaturedItems({}) {
 
   return (
     <div className="flex flex-col items-center gap-10 " data-aos="fade-right">
-      <div className="grid grid-cols-3 lg:grid-cols-4 gap-10">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
         {featureProducts.map((products) => {
           return (
             <ProductContainer products={products} key={products.productId} />
