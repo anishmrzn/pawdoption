@@ -175,11 +175,20 @@ function PageNav() {
                 <div
                   className={`${toggleClassSmallDropdown} flex flex-col items-center justify-center gap-2`}
                 >
-                  <div className="text-white hover:underline  mt-5">
-                    <Link to="/seller">My Account</Link>
-                  </div>
+                  {!sellerToken ? (
+                    <li className="text-white hover:underline  mt-5">
+                      <Link to="/account" onClick={window.location.reload}>
+                        My Account
+                      </Link>
+                    </li>
+                  ) : (
+                    <li className="text-white hover:underline  mt-5">
+                      <Link to="/seller">Seller</Link>
+                    </li>
+                  )}
+
                   <div className="text-white hover:underline">
-                    <Link to="/seller">My Orders</Link>
+                    <Link to="/orders">My Orders</Link>
                   </div>
                   {!sellerToken ? (
                     <div></div>
@@ -200,10 +209,13 @@ function PageNav() {
               </div>
 
               <button className="flex  text-md  hover:text-[#c9a687] transition-all duration-500 ">
-                <div className="flex items-center  justify-center gap-3">
+                <Link
+                  to="/cart"
+                  className="flex items-center  justify-center gap-3"
+                >
                   <ion-icon name="cart"></ion-icon>
                   <h1 className="text-lg">CART</h1>
-                </div>
+                </Link>
               </button>
             </>
           )}

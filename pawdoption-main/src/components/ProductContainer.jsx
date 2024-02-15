@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-
 function ProductContainer({ products }) {
   return (
     <Link to={`/singleproduct/${products.productId}`}>

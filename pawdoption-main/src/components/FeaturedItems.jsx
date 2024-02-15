@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useProductContext } from "../context/ProductContext";
 import ProductContainer from "./ProductContainer";
-import { useState } from "react";
 
 function FeaturedItems({}) {
   const { featureProducts } = useProductContext();

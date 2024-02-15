@@ -16,56 +16,69 @@ function SingleProduct() {
     getSingleProduct(`${API}${id}/`);
   }, [singleProduct]);
 
-  // window.location.reload();
-
   return (
-    <div className="flex flex-col gap-20 md:gap-[10rem] ">
+    <div className="flex flex-col gap-20 md:gap-[5rem]">
       <PageNav />
-      <div className="flex flex-col md:flex-row gap-16 lg:gap-16">
-        <div className="flex flex-col items-center ml-[8rem] md:ml-[0] w-[20rem] md:w-[40rem] border-2 border-black px-5 py-5 rounded-xl">
-          <img
-            src={singleProduct.productImgUrl}
-            alt="product"
-            className="w-[18rem] md:w-[45rem] rounded-xl transform hover:scale-105 transition-all duration-500"
-          ></img>
-        </div>
-        <div className="flex flex-col gap-6 lg:mt-[5rem]">
-          <h1 className="text-2xl lg:text-3xl font-extrabold">
+      <div className="flex flex-col md:flex-row gap-16 lg:gap-16 mx-auto">
+        <img
+          src={singleProduct.productImgUrl}
+          alt="product"
+          className="w-[30rem] h-[20rem] lg:h-[30rem] object-cover rounded-xl shadow-2xl transform hover:scale-105 transition-all duration-500"
+        />
+
+        <div className="flex flex-col gap-6 lg:mt-[5rem] text-center lg:items-start">
+          <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-800">
             {singleProduct.productName}
           </h1>
-          <div className="flex gap-10 items-center ">
-            <h1 className="text-xl font-extrabold">
+          <div className="flex items-center lg:items-start gap-5 justify-center">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl text-[#f67d00] font-extrabold">
+                ★★★★☆
+              </span>
+              <span className="text-sm text-gray-600">42 Reviews</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-5 justify-center">
+            <h1 className="text-2xl font-extrabold text-gray-800">
               Rs.
               {(
                 singleProduct.price -
                 singleProduct.price * (singleProduct.discount / 100)
               ).toFixed(2)}
             </h1>
-            <div className=" flex items-center gap-3 px-5  py-2 bg-[#1cadd9] rounded-xl">
-              <h1 className="text-white font-bold">
+            <div className="flex items-center gap-3 px-4 py-2 bg-[#1cadd9] rounded-md">
+              <span className="text-white font-bold">
                 {singleProduct.discount}% off
-              </h1>
-              <h1 className="text-lg text-white line-through border-l-2 pl-3">
+              </span>
+              <span className="text-lg text-white line-through pl-2">
                 Rs {singleProduct.price}
-              </h1>
+              </span>
             </div>
           </div>
-          <p className="text-lg w-[30rem]">{singleProduct.Description}</p>
-          <div className="flex gap-16">
+          <p className="text-lg text-gray-700 w-[25rem] leading-relaxed">
+            {singleProduct.Description}
+          </p>
+          <div className="flex items-center gap-5 justify-center">
             <AddToCart product={singleProduct} />
           </div>
-          <h1>Category : {singleProduct.category}</h1>
+          <div className="flex items-center gap-3 text-gray-700 justify-center">
+            <span>
+              Availability:
+              {singleProduct.stock === 0 ? "Not Available" : "In Stock"}
+            </span>
+            <span>Estimated Delivery: 3-5 days</span>
+          </div>
+          <div className="flex items-center gap-3 text-gray-700 justify-center">
+            <span>Seller: {singleProduct.sellerId}</span>
+          </div>
         </div>
       </div>
 
       <div className="flex flex-col gap-10">
-        <h1 className="text-[#c9a687] font-bold text-center">Other Products</h1>
-        <FeaturedItems
-        // isSingleProduct={true}
-        // featureProducts={featureProducts.filter(
-        //   (item) => item.productId !== singleProduct.productId
-        // )}
-        />
+        <h1 className="text-[#c9a687] font-bold text-center text-2xl">
+          Other Products
+        </h1>
+        <FeaturedItems />
       </div>
 
       <Footer />
