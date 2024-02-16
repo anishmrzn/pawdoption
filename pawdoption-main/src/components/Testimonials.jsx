@@ -49,7 +49,9 @@ function TestimonialSlider() {
 
   return (
     <div className=" text-center">
-      <h1 className="mb-[5rem] font-bold text-3xl">Testimonials</h1>
+      <h1 className="mb-[5rem] font-bold text-3xl text-[#c9a687]">
+        Testimonials
+      </h1>
       <div className=" relative max-w-[100%] md:max-w-[60%] h-[35rem] m-auto z-99 overflow-hidden">
         <div
           className={`flex   justify-between transition ease-out duration-1000 absolute top-0 w-[100%]  h-50  `}
