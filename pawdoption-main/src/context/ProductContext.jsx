@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from "../Reducer/productReducer";
+import Loader from "../components/Loader";
 
 const AppContext = createContext();
 
@@ -20,6 +21,7 @@ const AppProvider = ({ children }) => {
 
   const getProducts = async (url) => {
     dispatch({ type: "SET_LOADING" });
+
     try {
       const res = await axios.get(url);
       const products = await res.data;
@@ -29,6 +31,7 @@ const AppProvider = ({ children }) => {
       dispatch({ type: "API_ERROR" });
     }
   };
+
   const getSingleProduct = async (url) => {
     dispatch({ type: "SET_SINGLE_LOADING" });
     try {
@@ -47,7 +50,7 @@ const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider value={{ ...state, getSingleProduct }}>
-      {children}
+      {state.isLoading ? <Loader /> : children}
     </AppContext.Provider>
   );
 };

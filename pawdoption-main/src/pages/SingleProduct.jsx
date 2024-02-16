@@ -79,7 +79,9 @@ function SingleProduct() {
         <h1 className="text-[#c9a687] font-bold text-center text-2xl">
           Other Products
         </h1>
-        <FeaturedItems />
+        <div>
+          <FeaturedItems />
+        </div>
       </div>
 
       <Footer />

@@ -1,6 +1,10 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function ProductContainer({ products }) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Link to={`/singleproduct/${products.productId}`} className="h-full">
       <div className="border rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 bg-white h-full flex flex-col">

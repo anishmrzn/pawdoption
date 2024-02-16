@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from "../Reducer/productReducer";
+import Loader from "../components/Loader";
 
 const UpdateContext = createContext();
 const token = localStorage.getItem("sellerToken");
@@ -52,7 +53,7 @@ const UpdateProvider = ({ children }) => {
 
   return (
     <UpdateContext.Provider value={{ ...state, getSingleProduct }}>
-      {children}
+      {state.isLoading ? <Loader /> : children}
     </UpdateContext.Provider>
   );
 };

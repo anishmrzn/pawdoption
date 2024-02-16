@@ -39,9 +39,9 @@ function Footer() {
             Visit us at our location on Paw Street, find us on social media, or
             drop us an email. We're here to assist you!
             <br />
-            123 Paw Street, Barksville <br />
-            +1 123 456 7890 <br />
-            contact@pawdoption.com <br />
+            123 Paw Street, Labim Mall <br />
+            +977 9809876554 <br />
+            pawdoption0@gmail.com <br />
             www.pawdoption.com
           </p>
 
