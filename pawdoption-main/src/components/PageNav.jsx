@@ -201,7 +201,7 @@ function PageNav() {
                 </button>
 
                 <div
-                  className={`${toggleClassSmallDropdown} flex flex-col items-center justify-center gap-2`}
+                  className={` flex flex-col items-center justify-center gap-2`}
                 >
                   {!sellerToken ? (
                     <li className="text-white hover:underline  mt-5">

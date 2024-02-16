@@ -88,7 +88,6 @@ function Account() {
       if (response.ok) {
         localStorage.removeItem("userToken");
         toast.success("User deleted");
-        // navigate("/store");
       }
     } catch (error) {
       toast.error("Error");
@@ -101,8 +100,15 @@ function Account() {
       </div>
 
       <div
-        className={`${toggleClassHidden} ml-[16rem] h-[25rem] w-[50rem] flex items-center justify-between bg-[#eee4db] rounded-lg px-8 mt-10 shadow-md`}
+        className={`${toggleClassHidden} ml-[1rem] lg:ml-[15rem] h-[28rem] w-[30rem] lg:w-[50rem] flex flex-col lg:flex-row items-center justify-between bg-[#eee4db] rounded-lg px-2 lg:px-16 py-10 mt-10 shadow-md`}
       >
+        <div className="rounded-full overflow-hidden border-4 border-white">
+          <img
+            src={user.userImgUrl}
+            alt="userimage"
+            className="h-32 w-32 object-cover"
+          />
+        </div>
         <div className="w-[20rem] flex flex-col gap-6 text-lg">
           <div className="flex justify-between items-center">
             <span className="font-semibold text-gray-600">Name:</span>
@@ -125,16 +131,11 @@ function Account() {
             <span className="text-gray-800">{user.contact}</span>
           </div>
         </div>
-        <div className="rounded-full overflow-hidden border-4 border-white">
-          <img
-            src={user.userImgUrl}
-            alt="userimage"
-            className="h-32 w-32 object-cover"
-          />
-        </div>
       </div>
 
-      <div className={`${toggleClassHiddenn} w-[50rem] ml-[15rem] mt-20`}>
+      <div
+        className={`${toggleClassHiddenn} w-[30rem] lg:w-[50rem] ml-[1rem] lg:ml-[15rem] mt-20`}
+      >
         <form className="grid grid-cols-3 gap-5 font-semibold">
           <img
             src={`${user.userImgUrl}`}
@@ -142,7 +143,7 @@ function Account() {
             className="h-[10rem] px-7 rounded-2xl border-2 border-black overflow-hidden ml-10"
           />
 
-          <div className="col-span-2 flex gap-3 items-center">
+          <div className="col-span-3 lg:col-span-2 flex gap-3 items-center">
             <label htmlFor="UserImg">Profile Picture :</label>
             <input
               type="file"
@@ -205,7 +206,7 @@ function Account() {
             className="col-span-2 border-2  rounded-xl border-gray-400 py-1 px-5"
           />
           <div className="col-span-3 flex justify-between ">
-            <button onClick={handleSubmit} className="button">
+            <button onClick={handleSubmit} className="button ">
               Update Profile
             </button>
             <button
