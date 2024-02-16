@@ -14,6 +14,7 @@ function RehomePet() {
   const [gender, setGender] = useState("");
   const [vaccinated, setVaccinated] = useState("");
   const [medicalDescription, setMedicalDescription] = useState("");
+  const [reason, setReason] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +30,7 @@ function RehomePet() {
       formData.append("gender", gender);
       formData.append("vaccinated", vaccinated);
       formData.append("medicalDescription", medicalDescription);
+      formData.append("reason", reason);
 
       const token = localStorage.getItem("userToken");
       const response = await fetch("http://127.0.0.1:8000/api/add-pets/", {
@@ -98,16 +100,14 @@ function RehomePet() {
             <label htmlFor="animal" className="block font-semibold">
               Animal:
             </label>
-            <select
+            <input
               type="text"
               id="gender"
               value={animal}
               onChange={(e) => setAnimal(e.target.value)}
               className="border-2 rounded-md border-gray-300 p-2 w-full"
-            >
-              <option value="Dog">Dog</option>
-              <option value="Cat">Cat</option>
-            </select>
+              placeholder="Dog / Cat"
+            ></input>
           </div>
           <div className="mb-4">
             <label htmlFor="age" className="block font-semibold">
@@ -125,16 +125,14 @@ function RehomePet() {
             <label htmlFor="gender" className="block font-semibold">
               Gender:
             </label>
-            <select
+            <input
               type="text"
               id="gender"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
               className="border-2 rounded-md border-gray-300 p-2 w-full"
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
+              placeholder="Male / Female"
+            ></input>
           </div>
           <div className="mb-4">
             <label htmlFor="breed" className="block font-semibold">
@@ -152,16 +150,14 @@ function RehomePet() {
             <label htmlFor="vaccinated" className="block font-semibold">
               Vaccination:
             </label>
-            <select
+            <input
               type="text"
               id="vaccinated"
               value={vaccinated}
               onChange={(e) => setVaccinated(e.target.value)}
               className="border-2 rounded-md border-gray-300 p-2 w-full"
-            >
-              <option value="Vaccinated">Vaccinated</option>
-              <option value="NotVaccinated">Not Vaccinated</option>
-            </select>
+              placeholder="Vaccinated / Not Vaccinated"
+            ></input>
           </div>
           <div className="mb-4">
             <label htmlFor="medicaldesc" className="block font-semibold">
@@ -172,6 +168,16 @@ function RehomePet() {
               id="medicaldesc"
               value={medicalDescription}
               onChange={(e) => setMedicalDescription(e.target.value)}
+              className="border-2 rounded-md border-gray-300 p-2 w-full"
+            />
+            <label htmlFor="reason" className="block font-semibold">
+              Reason for Rehoming:
+            </label>
+            <input
+              type="text"
+              id="reason"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
               className="border-2 rounded-md border-gray-300 p-2 w-full"
             />
           </div>
