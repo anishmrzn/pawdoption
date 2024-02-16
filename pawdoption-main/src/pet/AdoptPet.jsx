@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PageNav from "../components/PageNav";
 import PetContainer from "../components/PetContainer";
 import { usePetContext } from "../context/petContext";
@@ -7,12 +7,30 @@ function AdoptPet() {
   const { pets } = usePetContext();
   const [searchBreed, setSearchBreed] = useState("");
   const [petType, setPetType] = useState("all");
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   const filteredPets = pets.filter((pet) => {
     const byBreed = pet.breed.toLowerCase().includes(searchBreed.toLowerCase());
     const byType = petType === "all" || pet.animal.toLowerCase() === petType;
     return byBreed && byType;
   });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setShowScrollButton(scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="container mx-auto p-8">
@@ -23,6 +41,7 @@ function AdoptPet() {
       </h1>
 
       <div className="flex justify-between items-center mb-6">
+        {/* Existing code for pet type buttons */}
         <div className="flex gap-10 ml-10">
           <button
             className={`type-btn ${
@@ -49,12 +68,14 @@ function AdoptPet() {
             Cats
           </button>
         </div>
+
+        {/* Input for searching by breed */}
         <input
           type="text"
           placeholder="Search by Breed"
           value={searchBreed}
           onChange={(e) => setSearchBreed(e.target.value)}
-          className="border border-gray-300 p-3 rounded-xl w-64  ml-2 mr-10"
+          className="border border-gray-300 p-3 rounded-xl w-64 ml-2 mr-10"
         />
       </div>
 
@@ -63,6 +84,15 @@ function AdoptPet() {
           <PetContainer key={pet.petId} pets={pet} />
         ))}
       </div>
+
+      {showScrollButton && (
+        <button
+          className="fixed bottom-7 right-7 bg-blue-500 text-white text-2xl px-3 py-2 rounded-full"
+          onClick={scrollToTop}
+        >
+          <ion-icon name="arrow-up-outline"></ion-icon>
+        </button>
+      )}
     </div>
   );
 }
