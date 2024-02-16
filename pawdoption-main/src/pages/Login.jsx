@@ -128,7 +128,7 @@ function Login() {
             </div>
           </form>
           <p className="text-center mt-8">
-            Not signd up yet?{" "}
+            Not signed up yet?{" "}
             <Link to="/signup" className="font-bold hover:underline">
               Sign up
             </Link>
