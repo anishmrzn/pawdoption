@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from "../Reducer/petReducer";
+import Loader from "../components/Loader";
 const API = "http://127.0.0.1:8000/api/get-pets/";
 
 const PetContext = createContext();
@@ -45,7 +46,7 @@ function PetProvider({ children }) {
   }, []);
   return (
     <PetContext.Provider value={{ ...state, getPet, getSinglePet }}>
-      {children}
+      {state.isLoading ? <Loader /> : children}
     </PetContext.Provider>
   );
 }

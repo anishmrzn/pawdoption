@@ -91,7 +91,6 @@ function RehomePet() {
               id="ShortDes"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              maxLength="40"
               className="border-2 rounded-md border-gray-300 p-2 w-full"
             />
           </div>
@@ -173,7 +172,6 @@ function RehomePet() {
               id="medicaldesc"
               value={medicalDescription}
               onChange={(e) => setMedicalDescription(e.target.value)}
-              maxLength="40"
               className="border-2 rounded-md border-gray-300 p-2 w-full"
             />
           </div>

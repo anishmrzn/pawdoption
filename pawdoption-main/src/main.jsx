@@ -22,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <CartProvider>
                 {/* <LoginContextProvider> */}
                 <ToastContainer />
+
                 <App />
                 {/* </LoginContextProvider> */}
               </CartProvider>

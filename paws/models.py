@@ -28,4 +28,5 @@ class Pets(models.Model):
   
   
   def __str__(self):
-    return self.name
+    return f'Name: {self.name} - Date Added: {self.created.strftime("%Y-%m-%d %H:%M:%S")}'
+  

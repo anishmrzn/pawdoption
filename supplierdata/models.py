@@ -39,7 +39,7 @@ class Products(models.Model):
 
 
   def __str__(self):
-    return self.productName
+    return f'Name: {self.productName} - Date Added: {self.created.strftime("%Y-%m-%d %H:%M:%S")}'
       
 class Orders(models.Model):
     

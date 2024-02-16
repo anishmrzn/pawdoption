@@ -44,32 +44,31 @@ function AdoptPet() {
         {/* Existing code for pet type buttons */}
         <div className="flex gap-10 ml-10">
           <button
-            className={`type-btn ${
-              petType === "all"
-            } text-2xl font-semibold hover:text-gray-500 transition-all duration-500`}
+            className={`type-btn text-2xl font-semibold hover:text-gray-500 transition-all duration-500 ${
+              petType === "all" ? "active" : ""
+            }`}
             onClick={() => setPetType("all")}
           >
             All
           </button>
           <button
-            className={`type-btn ${
-              petType === "dog"
-            } text-2xl font-semibold hover:text-gray-500 transition-all duration-500`}
+            className={`type-btn text-2xl font-semibold hover:text-gray-500 transition-all duration-500 ${
+              petType === "dog" ? "active" : ""
+            }`}
             onClick={() => setPetType("dog")}
           >
             Dogs
           </button>
           <button
-            className={`type-btn ${
-              petType === "cat"
-            } text-2xl font-semibold hover:text-gray-500 transition-all duration-500`}
+            className={`type-btn text-2xl font-semibold hover:text-gray-500 transition-all duration-500 ${
+              petType === "cat" ? "active" : ""
+            }`}
             onClick={() => setPetType("cat")}
           >
             Cats
           </button>
         </div>
 
-        {/* Input for searching by breed */}
         <input
           type="text"
           placeholder="Search by Breed"
@@ -79,7 +78,7 @@ function AdoptPet() {
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-8">
         {filteredPets.map((pet) => (
           <PetContainer key={pet.petId} pets={pet} />
         ))}
