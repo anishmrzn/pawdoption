@@ -123,3 +123,14 @@ input::file-selector-button {
 .clip {
   clip-path: polygon(36% 0, 42% 9%, 100% 9%, 100% 100%, 0 100%, 0 9%, 29% 9%);
 }
+.smallClip {
+  clip-path: polygon(
+    36% 1%,
+    42% 10%,
+    99% 10%,
+    99% 99%,
+    1% 99%,
+    1% 10%,
+    29% 10%
+  );
+}
