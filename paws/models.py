@@ -9,6 +9,7 @@ class Pets(models.Model):
   petId = models.UUIDField(
     default = uuid.uuid4, unique = True, primary_key = True, editable = False)
   name = models.TextField(max_length = 200)
+  animal = models.CharField(max_length = 10, default = True, null = True)
   age = models.TextField(max_length = 50, blank= True)
   breed = models.CharField(max_length = 50, blank = True, null = True)
   gender = models.CharField(max_length = 10, blank = True)
@@ -16,6 +17,7 @@ class Pets(models.Model):
   petImgUrl = models.URLField(blank = True)
   email = models.EmailField(null = True)
   vaccinated = models.CharField(max_length = 10, blank = True)
+  reason = models.TextField(blank = True, null = True)
   medicalDescription = models.TextField(blank = True, null = True)
   username = models.CharField(max_length = 50, null = True)
 
@@ -27,4 +29,5 @@ class Pets(models.Model):
   
   
   def __str__(self):
-    return self.name
+    return f'Name: {self.name} - Date Added: {self.created.strftime("%Y-%m-%d %H:%M:%S")}'
+  

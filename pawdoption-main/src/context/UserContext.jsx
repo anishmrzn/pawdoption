@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from "../Reducer/userReducer";
+import Loader from "../components/Loader";
 const API = "http://127.0.0.1:8000/api/user-profile/";
 const token = localStorage.getItem("userToken");
 
@@ -34,7 +35,7 @@ function UserProvider({ children }) {
   }, []);
   return (
     <UserContext.Provider value={{ ...state, getUser }}>
-      {children}
+      {state.isLoading ? <Loader /> : children}
     </UserContext.Provider>
   );
 }

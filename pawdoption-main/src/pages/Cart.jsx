@@ -12,24 +12,29 @@ function Cart() {
     productId: item.productId,
     quantity: item.amount,
   }));
-  console.log(checkoutItems);
 
   const handleCheckout = async () => {
     try {
       // Make a POST request to your backend API endpoint
+      const token = localStorage.getItem("userToken");
       const response = await axios.post(
         "http://127.0.0.1:8000/api/create-checkout-session/",
+
         {
           products: checkoutItems,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
-      // Extract the checkout URL from the response data
       const checkoutUrl = response.data.url;
 
-      // Redirect the user to the Stripe checkout page
       window.location.href = checkoutUrl;
       if ((response.data.success = true)) {
+        localStorage.removeItem("pawcart");
       }
     } catch (error) {
       // Handle errors from the backend

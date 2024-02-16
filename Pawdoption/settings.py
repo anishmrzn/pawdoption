@@ -52,8 +52,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
-    'users.apps.UsersConfig'
-    # 'cloudinary',
+    'users.apps.UsersConfig',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kathmandu'
 
 USE_I18N = True
 

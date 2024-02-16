@@ -88,7 +88,6 @@ function Account() {
       if (response.ok) {
         localStorage.removeItem("userToken");
         toast.success("User deleted");
-        // navigate("/store");
       }
     } catch (error) {
       toast.error("Error");
@@ -101,36 +100,42 @@ function Account() {
       </div>
 
       <div
-        className={`${toggleClassHidden} ml-[16rem] h-[30rem] w-[50rem] flex items-center justify-between`}
+        className={`${toggleClassHidden} ml-[1rem] lg:ml-[15rem] h-[28rem] w-[30rem] lg:w-[50rem] flex flex-col lg:flex-row items-center justify-between bg-[#eee4db] rounded-lg px-2 lg:px-16 py-10 mt-10 shadow-md`}
       >
-        <div className="w-[20rem] flex flex-col gap-10 text-xl ">
-          <h1 className="flex  justify-between">
-            <span className="font-bold">Name :</span> <h1>{user.name}</h1>
-          </h1>
-          <h1 className="flex justify-between">
-            <span className="font-bold">Username :</span>
-            <h1>{user.username}</h1>
-          </h1>
-          <h1 className="flex justify-between">
-            <span className="font-bold">Email :</span> <h1>{user.email}</h1>
-          </h1>
-          <h1 className="flex justify-between">
-            <span className="font-bold">Address :</span> <h1>{user.address}</h1>
-          </h1>
-          <h1 className="flex justify-between">
-            <span className="font-bold">Contact :</span> <h1>{user.contact}</h1>
-          </h1>
-        </div>
-        <div className="rounded-full px-6 border-2 border-black overflow-hidden mb-[10rem]">
+        <div className="rounded-full overflow-hidden border-4 border-white">
           <img
             src={user.userImgUrl}
-            // src="/product.jpg"
             alt="userimage"
-            className="h-[10rem] w-full object-cover"
+            className="h-32 w-32 object-cover"
           />
         </div>
+        <div className="w-[20rem] flex flex-col gap-6 text-lg">
+          <div className="flex justify-between items-center">
+            <span className="font-semibold text-gray-600">Name:</span>
+            <span className="text-gray-800">{user.name}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="font-semibold text-gray-600">Username:</span>
+            <span className="text-gray-800">{user.username}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="font-semibold text-gray-600">Email:</span>
+            <span className="text-gray-800">{user.email}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="font-semibold text-gray-600">Address:</span>
+            <span className="text-gray-800">{user.address}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="font-semibold text-gray-600">Contact:</span>
+            <span className="text-gray-800">{user.contact}</span>
+          </div>
+        </div>
       </div>
-      <div className={`${toggleClassHiddenn} w-[50rem] ml-[15rem] mt-20`}>
+
+      <div
+        className={`${toggleClassHiddenn} w-[30rem] lg:w-[50rem] ml-[1rem] lg:ml-[15rem] mt-20`}
+      >
         <form className="grid grid-cols-3 gap-5 font-semibold">
           <img
             src={`${user.userImgUrl}`}
@@ -138,7 +143,7 @@ function Account() {
             className="h-[10rem] px-7 rounded-2xl border-2 border-black overflow-hidden ml-10"
           />
 
-          <div className="col-span-2 flex gap-3 items-center">
+          <div className="col-span-3 lg:col-span-2 flex gap-3 items-center">
             <label htmlFor="UserImg">Profile Picture :</label>
             <input
               type="file"
@@ -201,7 +206,7 @@ function Account() {
             className="col-span-2 border-2  rounded-xl border-gray-400 py-1 px-5"
           />
           <div className="col-span-3 flex justify-between ">
-            <button onClick={handleSubmit} className="button">
+            <button onClick={handleSubmit} className="button ">
               Update Profile
             </button>
             <button
@@ -215,11 +220,12 @@ function Account() {
       </div>
       <div className="flex items-center justify-end mr-[15rem] my-10">
         <button
-          className={`${toggleClassHidden} button`}
+          className={`${toggleClassHidden} bg-[#ceae93] hover:bg-[#c9a687] hover:shadow-xl transition-all duration-500 text-white font-bold py-2 px-4 rounded-xl `}
           onClick={handleUpdate}
         >
-          Update
+          Update Profile
         </button>
+
         <button
           className={`${toggleClassHiddenn} button`}
           onClick={handleCloseUpdate}

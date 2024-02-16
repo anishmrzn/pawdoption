@@ -62,6 +62,25 @@ body {
 input::file-selector-button {
   @apply font-bold text-white text-sm lg:text-lg hover:shadow-2xl transition-all duration-500 bg-[#c9a687]  border-0 px-5 py-1 cursor-pointer hover:bg-[#dbaa81] mr-10;
 }
+@keyframes bounceAnimation {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.bounce {
+  animation: bounceAnimation 1s infinite;
+}
 
 /* hamburger menu */
 .hamburger {
@@ -103,4 +122,15 @@ input::file-selector-button {
 }
 .clip {
   clip-path: polygon(36% 0, 42% 9%, 100% 9%, 100% 100%, 0 100%, 0 9%, 29% 9%);
+}
+.smallClip {
+  clip-path: polygon(
+    36% 1%,
+    42% 10%,
+    99% 10%,
+    99% 99%,
+    1% 99%,
+    1% 10%,
+    29% 10%
+  );
 }

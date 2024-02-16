@@ -51,7 +51,7 @@ function Login() {
           localStorage.setItem(tokenName, data.access);
           // setToken(data.access);
           navigate("/");
-          toast.success("Successfully Loged in");
+          toast.success("Successfully Logged in");
         } else {
           toast.error("Username OR password did not work");
         }
@@ -67,13 +67,13 @@ function Login() {
       <img
         src="/loginbg.png"
         alt="dogo"
-        className="absolute top-[50%] left-[70%] hidden md:inline-block lg:left-[80%]"
+        className="absolute top-[50%] left-[80%] hidden md:inline-block lg:left-[82%]"
       ></img>
 
       <div className="border-2 border-[#c9a687]  flex flex-col lg:flex-row   gap-5  justify-center  absolute top-[70%] left-[50%]  translate-x-[-50%] translate-y-[-50%] rounded-xl">
         <div
-          className={`w-[20rem] md:w-[23rem] flex flex-col items-center justify-center gap-3
-          h-[10rem] lg:h-[30rem] bg-[linear-gradient(to_right_bottom,rgba(211,183,159,0.3),rgba(222,201,183,0.3)),url('/login.png')] bg-cover bg-center border-b-[10px] border-r-0 lg:border-r-[10px] lg:border-b-0 border-[#c9a687]`}
+          className={`w-[28rem]  flex flex-col items-center justify-center gap-3
+          h-[15rem] lg:h-[30rem] bg-[linear-gradient(to_right_bottom,rgba(211,183,159,0.3),rgba(222,201,183,0.3)),url('/login.png')] bg-cover bg-center border-b-[10px] border-r-0 lg:border-r-[10px] lg:border-b-0 border-[#c9a687]`}
         >
           <h1 className=" font-extrabold text-2xl ">Welcome</h1>
           <p className="text-center font-semibold lg:w-60">
@@ -108,7 +108,7 @@ function Login() {
               placeholder="*******"
               className="border-2 border-black rounded-md px-2 py-1"
             ></input>
-            <div className="flex gap-5 ">
+            <div className="flex gap-5 justify-center">
               <button
                 type="button"
                 disabled={!buttonEnabled}
