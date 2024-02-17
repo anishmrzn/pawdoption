@@ -1,3 +1,4 @@
+// Account.jsx
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import PageNav from "../components/PageNav";
@@ -26,7 +27,7 @@ function Account() {
     setHiddenClass(true);
     setHiddennClass(false);
   }
-  let toggleClassHidden = hiddenClass ? "" : "hidden";
+
   let toggleClassHiddenn = hiddennClass ? "" : "hidden";
   useEffect(() => {
     if (user) {
@@ -71,7 +72,7 @@ function Account() {
   const handleDelete = async () => {
     try {
       let answer = window.prompt(
-        "Are you sure you want to delete this product?"
+        "Are you sure you want to delete this account?"
       );
       if (!answer) return;
       const token = localStorage.getItem("userToken");
@@ -94,53 +95,59 @@ function Account() {
     }
   };
   return (
-    <div className="relative">
-      <div>
-        <PageNav />
+    <div className="relative bg-gray-100 min-h-screen">
+      <PageNav />
+
+      <div className=" mx-auto mt-10 p-4 bg-white rounded-lg shadow-md lg:py-10 lg:px-[10rem]">
+        <div className="flex items-center justify-between ">
+          <div className="flex items-center">
+            <div className="rounded-full overflow-hidden border-4 border-white">
+              <img
+                src={user.userImgUrl}
+                alt="userimage"
+                className="h-32 w-32 object-cover"
+              />
+            </div>
+            <div className="ml-4">
+              <h2 className="text-2xl font-semibold">{user.name}</h2>
+              <p className="text-gray-600">{user.username}</p>
+            </div>
+          </div>
+          <button
+            onClick={handleUpdate}
+            className="bg-blue-800 text-white px-4 py-2 rounded-full hover:bg-blue-900 focus:outline-none"
+          >
+            Edit Profile
+          </button>
+        </div>
+
+        <div className="mt-8 ">
+          <h3 className="text-xl font-semibold mb-2">Profile Information</h3>
+          <div className="md:grid grid-cols-2 gap-4">
+            <div className="mb-4 flex gap-3">
+              <label className="block text-gray-600">Email:</label>
+              <p className="text-gray-800">{user.email}</p>
+            </div>
+            <div className="mb-4 flex gap-3">
+              <label className="block text-gray-600">Address:</label>
+              <p className="text-gray-800">{user.address}</p>
+            </div>
+            <div className="mb-4 flex gap-3">
+              <label className="block text-gray-600">Contact:</label>
+              <p className="text-gray-800">{user.contact}</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div
-        className={`${toggleClassHidden} ml-[1rem] lg:ml-[15rem] h-[28rem] w-[30rem] lg:w-[50rem] flex flex-col lg:flex-row items-center justify-between bg-[#eee4db] rounded-lg px-2 lg:px-16 py-10 mt-10 shadow-md`}
-      >
-        <div className="rounded-full overflow-hidden border-4 border-white">
-          <img
-            src={user.userImgUrl}
-            alt="userimage"
-            className="h-32 w-32 object-cover"
-          />
-        </div>
-        <div className="w-[20rem] flex flex-col gap-6 text-lg">
-          <div className="flex justify-between items-center">
-            <span className="font-semibold text-gray-600">Name:</span>
-            <span className="text-gray-800">{user.name}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="font-semibold text-gray-600">Username:</span>
-            <span className="text-gray-800">{user.username}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="font-semibold text-gray-600">Email:</span>
-            <span className="text-gray-800">{user.email}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="font-semibold text-gray-600">Address:</span>
-            <span className="text-gray-800">{user.address}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="font-semibold text-gray-600">Contact:</span>
-            <span className="text-gray-800">{user.contact}</span>
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={`${toggleClassHiddenn} w-[30rem] lg:w-[50rem] ml-[1rem] lg:ml-[15rem] mt-20`}
+        className={`profile-edit-form ${toggleClassHiddenn} mx-auto mt-8 bg-white p-4 rounded-lg shadow-md`}
       >
         <form className="grid grid-cols-3 gap-5 font-semibold">
           <img
             src={`${user.userImgUrl}`}
             alt="userProfile"
-            className="h-[10rem] px-7 rounded-2xl border-2 border-black overflow-hidden ml-10"
+            className="h-[6rem] md:h-[10rem]  px-7 rounded-2xl border-2 border-black overflow-hidden ml-10"
           />
 
           <div className="col-span-3 lg:col-span-2 flex gap-3 items-center">
@@ -206,28 +213,25 @@ function Account() {
             className="col-span-2 border-2  rounded-xl border-gray-400 py-1 px-5"
           />
           <div className="col-span-3 flex justify-between ">
-            <button onClick={handleSubmit} className="button ">
+            <button
+              onClick={handleSubmit}
+              className="bg-blue-800 text-white px-4 py-2 rounded-full hover:bg-blue-900 focus:outline-none "
+            >
               Update Profile
             </button>
             <button
               onClick={handleDelete}
-              className=" px-5 py-1 rounded-xl text-white bg-red-500"
+              className="  bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full focus:outline-none"
             >
               Delete Profile
             </button>
           </div>
         </form>
       </div>
-      <div className="flex items-center justify-end mr-[15rem] my-10">
-        <button
-          className={`${toggleClassHidden} bg-[#ceae93] hover:bg-[#c9a687] hover:shadow-xl transition-all duration-500 text-white font-bold py-2 px-4 rounded-xl `}
-          onClick={handleUpdate}
-        >
-          Update Profile
-        </button>
 
+      <div className="flex items-center justify-end mx-auto my-8">
         <button
-          className={`${toggleClassHiddenn} button`}
+          className={`${toggleClassHiddenn} bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full focus:outline-none`}
           onClick={handleCloseUpdate}
         >
           Cancel

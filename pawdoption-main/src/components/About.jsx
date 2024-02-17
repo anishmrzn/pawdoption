@@ -8,7 +8,7 @@ function About() {
         className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center justify-center bg-white p-12 rounded-lg shadow-lg"
         data-aos="fade-left"
       >
-        <div className="text-center border border-gray-300 rounded-lg p-6">
+        <div className="text-center border border-gray-300 rounded-lg h-[30rem] p-6">
           <div className="text-[#a67b5b] text-[5rem]">
             <ion-icon name="heart-outline"></ion-icon>
           </div>
@@ -28,7 +28,7 @@ function About() {
           </ul>
         </div>
 
-        <div className="text-center border border-gray-300 rounded-lg p-6">
+        <div className="text-center border border-gray-300 rounded-lg h-[30rem] p-6">
           <div className="text-[#a67b5b] text-[5rem]">
             <ion-icon name="paw-outline"></ion-icon>
           </div>
@@ -46,7 +46,7 @@ function About() {
           </ul>
         </div>
 
-        <div className="text-center border border-gray-300 rounded-lg p-6">
+        <div className="text-center border border-gray-300 rounded-lg h-[30rem] p-6">
           <div className="text-[#a67b5b] text-[5rem]">
             <ion-icon name="home-outline"></ion-icon>
           </div>
