@@ -53,14 +53,7 @@ function UpdateProduct() {
       formData.append("featured", featured);
       formData.append("supplierId", supplierId);
       formData.append("animalCategory", animalCategory);
-      //   const { data } = await axios.put(
-      //     `http://127.0.0.1:8000/update/${id}/`,
-      //     formData,
-      //     { headers: { "Content-Type": "multipart/form-data" } }
-      //   );
-      // } catch (err) {
-      //   console.log(err);
-      // }
+
       const token = localStorage.getItem("sellerToken");
       const response = await fetch(`http://127.0.0.1:8000/api/update/${id}/`, {
         method: "PUT",
@@ -80,19 +73,6 @@ function UpdateProduct() {
   };
   const handleDelete = async () => {
     try {
-      // let answer = window.prompt(
-      //   "Are you sure you want to delete this product?"
-      // );
-      // if (!answer) return;
-      //   const { data } = await axios.delete(
-      //     `http://127.0.0.1:8000/delete/${id}/`
-      //   );
-      //   toast.success("product deleted successfully");
-      //   navigate("/seller");
-      // } catch (error) {
-      //   console.log(error);
-      //   toast.error("error deleting");
-      // }
       let answer = window.prompt(
         "Are you sure you want to delete this product?"
       );
@@ -104,7 +84,6 @@ function UpdateProduct() {
       if (response.ok) {
         window.location.replace("http://localhost:5173/store");
         toast.success("Product deleted");
-        // navigate("/store");
       }
     } catch (error) {
       toast.error("Error");

@@ -20,11 +20,9 @@ import { useEffect } from "react";
 import AboutUs from "./pages/AboutUs";
 import SellerSignup from "./pages/SellerSignUp";
 import Account from "./pages/Account";
-
 import AdoptPet from "./pet/AdoptPet";
 import RehomePet from "./pet/RehomePet";
 import Orders from "./pages/Orders";
-import Loader from "./components/Loader";
 
 function App() {
   useEffect(() => {

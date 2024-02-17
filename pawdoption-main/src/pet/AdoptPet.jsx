@@ -1,3 +1,4 @@
+// AdoptPet.jsx
 import React, { useState, useEffect } from "react";
 import PageNav from "../components/PageNav";
 import PetContainer from "../components/PetContainer";
@@ -8,6 +9,8 @@ function AdoptPet() {
   const [searchBreed, setSearchBreed] = useState("");
   const [petType, setPetType] = useState("all");
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   const filteredPets = pets.filter((pet) => {
     const byBreed = pet.breed.toLowerCase().includes(searchBreed.toLowerCase());
@@ -32,6 +35,14 @@ function AdoptPet() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPets = filteredPets.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="container mx-auto p-8">
       <PageNav />
@@ -41,7 +52,6 @@ function AdoptPet() {
       </h1>
 
       <div className="flex justify-between items-center mb-6">
-        {/* Existing code for pet type buttons */}
         <div className="flex gap-10 ml-10">
           <button
             className={`type-btn text-2xl font-semibold hover:text-gray-500 transition-all duration-500 ${
@@ -79,14 +89,41 @@ function AdoptPet() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-8">
-        {filteredPets.map((pet) => (
+        {currentPets.map((pet) => (
           <PetContainer key={pet.petId} pets={pet} />
         ))}
       </div>
 
+      <div className="flex justify-center mt-8">
+        <button
+          className={`${
+            currentPage === 1
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-blue-800 hover:bg-blue-900"
+          } text-white px-4 py-2 rounded-full mx-2 transition-all duration-300`}
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <button
+          className={`${
+            currentPage === Math.ceil(filteredPets.length / itemsPerPage)
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-blue-800 hover:bg-blue-900"
+          } text-white px-4 py-2 rounded-full mx-2 transition-all duration-300`}
+          onClick={() => paginate(currentPage + 1)}
+          disabled={
+            currentPage === Math.ceil(filteredPets.length / itemsPerPage)
+          }
+        >
+          Next
+        </button>
+      </div>
+
       {showScrollButton && (
         <button
-          className="fixed bottom-7 right-7 bg-blue-500 text-white text-2xl px-3 py-2 rounded-full"
+          className="fixed bottom-7 right-7 bg-blue-800 text-white text-2xl px-3 py-2 rounded-full"
           onClick={scrollToTop}
         >
           <ion-icon name="arrow-up-outline"></ion-icon>
