@@ -47,7 +47,6 @@ function PageNav() {
     localStorage.removeItem("userToken");
 
     navigate("/");
-    window.location.reload();
   }
 
   function handleDropdown() {

@@ -3,7 +3,6 @@ import { useUpdateContext } from "../context/SellerUpdateContext";
 
 function ManageProducts() {
   const { products } = useUpdateContext();
-  console.log(products);
 
   return (
     <div className="flex flex-col items-center gap-10">
