@@ -38,7 +38,7 @@ function ProductContainer({ products }) {
           </div>
           <p className="text-gray-600">{products.shortDescription}</p>
           <div className="mt-4 flex justify-between items-center">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition duration-300">
+            <button className="bg-blue-800 text-white px-4 py-2 rounded-full hover:bg-blue-900 transition duration-300">
               View Details
             </button>
           </div>

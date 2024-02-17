@@ -41,7 +41,7 @@ function Home() {
 
       {showScrollButton && (
         <button
-          className="fixed bottom-7 right-7 bg-blue-500 text-white text-2xl px-3 py-2 rounded-full"
+          className="fixed bottom-7 right-7 bg-blue-800 text-white text-2xl px-3 py-2 rounded-full"
           onClick={scrollToTop}
         >
           <ion-icon name="arrow-up-outline"></ion-icon>

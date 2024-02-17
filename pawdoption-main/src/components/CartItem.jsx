@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useCartContext } from "../context/cartContext";
 import CartCounter from "./CartCounter";
 
@@ -6,19 +5,11 @@ function CartItem({
   productId,
   productName,
   productImgUrl,
-  stock,
   amount,
   price,
   discount,
 }) {
   const { removeItem, setIncrease, setDecrease } = useCartContext();
-  // const [amount, setAmount] = useState(1);
-  // const setDecrease = () => {
-  //   amount > 1 ? setAmount(amount - 1) : setAmount(1);
-  // };
-  // const setIncrease = () => {
-  //   amount < stock ? setAmount(amount + 1) : setAmount(stock);
-  // };
 
   return (
     <>

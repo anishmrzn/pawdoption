@@ -12,7 +12,6 @@ function ManageProducts() {
       </h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10  justify-between">
         {products?.map((product) => {
-          // return <FeatureProducts product={product} key={product._id} />;
           return (
             <Link
               key={product.productId}

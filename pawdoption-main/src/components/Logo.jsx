@@ -6,7 +6,7 @@ function Logo() {
       <img
         src="/logo.png"
         alt="Pawdoption logo"
-        className="ml-2  h-auto w-[15rem]"
+        className="ml-2  h-auto w-[20rem]"
         data-aos="fade-down"
       />
     </Link>

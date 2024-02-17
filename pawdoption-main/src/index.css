@@ -44,7 +44,7 @@ body {
 .hero {
   @apply bg-[url("/hero2.jpg")]
   bg-cover
-  bg-center;
+  bg-right;
 }
 
 .active {
@@ -54,7 +54,7 @@ body {
   duration-500;
 }
 .button {
-  @apply font-bold text-white text-sm lg:text-lg hover:shadow-2xl transition-all duration-500 bg-[#c9a687] px-5 lg:px-8 py-2 rounded-xl;
+  @apply bg-blue-800 text-white px-4 py-2 rounded-full hover:bg-blue-900 focus:outline-none;
 }
 .sticky {
   @apply fixed w-[96%] bg-white z-10 shadow-md pt-3 pb-7  px-3 transform translate-y-[-1.3rem];
