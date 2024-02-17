@@ -32,7 +32,7 @@ function UserProvider({ children }) {
   };
   useEffect(() => {
     getUser(API);
-  }, []);
+  }, [token]);
   return (
     <UserContext.Provider value={{ ...state, getUser }}>
       {state.isLoading ? <Loader /> : children}
