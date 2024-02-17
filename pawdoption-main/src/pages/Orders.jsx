@@ -49,7 +49,8 @@ function Orders() {
             <table className="w-full bg-white shadow-lg table-auto">
               <thead className="bg-[#c9a687] text-white">
                 <tr>
-                  <th className="py-3 px-6 text-left border-r">Product Name</th>
+                  <th className="py-3 px-6 text-left border-r">Product</th>
+                  <th className="py-3 px-6 text-left border-r">Name</th>
                   <th className="py-3 px-6 text-left border-r">Price</th>
                   <th className="py-3 px-6  border-r text-center">
                     Delivery Status
@@ -63,6 +64,18 @@ function Orders() {
                     <tr
                       className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
                     >
+                      <td className="py-4 px-6 border-r flex flex-col items-center justify-center">
+                        {order.products.map((product, productIndex) => (
+                          <div key={product.productName}>
+                            {productIndex !== 0 && <div className="mt-2"></div>}
+                            <img
+                              src={product.productImgUrl}
+                              alt="orderimg"
+                              className="h-[3rem]"
+                            />
+                          </div>
+                        ))}
+                      </td>
                       <td className="py-4 px-6 border-r">
                         {order.products.map((product, productIndex) => (
                           <div key={product.productName}>
@@ -100,7 +113,7 @@ function Orders() {
               <tfoot className="bg-[#c9a687] text-white">
                 <tr>
                   <td
-                    colSpan="3"
+                    colSpan="4"
                     className="py-3 px-6 text-right font-bold border-r"
                   >
                     Total Price:
