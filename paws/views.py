@@ -9,7 +9,6 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import PetSerializer, PetAdoptionSerializer
 import stripe
 from rest_framework.views import APIView
-from stripe.api_resources.checkout.session import Session
 from .models import Pets
 
 # Create your views here.
@@ -182,15 +181,13 @@ class AdoptionCheckout(APIView):
                 'quantity': 1,
             }]
 
-            session = Session.create(
+            session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 line_items=line_items,
                 mode='payment',
-                success_url=settings.SITE_URL,
+                success_url=settings.SITE_URL + '?successful_payment=true',
                 cancel_url=settings.SITE_URL,
             )
-
-            print(session)
 
             return Response({'url': session.url})
 
