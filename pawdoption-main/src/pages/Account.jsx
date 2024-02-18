@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import PageNav from "../components/PageNav";
 import { useUserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
+import ChangePassword from "../components/ChangePassword";
 
 function Account() {
   const { user } = useUserContext();
@@ -16,7 +17,7 @@ function Account() {
   const [update, setUpdate] = useState(false);
   const [hiddenClass, setHiddenClass] = useState(true);
   const [hiddennClass, setHiddennClass] = useState(false);
-
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   function handleUpdate() {
     setUpdate(true);
     setHiddenClass(false);
@@ -27,6 +28,18 @@ function Account() {
     setHiddenClass(true);
     setHiddennClass(false);
   }
+  function handleOpenChangePasswordModal() {
+    setShowChangePasswordModal(true);
+  }
+
+  function handleCloseChangePasswordModal() {
+    setShowChangePasswordModal(false);
+  }
+  const handleModalOutsideClick = (e) => {
+    if (e.target.classList.contains("modal-overlay")) {
+      handleCloseChangePasswordModal();
+    }
+  };
 
   let toggleClassHiddenn = hiddennClass ? "" : "hidden";
   useEffect(() => {
@@ -95,9 +108,12 @@ function Account() {
     }
   };
   return (
-    <div className="relative bg-gray-100 min-h-screen">
+    <div
+      className={`relative bg-gray-100 min-h-screen ${
+        showChangePasswordModal ? "overflow-hidden" : ""
+      }`}
+    >
       <PageNav />
-
       <div className=" mx-auto mt-10 p-4 bg-white rounded-lg shadow-md lg:py-10 lg:px-[10rem]">
         <div className="flex items-center justify-between ">
           <div className="flex items-center">
@@ -113,12 +129,20 @@ function Account() {
               <p className="text-gray-600">{user.username}</p>
             </div>
           </div>
-          <button
-            onClick={handleUpdate}
-            className="bg-blue-800 text-white px-4 py-2 rounded-full hover:bg-blue-900 focus:outline-none"
-          >
-            Edit Profile
-          </button>
+          <div className="flex flex-col gap-4">
+            <button
+              onClick={handleUpdate}
+              className="bg-blue-800 text-white px-4 py-2 rounded-full hover:bg-blue-900 focus:outline-none"
+            >
+              Edit Profile
+            </button>
+            <button
+              onClick={handleOpenChangePasswordModal}
+              className="bg-blue-800 text-white px-4 py-2 rounded-full hover:bg-blue-900 focus:outline-none"
+            >
+              Change Password
+            </button>
+          </div>
         </div>
 
         <div className="mt-8 ">
@@ -139,7 +163,6 @@ function Account() {
           </div>
         </div>
       </div>
-
       <div
         className={`profile-edit-form ${toggleClassHiddenn} mx-auto mt-8 bg-white p-4 rounded-lg shadow-md`}
       >
@@ -228,7 +251,6 @@ function Account() {
           </div>
         </form>
       </div>
-
       <div className="flex items-center justify-end mx-auto my-8">
         <button
           className={`${toggleClassHiddenn} bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full focus:outline-none`}
@@ -237,7 +259,24 @@ function Account() {
           Cancel
         </button>
       </div>
-
+      {showChangePasswordModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-75 bg-gray-900 modal-overlay"
+          onClick={handleModalOutsideClick}
+        >
+          <div className="bg-white p-4 rounded-lg shadow-md w-96">
+            <button
+              onClick={handleCloseChangePasswordModal}
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 focus:outline-none"
+            >
+              Close
+            </button>
+            <ChangePassword
+              handleCloseChangePasswordModal={handleCloseChangePasswordModal}
+            />
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );

@@ -94,10 +94,8 @@ def getPets(request,pk = None):
 # send_emails.py
 
 
-  
-  
-  
 @api_view(['POST'])
+<<<<<<< HEAD
 @permission_classes([IsAuthenticated])
 def send_feedback_email(request):
     if request.method == 'POST':
@@ -137,5 +135,19 @@ def submit_adoption_application(request):
     else:
       return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
+=======
+@permission_classes([IsAuthenticated]) 
+def ChangePassword(request):
+  user = request.user
+>>>>>>> e78705ca3ec95db462ab2e586545c9d9bba781c5
   
+  old_password = request.data.get('old_password')
+  new_password = request.data.get('new_password')
   
+  if user.check_password(old_password):
+    user.set_password(new_password)
+    user.save()
+    
+    return Response({'message': 'Password changed successfully'}, status= status.HTTP_202_ACCEPTED)
+  
+  return Response({'error': 'Invalid old password'}, status= status.HTTP_400_BAD_REQUEST) 

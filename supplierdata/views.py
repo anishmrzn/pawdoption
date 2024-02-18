@@ -147,7 +147,7 @@ def orders(request):
             order_details = serializer.data
             
             # Include product details within each order
-            products = [{'productName': product.productName, 'discounted': product.discounted} for product in order.products.all()]
+            products = [{'productImgUrl':product.productImgUrl,'productName': product.productName, 'discounted': product.discounted} for product in order.products.all()]
             order_details['products'] = products
             
             order_data.append(order_details)

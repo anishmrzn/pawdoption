@@ -79,6 +79,12 @@ function Footer() {
             helpful tips on pet care, training, and creating a happy home for
             your new family member.
           </p>
+          <Link
+            to="/blog"
+            className="font-bold text-black border-2 border-[#a67b5b] text-lg hover:shadow-2xl transition-all duration-500 bg-[#b98e6d] px-8 py-3 rounded-xl"
+          >
+            Blog
+          </Link>
         </div>
       </div>
 
