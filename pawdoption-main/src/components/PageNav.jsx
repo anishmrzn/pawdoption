@@ -104,17 +104,16 @@ function PageNav() {
             <div>
               <button
                 className="hidden md:flex absolute left-[88%] top-[0%] text-md border-2 rounded-full px-4 py-4 hover:text-[#c9a687] transition-all duration-500"
-                
+                onClick={handleDropdown}
               >
                 <ion-icon name="person"></ion-icon>
               </button>
 
               <div
-             
                 ref={dropdownRef}
                 className={`${toggleClassDropdown} absolute left-[86.4%] top-[180%]  clip  bg-gray-300  }`}
               >
-                <div  className="smallClip bg-white  px-6 py-5">
+                <div className="smallClip bg-white  px-6 py-5">
                   <ul className="flex flex-col gap-3 text-md">
                     {!sellerToken ? (
                       <li className="text-black hover:scale-110 transition-all hover:text-gray-500 duration-500 mt-2">
