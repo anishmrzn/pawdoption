@@ -59,40 +59,6 @@ def getPets(request,pk = None):
     serializer = PetSerializer(pets, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
   
-  
-  
-# @api_view(['POST'])
-# def send_approval_rejection_emails(request):
-
-#     pets = Pets.objects.filter(Q(is_approved=True) | Q(is_rejected=True), email_sent=False)
-
-#     for pet in pets:
-
-#         if pet.is_approved:
-#             send_mail(
-#                 subject='Congratulations!',
-#                 message='Your pet form has been approved. Thank you!',
-#                 from_email=settings.EMAIL_HOST_USER, 
-#                 recipient_list=[pet.email], 
-#                 fail_silently=False,
-#             )
-        
-
-#         if pet.is_rejected:
-#             send_mail(
-#                 subject='Sorry!',
-#                 message='Your pet form has been rejected. Please contact us for more information.',
-#                 from_email=settings.EMAIL_HOST_USER,  
-#                 recipient_list=[pet.email], 
-#                 fail_silently=False,
-#             )
-
-
-#         pet.email_sent = True
-#         pet.save()
-
-#     return Response({'message': 'Emails sent successfully'}, status=status.HTTP_200_OK)
-# send_emails.py
 
 
 @api_view(['POST'])
@@ -165,17 +131,17 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 class AdoptionCheckout(APIView):
     def post(self, request):
         try:
-            pet_info = request.data.get('pet_info')  # Assuming pet_info contains pet information
-            
-            # Assuming there's a fixed adoption price per pet
-            adoption_price = 1000  # $50.00 in cents
+            pet_id = request.data.get('petId')  
+            pet = Pets.objects.get(petId = pet_id)
+           
+            adoption_price = 1000  
 
             line_items = [{
                 'price_data': {
                     'currency': 'usd',
                     'unit_amount': adoption_price,
                     'product_data': {
-                        'name': 'Pet Adoption Fee',
+                        'name':f"You are paying to adopt our lovely pet '{pet.name}'" ,
                     },
                 },
                 'quantity': 1,
