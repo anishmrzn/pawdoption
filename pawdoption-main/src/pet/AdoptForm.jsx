@@ -13,15 +13,17 @@ function AdoptForm() {
   useEffect(() => {
     getSinglePet(`${API}${id}/`);
   }, [singlePet]);
-  
+
+  const petId = singlePet.petId;
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
- 
+
   const [previous, setPrevious] = useState("");
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,19 +32,23 @@ function AdoptForm() {
       formData.append("full_name", fullName);
       formData.append("email", email);
       formData.append("phone_number", phoneNumber);
-      formData.append("adddress", address);
+      formData.append("address", address);
       formData.append("city", city);
       formData.append("previous_pet_experience", previous);
-      
+      formData.append("petId", petId);
 
       const token = localStorage.getItem("userToken");
-      const response = await fetch("http://127.0.0.1:8000/api/add-pets/", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: {formData,id:singlePet.petId}
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/petadoption-form/",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // "Content-Type": "application/json",
+          },
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         navigate("/adopt");
@@ -63,10 +69,9 @@ function AdoptForm() {
           Fill out the Adoption Form
         </h1>
         <form className="grid grid-cols-2 gap-4">
-         
           <div className="mb-4">
             <label htmlFor="fullName" className="block font-semibold">
-             Full Name:
+              Full Name:
             </label>
             <input
               type="text"
@@ -94,11 +99,10 @@ function AdoptForm() {
             </label>
             <input
               type="text"
-              id="phonenNumber"
+              id="phoneNumber"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               className="border-2 rounded-md border-gray-300 p-2 w-full"
-              
             ></input>
           </div>
           <div className="mb-4">
@@ -123,7 +127,6 @@ function AdoptForm() {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               className="border-2 rounded-md border-gray-300 p-2 w-full"
-            
             ></input>
           </div>
           <div className="mb-4">
@@ -138,7 +141,6 @@ function AdoptForm() {
               className="border-2 rounded-md border-gray-300 p-2 w-full"
             />
           </div>
-          
         </form>
         <button
           onClick={handleSubmit}

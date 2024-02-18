@@ -95,7 +95,7 @@ def getPets(request,pk = None):
 
 
 @api_view(['POST'])
-<<<<<<< HEAD
+
 @permission_classes([IsAuthenticated])
 def send_feedback_email(request):
     if request.method == 'POST':
@@ -126,7 +126,11 @@ def send_feedback_email(request):
 @permission_classes([IsAuthenticated])
 def submit_adoption_application(request):
     if request.method == 'POST':
-        serializer = PetAdoptionSerializer(data=request.data)
+
+        mutable = request.data.copy()
+        mutable['petId'] = request.data.get('petId')
+        
+        serializer = PetAdoptionSerializer(data=mutable)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -135,11 +139,11 @@ def submit_adoption_application(request):
     else:
       return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
-=======
+
 @permission_classes([IsAuthenticated]) 
 def ChangePassword(request):
   user = request.user
->>>>>>> e78705ca3ec95db462ab2e586545c9d9bba781c5
+
   
   old_password = request.data.get('old_password')
   new_password = request.data.get('new_password')
