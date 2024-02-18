@@ -36,12 +36,13 @@ function AdoptForm() {
       
 
       const token = localStorage.getItem("userToken");
-      const response = await fetch("http://127.0.0.1:8000/api/add-pets/", {
+      const response = await fetch("http://127.0.0.1:8000/api/petadoption-form/", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-        body: {formData,id:singlePet.petId}
+        body: JSON.stringify({ formData, id: singlePet.petId }),
       });
 
       if (response.ok) {
