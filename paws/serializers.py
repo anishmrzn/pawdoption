@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Pets
+from .models import Pets, PetAdoption
 import cloudinary.uploader
 
 class PetSerializer(serializers.ModelSerializer):
@@ -21,3 +21,10 @@ class PetSerializer(serializers.ModelSerializer):
       pet.save()
       
     return pet
+  
+
+class PetAdoptionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+      model = PetAdoption
+      fields = '__all__'

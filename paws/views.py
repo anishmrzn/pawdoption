@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import PetSerializer
+from .serializers import PetSerializer, PetAdoptionSerializer
+
 from .models import Pets
 
 # Create your views here.
@@ -94,9 +95,51 @@ def getPets(request,pk = None):
 
 
 @api_view(['POST'])
+<<<<<<< HEAD
+@permission_classes([IsAuthenticated])
+def send_feedback_email(request):
+    if request.method == 'POST':
+        subject = request.data.get('subject', '')
+        message = request.data.get('message', '')
+
+        if subject and message:
+            from_email = request.user.email #
+            recipient_email = settings.EMAIL_HOST_USER
+
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=from_email,
+                recipient_list=[recipient_email],
+                fail_silently=False,
+            )
+
+            return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Subject and message are required'}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({'error': 'Only POST requests are allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def submit_adoption_application(request):
+    if request.method == 'POST':
+        serializer = PetAdoptionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    else:
+      return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+=======
 @permission_classes([IsAuthenticated]) 
 def ChangePassword(request):
   user = request.user
+>>>>>>> e78705ca3ec95db462ab2e586545c9d9bba781c5
   
   old_password = request.data.get('old_password')
   new_password = request.data.get('new_password')

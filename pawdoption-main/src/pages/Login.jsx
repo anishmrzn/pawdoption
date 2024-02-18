@@ -122,12 +122,15 @@ function Login() {
               </button>
             </div>
           </form>
+
+
           <p className="text-center mt-8 text-[#4A5568]">
             Not signed up yet?{" "}
             <Link
               to="/signup"
               className="text-[#2C5282] font-semibold hover:underline"
             >
+
               Sign up
             </Link>
           </p>

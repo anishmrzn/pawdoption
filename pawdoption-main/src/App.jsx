@@ -24,6 +24,7 @@ import AdoptPet from "./pet/AdoptPet";
 import RehomePet from "./pet/RehomePet";
 import Orders from "./pages/Orders";
 import Blog from "./pages/Blog";
+import AdoptForm from "./pet/AdoptForm";
 
 function App() {
   useEffect(() => {
@@ -42,6 +43,7 @@ function App() {
           <Route path="admin" element={<Admin />} />
           <Route path="account" element={<Account />} />
           <Route path="blog" element={<Blog />} />
+          <Route path="adoptform/:id" element={<AdoptForm />} />
           <Route path="rehome" element={<RehomePet />} />
           <Route path="adopt" element={<AdoptPet />} />
           <Route path="orders" element={<Orders />} />
