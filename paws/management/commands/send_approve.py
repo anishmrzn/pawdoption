@@ -15,8 +15,8 @@ class Command(BaseCommand):
             if pet.is_approved:
                 
                 message = f"Dear {pet.username}, \n\n" \
-                          f"Your pet '{pet.name}' has been approved. Thank you! \n\n " \
-                          f"Best regards, \nYour Pet Adoption Team - Pawdoption"    
+                          f"Your pet '{pet.name}' has been approved for adoption. Thank you! \n\n " \
+                          f"Best regards, \n Pet Adoption Team - Pawdoption"    
                 
 
                 send_mail(
@@ -30,8 +30,8 @@ class Command(BaseCommand):
             if pet.is_rejected:
                 
                 message = f"Dear {pet.username}, \n\n" \
-                          f"Unfortunately, your pet '{pet.name}' has been rejected. Please contact us for more information. \n\n " \
-                          f"Best regards, \nYour Pet Adoption Team - Pawdoption"
+                          f"Unfortunately, your pet '{pet.name}' has been rejected for adoption. Please contact us for more information. \n\n " \
+                          f"Best regards, \n Pet Adoption Team - Pawdoption"
                  
                 send_mail(
                     subject='Sorry for the Inconvenience',

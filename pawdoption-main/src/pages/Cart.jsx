@@ -1,13 +1,16 @@
-import PageNav from "../components/PageNav";
-import { useCartContext } from "../context/cartContext";
-import CartItem from "../components/CartItem";
+// Cart.jsx
+import React from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-
+import { useCartContext } from "../context/cartContext";
+import PageNav from "../components/PageNav";
+import CartItem from "../components/CartItem";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useUserContext } from "../context/UserContext";
 
-function Cart() {
+const Cart = () => {
   const { cart, clearCart, total_amount } = useCartContext();
+  const { user } = useUserContext();
   const checkoutItems = cart.map((item) => ({
     productId: item.productId,
     quantity: item.amount,
@@ -15,11 +18,9 @@ function Cart() {
 
   const handleCheckout = async () => {
     try {
-      // Make a POST request to your backend API endpoint
       const token = localStorage.getItem("userToken");
       const response = await axios.post(
         "http://127.0.0.1:8000/api/create-checkout-session/",
-
         {
           products: checkoutItems,
         },
@@ -37,60 +38,84 @@ function Cart() {
         localStorage.removeItem("pawcart");
       }
     } catch (error) {
-      // Handle errors from the backend
-      toast.error("Unsuccessfull");
+      toast.error("Unsuccessful");
     }
   };
 
-  if (cart.length === 0) {
-    return (
-      <>
-        <PageNav />
-        <h1 className="container flex items-center justify-center mt-[10rem]">
-          No Items in Cart
-        </h1>
-        ;
-      </>
-    );
-  }
   return (
-    <div>
+    <div className="bg-gray-100 min-h-screen">
       <PageNav />
-      <div className="container mt-20">
-        <div className="grid grid-cols-5 gap-10 justify-items-center ">
+      <div className="container mx-auto my-12 p-8 bg-white rounded-lg shadow-md">
+        <h1 className="text-4xl font-extrabold text-gray-800 mb-8 text-center">
+          Shopping Cart
+        </h1>
+        <div className="grid grid-cols-5 gap-8 justify-items-center text-lg font-semibold text-gray-700">
           <p>Item</p>
           <p>Price</p>
           <p>Quantity</p>
-          <p>SubTotal</p>
+          <p>Subtotal</p>
           <p>Remove</p>
         </div>
-        <hr className="mt-5"></hr>
+        <hr className="my-6 border-t border-gray-300" />
         <div>
-          {cart.map((curEl) => {
-            return <CartItem key={curEl.productId} {...curEl} />;
-          })}
+          {cart.map((curEl) => (
+            <CartItem key={curEl.productId} {...curEl} />
+          ))}
         </div>
       </div>
 
-      <div className="container flex justify-between">
-        <Link to="/store">
-          <button className="button">Continue Shopping</button>
-        </Link>
-        <button className="button" onClick={clearCart}>
-          Clear Cart
-        </button>
-      </div>
-      <div className="flex flex-col gap-3 justify-end items-end mr-20 mt-10">
-        <div className="flex gap-3 justify-end">
-          <p className="text-xl font-extrabold">Total Price :</p>
-          <p className="text-xl font-extrabold">Rs {total_amount.toFixed(2)}</p>
+      {cart.length > 0 && (
+        <div className="container mx-auto flex justify-between items-center mt-8 space-x-4">
+          <Link to="/store">
+            <button className="button bg-gray-500 hover:bg-gray-600 transform transition-all duration-300">
+              Continue Shopping
+            </button>
+          </Link>
+          <button
+            className="button bg-red-500 hover:bg-red-600 transform transition-all duration-300"
+            onClick={clearCart}
+          >
+            Clear Cart
+          </button>
         </div>
-        <button onClick={handleCheckout} className="button flex justify-end">
-          Place Order
-        </button>
-      </div>
+      )}
+
+      {cart.length > 0 && (
+        <div className="container mx-auto flex flex-col gap-4 items-end mt-8">
+          <div className="bg-gray-200 p-6 rounded-md shadow-md w-[16rem]">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Order Summary
+            </h2>
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">Items in Cart:</h3>
+              <ul className="list-disc list-inside">
+                {cart.map((item) => (
+                  <li key={item.productId}>
+                    {item.productName} x {item.amount}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">Shipping Details:</h3>
+              <p>Address: {user.address}</p>
+              <p>Contact: {user.contact}</p>
+            </div>
+            <div className="flex items-center justify-between text-xl font-extrabold text-gray-800">
+              <p>Total Price:</p>
+              <p className="ml-2">Rs {total_amount.toFixed(2)}</p>
+            </div>
+          </div>
+          <button
+            onClick={handleCheckout}
+            className="button bg-green-500 hover:bg-green-600 transform transition-all duration-300 mt-4"
+          >
+            Proceed to Checkout
+          </button>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default Cart;

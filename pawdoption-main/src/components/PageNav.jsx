@@ -6,12 +6,11 @@ function PageNav() {
   const location = useLocation();
   const navigate = useNavigate();
   const { total_item } = useCartContext();
-
   const sellerToken = localStorage.getItem("sellerToken");
   const userToken = localStorage.getItem("userToken");
   const [btnState, setBtnState] = useState(false);
   const [dropDown, setDropDown] = useState(false);
-  const [smallDropDown, setSmallDropDown] = useState(false);
+
   const [sticky, setSticky] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -23,7 +22,6 @@ function PageNav() {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropDown(false);
-        setSmallDropDown(false);
       }
     };
 
@@ -49,19 +47,13 @@ function PageNav() {
     localStorage.removeItem("userToken");
 
     navigate("/");
-    window.location.reload();
   }
 
   function handleDropdown() {
     setDropDown((dropDown) => !dropDown);
   }
 
-  function handleSmallDropdown() {
-    setSmallDropDown((smallDropDown) => !smallDropDown);
-  }
-
   let toggleClassDropdown = dropDown ? "" : "hidden";
-  let toggleClassSmallDropdown = smallDropDown ? "" : "hidden";
   let toggleClassOpen = btnState ? "open" : "";
   let toggleClassHidden = btnState ? "flex" : "hidden";
 
@@ -99,8 +91,11 @@ function PageNav() {
           </div>
         </ul>
         {!(sellerToken || userToken) ? (
-          <div className="hidden md:flex absolute left-[88%] top-[-20%]">
-            <Link to="/login" className="button ">
+          <div className="hidden md:flex absolute left-[88%] top-[0%]">
+            <Link
+              to="/login"
+              className="bg-[#c9a687] text-white py-2 px-4 w-[6rem] text-center rounded-xl shadow-md hover:bg-[#a57b50] transition-all duration-300"
+            >
               Login
             </Link>
           </div>
@@ -190,11 +185,8 @@ function PageNav() {
           ) : (
             <>
               <div>
-                <button
-                  className="flex text-md  hover:text-[#c9a687] transition-all duration-500"
-                  onClick={handleSmallDropdown}
-                >
-                  <div className="flex items-center justify-center gap-3">
+                <button className="flex text-md  hover:text-[#c9a687] transition-all duration-500">
+                  <div className="flex items-center justify-center gap-3 ">
                     <ion-icon name="person"></ion-icon>
                     <h1 className="text-lg">ACCOUNT</h1>
                   </div>

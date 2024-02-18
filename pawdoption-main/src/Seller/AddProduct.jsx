@@ -14,30 +14,8 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [featured, setFeatured] = useState(false);
-  // const [supplierId, setSupplierId] = useState("");
+
   const [animalCategory, setAnimalCategory] = useState("");
-  // const singleProduct = {
-  //   supplierId: "Astha daraz",
-  // };
-  // useEffect(() => {
-  //   async function getData() {
-  //     try {
-  //       const res = await axios.post(
-  //         "http://127.0.0.1:8000/api/create-product/"
-  //       );
-  //       const product = await res.data;
-  //       console.log(product);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   }
-  //   getData();
-  // }, []);
-  // useEffect(() => {
-  //   if (singleProduct) {
-  //     setSupplierId(singleProduct.seller || "");
-  //   }
-  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -192,16 +170,7 @@ function AddProduct() {
           }}
           className="col-span-2 rounded-xl border-gray-300 py-1 px-5"
         />
-        {/* <label htmlFor="seller">Seller:</label>
-        <input
-          type="text"
-          id="seller"
-          value={supplierId}
-          onChange={(e) => {
-            setStock(e.target.value);
-          }}
-          className="col-span-2 border-2"
-        /> */}
+       
       </form>
       <button onClick={handleSubmit} className="button ">
         Submit

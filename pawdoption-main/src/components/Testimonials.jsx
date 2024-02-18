@@ -60,6 +60,7 @@ function TestimonialSlider() {
           {testimonials.map((s) => {
             return (
               <div
+                key={s.id}
                 className={` ${s.transform}  w-[100%] flex flex-col items-center justify-between gap-3 lg:gap-10 relative`}
               >
                 <div className="before:content-['\201C'] absolute text-[#c9a687] top-0 left-[-1rem] text-8xl"></div>

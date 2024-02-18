@@ -93,35 +93,18 @@ def getPets(request,pk = None):
 # send_emails.py
 
 
-  
-  
-  
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def send_feedback_email(request):
-    if request.method == 'POST':
-        subject = request.data.get('subject', '')
-        message = request.data.get('message', '')
-
-        if subject and message:
-            from_email = request.user.email #
-            recipient_email = settings.EMAIL_HOST_USER
-
-            send_mail(
-                subject=subject,
-                message=message,
-                from_email=from_email,
-                recipient_list=[recipient_email],
-                fail_silently=False,
-            )
-
-            return Response({'message': 'Email sent successfully'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Subject and message are required'}, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        return Response({'error': 'Only POST requests are allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
+@permission_classes([IsAuthenticated]) 
+def ChangePassword(request):
+  user = request.user
+  
+  old_password = request.data.get('old_password')
+  new_password = request.data.get('new_password')
+  
+  if user.check_password(old_password):
+    user.set_password(new_password)
+    user.save()
     
+    return Response({'message': 'Password changed successfully'}, status= status.HTTP_202_ACCEPTED)
   
-  
+  return Response({'error': 'Invalid old password'}, status= status.HTTP_400_BAD_REQUEST) 

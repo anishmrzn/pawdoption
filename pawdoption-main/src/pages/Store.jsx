@@ -1,3 +1,4 @@
+// Store.jsx
 import React, { useState, useEffect } from "react";
 import PageNav from "../components/PageNav";
 import ProductContainer from "../components/ProductContainer";
@@ -5,6 +6,7 @@ import { useFilterContext } from "../context/filterContext";
 
 function Store() {
   const { filter_products } = useFilterContext();
+  const itemsPerPage = 12;
 
   const {
     filters: { text },
@@ -32,18 +34,16 @@ function Store() {
   const animalCategoryOnlyData = getUniqueData2(all_products, "animalCategory");
 
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-
-      // Set showScrollButton to true when user scrolls down, false when at the top
       setShowScrollButton(scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -53,6 +53,17 @@ function Store() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentProducts = filter_products.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="grid grid-cols-5 gap-10 lg:gap-16">
       <div className="col-span-5">
@@ -60,13 +71,6 @@ function Store() {
       </div>
 
       <div className="col-span-2 flex items-center justify-center ">
-        {/* <button className="mx-16 font-semibold text-md hover:text-gray-500 md:text-xl lg:text-2xl">
-          Dog
-        </button>
-        <button className="font-semibold text-md hover:text-gray-500 md:text-xl lg:text-2xl">
-          Cat
-        </button> */}
-
         {animalCategoryOnlyData.map((curEl, index) => {
           return (
             <button
@@ -115,18 +119,44 @@ function Store() {
         </div>
       </div>
 
-      <div className="col-span-4 h-screen">
-        <h1 className="text-center text-2xl font-bold mb-5">Products</h1>
+      <div className="col-span-4 h-screen ">
+        <h1 className="text-center text-2xl font-bold mb-10">Products</h1>
         <div className="grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4">
-          {filter_products.map((products) => (
+          {currentProducts.map((products) => (
             <ProductContainer key={products.id} products={products} />
           ))}
+        </div>
+        <div className="flex justify-center mt-8 mb-10">
+          <button
+            className={`${
+              currentPage === 1
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-blue-800 hover:bg-blue-900"
+            } text-white px-4 py-2 rounded-full mx-2 mb-10 transition-all duration-300`}
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <button
+            className={`${
+              currentPage === Math.ceil(filter_products.length / itemsPerPage)
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-blue-800 hover:bg-blue-900"
+            } text-white px-4 py-2 rounded-full mx-2 mb-10  transition-all duration-300`}
+            onClick={() => paginate(currentPage + 1)}
+            disabled={
+              currentPage === Math.ceil(filter_products.length / itemsPerPage)
+            }
+          >
+            Next
+          </button>
         </div>
       </div>
 
       {showScrollButton && (
         <button
-          className="fixed bottom-7 right-7 bg-blue-500 text-white text-2xl px-3 py-2 rounded-full"
+          className="fixed bottom-7 right-7 bg-blue-800 text-white text-2xl px-3 py-2 rounded-full"
           onClick={scrollToTop}
         >
           <ion-icon name="arrow-up-outline"></ion-icon>
