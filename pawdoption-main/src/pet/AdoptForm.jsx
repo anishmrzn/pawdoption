@@ -37,7 +37,6 @@ function AdoptForm() {
       formData.append("petId", petId);
 
       await handleCheckout(formData);
-      toast.success("Wait for approval");
     } catch (error) {
       toast.error("Error");
     }
@@ -45,15 +44,31 @@ function AdoptForm() {
 
   const handleCheckout = async (formData) => {
     try {
-      const response = await axios.post(
+      const response1 = await axios.post(
         "http://127.0.0.1:8000/api/AdoptionCheckout/",
         {
           petId: petId,
         }
       );
 
-      const checkoutUrl = response.data.url;
+      const checkoutUrl = response1.data.url;
+      const token = localStorage.getItem("userToken");
+      const response2 = await fetch(
+        "http://127.0.0.1:8000/api/petadoption-form/",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
+      if (response2.ok) {
+        toast.success("Wait until the form gets approved");
+      } else {
+        toast.error("Unsuccessful");
+      }
       window.location.href = checkoutUrl;
     } catch (error) {
       toast.error("Unsuccessful");
