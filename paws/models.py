@@ -31,3 +31,26 @@ class Pets(models.Model):
   def __str__(self):
     return f'Name: {self.name} - Date Added: {self.created.strftime("%Y-%m-%d %H:%M:%S")}'
   
+
+class PetAdoption(models.Model):
+  adoptionId = models.UUIDField(
+    default = uuid.uuid4, unique = True, primary_key = True, editable = False)
+  full_name = models.CharField(max_length=100)
+  email = models.EmailField()
+  phone_number = models.CharField(max_length=20)
+  address = models.CharField(max_length=200)
+  city = models.CharField(max_length=100)
+  previous_pet_experience = models.TextField()
+
+  is_approved = models.BooleanField(default = False)
+  is_rejected = models.BooleanField(default = False)
+  email_sent = models.BooleanField(default = False)
+  created = models.DateTimeField(auto_now_add = True)
+  owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank= True,null = True)
+  
+  
+  def __str__(self):
+    return f'Name: {self.full_name} - Date Added: {self.created.strftime("%Y-%m-%d %H:%M:%S")}'
+
+
+
