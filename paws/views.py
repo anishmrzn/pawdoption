@@ -7,7 +7,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers import PetSerializer, PetAdoptionSerializer
-
+import stripe
+from rest_framework.views import APIView
+from stripe.api_resources.checkout.session import Session
 from .models import Pets
 
 # Create your views here.
@@ -155,3 +157,42 @@ def ChangePassword(request):
     return Response({'message': 'Password changed successfully'}, status= status.HTTP_202_ACCEPTED)
   
   return Response({'error': 'Invalid old password'}, status= status.HTTP_400_BAD_REQUEST) 
+
+
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+class AdoptionCheckout(APIView):
+    def post(self, request):
+        try:
+            pet_info = request.data.get('pet_info')  # Assuming pet_info contains pet information
+            
+            # Assuming there's a fixed adoption price per pet
+            adoption_price = 1000  # $50.00 in cents
+
+            line_items = [{
+                'price_data': {
+                    'currency': 'usd',
+                    'unit_amount': adoption_price,
+                    'product_data': {
+                        'name': 'Pet Adoption Fee',
+                    },
+                },
+                'quantity': 1,
+            }]
+
+            session = Session.create(
+                payment_method_types=['card'],
+                line_items=line_items,
+                mode='payment',
+                success_url=settings.SITE_URL,
+                cancel_url=settings.SITE_URL,
+            )
+
+            print(session)
+
+            return Response({'url': session.url})
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
