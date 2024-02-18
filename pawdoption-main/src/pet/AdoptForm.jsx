@@ -12,7 +12,7 @@ function AdoptForm() {
 
   useEffect(() => {
     getSinglePet(`${API}${id}/`);
-  }, [singlePet]);
+  }, []);
 
   const petId = singlePet.petId;
 
