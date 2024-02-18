@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import PageNav from "../components/PageNav";
 import Footer from "../components/Footer";
@@ -8,7 +8,7 @@ import { FaPaw } from "react-icons/fa";
 const API = "http://127.0.0.1:8000/api/get-pets/";
 
 function SinglePet() {
-  const { singlePet, getSinglePet } = usePetContext();
+  const { singlePet, getSinglePet, pets } = usePetContext();
   const { id } = useParams();
 
   useEffect(() => {
@@ -66,6 +66,7 @@ function SinglePet() {
                   {singlePet.medicalDescription || "Not available"}
                 </div>
               </div>
+                <Link to={`/adoptform/${id}`} className="button">Adopt</Link>
             </div>
           </div>
         )}
