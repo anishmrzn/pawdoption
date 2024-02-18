@@ -46,7 +46,7 @@ class PetAdoption(models.Model):
   is_rejected = models.BooleanField(default = False)
   email_sent = models.BooleanField(default = False)
   created = models.DateTimeField(auto_now_add = True)
-  owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank= True,null = True)
+  petId = models.ForeignKey(Pets, on_delete = models.CASCADE, blank =True, null = True)
   
   
   def __str__(self):

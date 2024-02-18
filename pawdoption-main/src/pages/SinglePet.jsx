@@ -66,7 +66,9 @@ function SinglePet() {
                   {singlePet.medicalDescription || "Not available"}
                 </div>
               </div>
-                <Link to={`/adoptform/${id}`} className="button">Adopt</Link>
+              <Link to={`/adoptform/${id}`} className="button">
+                Adopt
+              </Link>
             </div>
           </div>
         )}
