@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import PageNav from "../components/PageNav";
@@ -15,6 +15,9 @@ function RehomePet() {
   const [vaccinated, setVaccinated] = useState("");
   const [medicalDescription, setMedicalDescription] = useState("");
   const [reason, setReason] = useState("");
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

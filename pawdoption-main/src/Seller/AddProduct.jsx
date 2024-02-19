@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,9 @@ function AddProduct() {
   const [featured, setFeatured] = useState(false);
 
   const [animalCategory, setAnimalCategory] = useState("");
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -170,7 +173,6 @@ function AddProduct() {
           }}
           className="col-span-2 rounded-xl border-gray-300 py-1 px-5"
         />
-       
       </form>
       <button onClick={handleSubmit} className="button ">
         Submit
