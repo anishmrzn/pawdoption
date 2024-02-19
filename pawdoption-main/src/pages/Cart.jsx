@@ -1,5 +1,5 @@
 // Cart.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../context/cartContext";
 import PageNav from "../components/PageNav";
@@ -15,6 +15,9 @@ const Cart = () => {
     productId: item.productId,
     quantity: item.amount,
   }));
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleCheckout = async () => {
     try {
