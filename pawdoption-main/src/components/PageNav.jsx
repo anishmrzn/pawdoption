@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { useCartContext } from "../context/cartContext";
+import { useUserContext } from "../context/UserContext";
 
 function PageNav() {
+  const { removeUser } = useUserContext();
   const location = useLocation();
   const navigate = useNavigate();
   const { total_item } = useCartContext();
@@ -45,7 +47,7 @@ function PageNav() {
   function handleLogout() {
     localStorage.removeItem("sellerToken");
     localStorage.removeItem("userToken");
-
+    removeUser();
     navigate("/");
   }
 
@@ -117,9 +119,7 @@ function PageNav() {
                   <ul className="flex flex-col gap-3 text-md">
                     {!sellerToken ? (
                       <li className="text-black hover:scale-110 transition-all hover:text-gray-500 duration-500 mt-2">
-                        <Link to="/account" onClick={window.location.reload}>
-                          My Account
-                        </Link>
+                        <Link to="/account">My Account</Link>
                       </li>
                     ) : (
                       <li className="text-black hover:scale-110 transition-all hover:text-gray-500 mt-2">
