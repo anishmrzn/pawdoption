@@ -8,6 +8,7 @@ import ChangePassword from "../components/ChangePassword";
 
 function Account() {
   const { user } = useUserContext();
+  console.log(user);
   const [userImgUrl, setUserImgUrl] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -76,7 +77,7 @@ function Account() {
 
       if (response.ok) {
         toast.success("Profile Updated");
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (error) {
       toast.error("Error");
