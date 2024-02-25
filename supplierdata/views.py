@@ -131,13 +131,29 @@ def salesRecord(request):
     
     sales_data = Orders.objects.filter(products__sellerId=seller).annotate(month=ExtractMonth('created')).values('month').annotate(total_sales=Sum('total_amount'))
     
-    for entry in sales_data:
-      month_number = entry['month']
-      entry['month'] = calendar.month_name[month_number]
+    def months_order(month_number):
+      month_order_mapping = {
+        11:0,
+        12:1,
+        1:2,
+        2:3,
+        3:4,
+        4:5,
+        5:6,
+        6:7,
+        7:8,
+        8:9,
+        9:10,
+        10:11,
+      }
       
+      return month_order_mapping.get(month_number)
+    
+    sales_data = sorted(sales_data, key=lambda entry :months_order(entry['month']))
+     
     data = {
       'seller': seller_name,
-      'sales_data':[{'month': entry['month'], 'total_sales': entry['total_sales']} for entry in sales_data]}
+      'sales_data':[{'month': calendar.month_name[entry['month']], 'total_sales': entry['total_sales']} for entry in sales_data]}
     
     return Response(data)
 
