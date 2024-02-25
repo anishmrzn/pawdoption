@@ -16,11 +16,12 @@ from django.views.decorators.csrf import csrf_exempt
 import joblib
 import pandas as pd
 import json
+from django.http import JsonResponse
 
 # loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 # Load the trained model
-loaded_model = joblib.load(r'MLquiz\breedquiz.joblib')
+loaded_model = joblib.load(r'MLquiz/breedquiz.joblib')
 
 
 # Create your views here.
@@ -121,19 +122,22 @@ def predict_dog_breed(request):
         # Get user responses from the request
         data = json.loads(request.body)
         user_responses = data.get('user_responses', [])
+        print(user_responses)
 
         # Convert user responses to DataFrame
         user_df = pd.DataFrame(user_responses)
-        # user_df = pd.get_dummies(user_df)
-        # print(user_responses)
-        # print(user_df.columns.to_list())
         print(user_df)
-        # Predict the dog breed
+        # # user_df = pd.get_dummies(user_df)
+        # # print(user_responses)
+        # print(user_df.columns.to_list())
+        # print(user_df)
+        # # Predict the dog breed
         prediction = loaded_model.predict(user_df)
         print("----------------------------------",prediction)
-        recommended_breed = prediction[0]
+        # recommended_breed = prediction[0]
 
-        return Response({"recommended_breed": recommended_breed})
+        return JsonResponse({"recommended_breed": prediction[0]})
+        # return JsonResponse({"success":"success"})
 
     except Exception as e:
         return Response({"error": str(e)})     

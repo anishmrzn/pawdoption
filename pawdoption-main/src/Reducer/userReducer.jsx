@@ -9,7 +9,8 @@ const UserReducer = (state, action) => {
         isLoading: false,
         user: action.payload,
       };
-
+    case "REMOVE_USER":
+      return { ...state, user: [] };
     case "API_ERROR":
       return { ...state, isLoading: false, isError: true };
 

@@ -25,6 +25,8 @@ import RehomePet from "./pet/RehomePet";
 import Orders from "./pages/Orders";
 import Blog from "./pages/Blog";
 import AdoptForm from "./pet/AdoptForm";
+import PetQuiz from "./pet/PetQuiz";
+import SalesRecords from "./pages/SalesRecords";
 
 function App() {
   useEffect(() => {
@@ -36,9 +38,10 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="store" element={<Store />} />
-          <Route path="quiz" element={<Quiz />} />
+          <Route path="quiz" element={<PetQuiz />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="sales" element={<SalesRecords />} />
           <Route path="sellersignup" element={<SellerSignup />} />
           <Route path="admin" element={<Admin />} />
           <Route path="account" element={<Account />} />
