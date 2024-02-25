@@ -5,6 +5,9 @@ from .serializers import ProductsSerializer, OrderSerializer
 from .models import Products,Orders
 from rest_framework.permissions import IsAuthenticated
 import cloudinary.uploader
+from django.db.models import Sum
+from django.db.models.functions import ExtractMonth
+import calendar
 
 # Create your views here.
 
@@ -118,19 +121,26 @@ def products(request, pk=None):
     return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def orders(request):
-#   try:
-#     user_id = request.user.id
-#     orders = Orders.objects.filter(user = user_id)
-    
-#     serializer = OrderSerializer(orders, many = True)
-    
-#     return Response(serializer.data, status= status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def salesRecord(request):
   
-#   except:
-#     return Response(serializer.errors, status= status.HTTP_404_NOT_FOUND)
+    seller = request.user.sellerId
+    seller_name = request.user.username
+    
+    sales_data = Orders.objects.filter(products__sellerId=seller).annotate(month=ExtractMonth('created')).values('month').annotate(total_sales=Sum('total_amount'))
+    
+    for entry in sales_data:
+      month_number = entry['month']
+      entry['month'] = calendar.month_name[month_number]
+      
+    data = {
+      'seller': seller_name,
+      'sales_data':[{'month': entry['month'], 'total_sales': entry['total_sales']} for entry in sales_data]}
+    
+    return Response(data)
+
 
 
 

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import createProduct, getProduct, getProductSeller,getSingleProduct, updateProduct,deleteProduct, products,orders
+from .views import createProduct, getProduct, getProductSeller,getSingleProduct, updateProduct,deleteProduct, products,orders,salesRecord
 
 
 urlpatterns = [
@@ -13,5 +13,6 @@ urlpatterns = [
     path('get-product-seller/',getProductSeller, name = 'get-product-seller'),
     path('get-product-seller/<str:pk>/', getProductSeller, name = 'single-product-seller'),
     path('get-orders/', orders, name= 'get-orders'),
+    path('sales-record/', salesRecord, name= 'sales_record'),
     
 ]

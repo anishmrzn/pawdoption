@@ -57,6 +57,6 @@ class Orders(models.Model):
   user = models.ForeignKey(CustomUser, on_delete = models.CASCADE)
     
   def __str__(self):
-    return f'Created: {self.created.strftime("%Y-%m-%d")} - Status: {self.delivery_status}'
+    return f'Created: {self.created.strftime("%Y-%m-%d")} - Orderd By: {self.user} - Status: {self.delivery_status} '
       
    

@@ -1,14 +1,15 @@
 from django.urls import path,include
 from . import views
 
-from .views import customUserCreate, send_email,CustomTokenObtainPairView, getUserProfile,updateUserProfile,deleteUserProfile,predict_dog_breed, StripeCheckoutView
+from .views import (customUserCreate, send_email,CustomTokenObtainPairView, getUserProfile,updateUserProfile,deleteUserProfile,predict_dog_breed, 
+StripeCheckoutView)
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
 from supplierdata.urls import (createProduct,getSingleProduct,getProduct
-,getProductSeller,updateProduct,deleteProduct,products,orders)
+,getProductSeller,updateProduct,deleteProduct,products,orders ,salesRecord)
 
 
 urlpatterns = [
@@ -38,7 +39,8 @@ urlpatterns = [
     path('update-user-profile/', updateUserProfile, name= 'update-user-profile'),
     path('delete-user-profile/', deleteUserProfile, name= 'Delete-user-profile'),
     path('create-checkout-session/', StripeCheckoutView.as_view(), name='checkout_session'),
-    path('get-orders/', orders, name= 'get-orders')
+    path('get-orders/', orders, name= 'get-orders'),
+    path('sales-record/', salesRecord, name= 'sales_record'),
 
 ]
 
