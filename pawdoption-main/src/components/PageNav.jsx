@@ -128,9 +128,16 @@ function PageNav() {
                         <Link to="/seller">Seller</Link>
                       </li>
                     )}
-                    <li className="text-black hover:scale-110 transition-all hover:text-gray-500">
-                      <Link to="/orders">My Orders</Link>
-                    </li>
+                    {!sellerToken ? (
+                      <li className="text-black hover:scale-110 transition-all hover:text-gray-500">
+                        <Link to="/orders">My Orders</Link>
+                      </li>
+                    ) : (
+                      <li className="text-black hover:scale-110 transition-all hover:text-gray-500 mt-2">
+                        <Link to="/sales">Sales Records</Link>
+                      </li>
+                    )}
+
                     <li>
                       <button
                         onClick={handleLogout}
@@ -208,17 +215,16 @@ function PageNav() {
                       <Link to="/seller">Seller</Link>
                     </li>
                   )}
-
-                  <div className="text-white hover:underline">
-                    <Link to="/orders">My Orders</Link>
-                  </div>
                   {!sellerToken ? (
-                    <div></div>
-                  ) : (
                     <div className="text-white hover:underline">
-                      <Link to="/seller">Seller</Link>
+                      <Link to="/orders">My Orders</Link>
                     </div>
+                  ) : (
+                    <li className="text-white hover:underline  mt-5">
+                      <Link to="/sales">Sales Records</Link>
+                    </li>
                   )}
+
                   <div>
                     <button
                       onClick={handleLogout}
