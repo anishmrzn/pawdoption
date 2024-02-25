@@ -119,7 +119,9 @@ function PageNav() {
                   <ul className="flex flex-col gap-3 text-md">
                     {!sellerToken ? (
                       <li className="text-black hover:scale-110 transition-all hover:text-gray-500 duration-500 mt-2">
-                        <Link to="/account">My Account</Link>
+                        <Link to="/account" onClick={window.location.reload}>
+                          My Account
+                        </Link>
                       </li>
                     ) : (
                       <li className="text-black hover:scale-110 transition-all hover:text-gray-500 mt-2">

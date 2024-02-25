@@ -39,8 +39,8 @@ function SingleProduct() {
             </div>
           </div>
           <div className="flex items-center gap-5 justify-center">
-            <h1 className="text-2xl font-extrabold text-gray-800">
-              $.
+            <h1 className="text-2xl font-extrabold text-green-600">
+              $
               {(
                 singleProduct.price -
                 singleProduct.price * (singleProduct.discount / 100)

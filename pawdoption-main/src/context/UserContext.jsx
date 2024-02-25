@@ -27,7 +27,7 @@ function UserProvider({ children }) {
       const user = res.data;
       // setUsr(user);
       // console.log(res, "this is jha");
-      console.log(user);
+
       dispatch({ type: "USERS", payload: user });
     } catch (error) {
       dispatch({ type: "API_ERROR" });
