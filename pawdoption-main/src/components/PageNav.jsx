@@ -103,7 +103,7 @@ function PageNav() {
           <>
             <div>
               <button
-                className="hidden md:flex absolute left-[88%] top-[0%] text-md border-2 rounded-full px-4 py-4 hover:text-[#c9a687] transition-all duration-500"
+                className="hidden md:flex absolute left-[88%] top-[0%] text-md hover:shadow-2xl shadow-black border-2 rounded-full px-4 py-4 hover:text-[#c9a687] transition-all duration-500"
                 onClick={handleDropdown}
               >
                 <ion-icon name="person"></ion-icon>
@@ -142,9 +142,9 @@ function PageNav() {
               </div>
             </div>
             <Link to="/cart">
-              <div className="hidden md:flex absolute left-[94%] top-[0%] text-lg border-2 rounded-full px-4 py-4 hover:text-[#c9a687] transition-all duration-500 ">
+              <div className="hidden md:flex absolute left-[94%] top-[0%] text-lg border-2 rounded-full px-4 py-4 hover:text-[#c9a687] transition-all duration-500 hover:shadow-2xl shadow-black ">
                 <ion-icon name="cart"></ion-icon>
-                <div className="bg-[#d9c0ab] flex rounded-full px-1 w-7 h-7 absolute top-[-20%] left-[50%] items-center justify-center text-sm bounce">
+                <div className="bg-[#d9c0ab] flex rounded-full border-2 font-bold shadow-2xl px-1 w-7 h-7 absolute top-[-20%] left-[50%] items-center justify-center text-sm bounce">
                   {total_item}
                 </div>
               </div>

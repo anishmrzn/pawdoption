@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageNav from "../components/PageNav";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,12 +13,14 @@ function Signup() {
     password: "",
     confirm_password: "",
   });
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleChange = (e) => {
     e.preventDefault();
 
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
   };
 
   const handleSubmit = async (e) => {

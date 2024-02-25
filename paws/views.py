@@ -7,7 +7,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers import PetSerializer, PetAdoptionSerializer
-
+import stripe
+from rest_framework.views import APIView
 from .models import Pets
 
 # Create your views here.
@@ -58,40 +59,6 @@ def getPets(request,pk = None):
     serializer = PetSerializer(pets, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
   
-  
-  
-# @api_view(['POST'])
-# def send_approval_rejection_emails(request):
-
-#     pets = Pets.objects.filter(Q(is_approved=True) | Q(is_rejected=True), email_sent=False)
-
-#     for pet in pets:
-
-#         if pet.is_approved:
-#             send_mail(
-#                 subject='Congratulations!',
-#                 message='Your pet form has been approved. Thank you!',
-#                 from_email=settings.EMAIL_HOST_USER, 
-#                 recipient_list=[pet.email], 
-#                 fail_silently=False,
-#             )
-        
-
-#         if pet.is_rejected:
-#             send_mail(
-#                 subject='Sorry!',
-#                 message='Your pet form has been rejected. Please contact us for more information.',
-#                 from_email=settings.EMAIL_HOST_USER,  
-#                 recipient_list=[pet.email], 
-#                 fail_silently=False,
-#             )
-
-
-#         pet.email_sent = True
-#         pet.save()
-
-#     return Response({'message': 'Emails sent successfully'}, status=status.HTTP_200_OK)
-# send_emails.py
 
 
 @api_view(['POST'])
@@ -155,3 +122,40 @@ def ChangePassword(request):
     return Response({'message': 'Password changed successfully'}, status= status.HTTP_202_ACCEPTED)
   
   return Response({'error': 'Invalid old password'}, status= status.HTTP_400_BAD_REQUEST) 
+
+
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+class AdoptionCheckout(APIView):
+    def post(self, request):
+        try:
+            pet_id = request.data.get('petId')  
+            pet = Pets.objects.get(petId = pet_id)
+           
+            adoption_price = 1000  
+
+            line_items = [{
+                'price_data': {
+                    'currency': 'usd',
+                    'unit_amount': adoption_price,
+                    'product_data': {
+                        'name':f"You are paying to adopt our lovely pet '{pet.name}'" ,
+                    },
+                },
+                'quantity': 1,
+            }]
+
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=line_items,
+                mode='payment',
+                success_url=settings.SITE_URL + '?successful_payment=true',
+                cancel_url=settings.SITE_URL,
+            )
+
+            return Response({'url': session.url})
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)

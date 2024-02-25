@@ -1,16 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import PageNav from "../components/PageNav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 function Login() {
-  
   const navigate = useNavigate();
 
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
   });
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const inputHandler = (e) => {
     setLoginFormData({
@@ -123,14 +125,12 @@ function Login() {
             </div>
           </form>
 
-
           <p className="text-center mt-8 text-[#4A5568]">
             Not signed up yet?{" "}
             <Link
               to="/signup"
               className="text-[#2C5282] font-semibold hover:underline"
             >
-
               Sign up
             </Link>
           </p>

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PageNav from "../components/PageNav";
 import { usePetContext } from "../context/petContext";
+import axios from "axios";
 const API = "http://127.0.0.1:8000/api/get-pets/";
 
 function AdoptForm() {
-  const navigate = useNavigate();
   const { singlePet, getSinglePet } = usePetContext();
   const { id } = useParams();
 
   useEffect(() => {
     getSinglePet(`${API}${id}/`);
-  }, [singlePet]);
+  }, []);
 
   const petId = singlePet.petId;
 
@@ -21,7 +21,6 @@ function AdoptForm() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-
   const [previous, setPrevious] = useState("");
 
   const handleSubmit = async (e) => {
@@ -37,27 +36,42 @@ function AdoptForm() {
       formData.append("previous_pet_experience", previous);
       formData.append("petId", petId);
 
+      await handleCheckout(formData);
+    } catch (error) {
+      toast.error("Error");
+    }
+  };
+
+  const handleCheckout = async (formData) => {
+    try {
+      const response1 = await axios.post(
+        "http://127.0.0.1:8000/api/AdoptionCheckout/",
+        {
+          petId: petId,
+        }
+      );
+
+      const checkoutUrl = response1.data.url;
       const token = localStorage.getItem("userToken");
-      const response = await fetch(
+      const response2 = await fetch(
         "http://127.0.0.1:8000/api/petadoption-form/",
         {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
-            // "Content-Type": "application/json",
           },
           body: formData,
         }
       );
 
-      if (response.ok) {
-        navigate("/adopt");
+      if (response2.ok) {
         toast.success("Wait until the form gets approved");
       } else {
         toast.error("Unsuccessful");
       }
+      window.location.href = checkoutUrl;
     } catch (error) {
-      toast.error("Error");
+      toast.error("Unsuccessful");
     }
   };
 
@@ -68,7 +82,7 @@ function AdoptForm() {
         <h1 className="text-center font-extrabold text-2xl mb-6">
           Fill out the Adoption Form
         </h1>
-        <form className="grid grid-cols-2 gap-4">
+        <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="fullName" className="block font-semibold">
               Full Name:
@@ -131,7 +145,7 @@ function AdoptForm() {
           </div>
           <div className="mb-4">
             <label htmlFor="previous" className="block font-semibold">
-              Previous Pet Exerience:
+              Previous Pet Experience:
             </label>
             <input
               type="text"
@@ -141,13 +155,18 @@ function AdoptForm() {
               className="border-2 rounded-md border-gray-300 p-2 w-full"
             />
           </div>
+          <p className="text-sm text-gray-500 mt-4 p-1 border border-gray-300 rounded-lg bg-gray-100">
+            Disclaimer: A certain fee is required to deter misuse of pets. You
+            will be redirected to the payment page to complete the transaction
+            before proceeding.
+          </p>
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full mt-4"
+          >
+            Submit
+          </button>
         </form>
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full mt-4"
-        >
-          Submit
-        </button>
       </div>
     </>
   );
