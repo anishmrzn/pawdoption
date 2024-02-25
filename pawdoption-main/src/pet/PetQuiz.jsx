@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "tailwindcss/tailwind.css";
 import breed_desc from "../constants/constants";
 import Layout from "../layouts/Layout";
+import { Link } from "react-router-dom";
 
 function PetQuiz() {
   const [userResponses, setUserResponses] = useState({
@@ -22,6 +23,9 @@ function PetQuiz() {
 
   const [questionIndex, setQuestionIndex] = useState(0);
   const [recommendedBreed, setRecommendedBreed] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [hidden, setHidden] = useState(false);
+  const toggleClassHidden = hidden ? "hidden" : "";
 
   const sampleQuestions = [
     {
@@ -38,40 +42,50 @@ function PetQuiz() {
       type: "radio",
     },
     {
-      question: "2. Do you want a short dog or a tall dog?",
-      key: ["min_height"],
+      question:
+        "2. What is the shortest you would like your pet to be? Min value (10-50)",
+      // options: {
+      //   tiny: 10,
+      //   small: 20,
+      //   medium: 30,
+      //   large: 50,
+      // },
+      key: "min_height",
       type: "number",
     },
     {
-      question: "2. Do you want a short dog or a tall dog?",
+      question:
+        "3. What is the tallest you would like your pet to grow? Max value (20-65)",
       key: "max_height",
       type: "number",
     },
     {
-      question: "3. Do you want a lighter dog or a heavier dog?",
+      question:
+        "4. What is the lightest you would like your pet to be? Min value (2-50)",
       key: ["min_weight"],
       type: "number",
     },
     {
-      question: "3. Do you want a lighter dog or a heavier dog?",
+      question:
+        "5. What is the heaviest you would like your pet to be? Max value (10-60)",
       key: "max_weight",
       type: "number",
     },
     {
       question:
-        "How many joyful years would you like to share with your furry friend?",
+        "6. How many years at least would you like to spend with your pet? Min value (7-14)",
       key: ["min_expectancy"],
       type: "number",
     },
     {
       question:
-        "How many joyful years would you like to share with your furry friend?",
+        "7. How many joyful years would you like to share with your furry friend? Max value (10-16)",
       key: "max_expectancy",
       type: "number",
     },
     {
       question:
-        "Which group of dog breeds would you consider most compatible with your preference?",
+        "8. Which group of dog breeds would you consider most compatible with your preference?",
       options: {
         "toy group": 0,
         "hound group": 1,
@@ -86,7 +100,7 @@ function PetQuiz() {
       type: "radio",
     },
     {
-      question: "How often are you willing to groom your pet?",
+      question: "9. How often are you willing to groom your pet?",
       options: {
         occasional: 0.2,
         weekly: 0.4,
@@ -98,7 +112,7 @@ function PetQuiz() {
       type: "radio",
     },
     {
-      question: "How much coat shedding can you deal with?",
+      question: "10. How much coat shedding can you deal with?",
       options: {
         tnfrequent: 0.2,
         occasional: 0.4,
@@ -110,7 +124,7 @@ function PetQuiz() {
       type: "radio",
     },
     {
-      question: "How energetic would you like your dog to be?",
+      question: "11. How energetic would you like your dog to be?",
       options: {
         "couch potato": 0.2,
         calm: 0.4,
@@ -122,7 +136,7 @@ function PetQuiz() {
       type: "radio",
     },
     {
-      question: "How trainable do you want your dog to be?",
+      question: "12. How trainable do you want your dog to be?",
       options: {
         stubborn: 0.2,
         independent: 0.4,
@@ -136,7 +150,7 @@ function PetQuiz() {
 
     {
       question:
-        "How would you describe your dogs behaviour around other people?",
+        "13. How would you describe your dogs behaviour around other people?",
       options: {
         wary: 0.2,
         "reserved with strangers": 0.4,
@@ -154,7 +168,9 @@ function PetQuiz() {
       ...prevResponses,
       [key]: value,
     }));
+    setSelectedOption(value);
   };
+  console.log(selectedOption);
   console.log(userResponses);
 
   const handleNextQuestion = () => {
@@ -182,6 +198,7 @@ function PetQuiz() {
       const data = await response.json();
       console.log(breed_desc[data.recommended_breed]);
       setRecommendedBreed(data.recommended_breed);
+      setHidden(!hidden);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -196,102 +213,129 @@ function PetQuiz() {
 
   return (
     <Layout>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 my-10">
-        <div className="bg-white p-8  shadow-2xl rounded-2xl max-w-md w-full">
-          <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">
-            Dog Breed Recommender
+      <div
+        className={`${toggleClassHidden} min-h-screen flex items-center justify-center bg-[#eee4db] my-10`}
+      >
+        <div className="bg-white border-2 border-[#b98e6d] p-8 shadow-lg rounded-3xl w-[45rem] ">
+          <h1 className="text-4xl flex items-center justify-center gap-5 font-bold mb-6 text-center text-[#b98e6d]">
+            Dog Breed Quiz{" "}
+            <img src="/quiz.png" alt="quiz" className="h-[3rem]" />
           </h1>
 
           {questionIndex !== sampleQuestions.length && (
             <div key={currentQuestion.key} className="mb-6">
-              <label className="block text-sm font-medium text-gray-600 mb-2">
+              <label className="block text-xl font-semibold text-black mb-5 text-center mt-5  ">
                 {currentQuestion.question}
               </label>
-              {currentQuestion.type === "radio"
-                ? Object.entries(currentQuestion.options).map(
-                    ([key, value]) => (
-                      <div key={key} className="flex items-center mb-2">
-                        <input
-                          name={currentQuestion.key}
-                          id={key}
-                          value={value}
-                          type="radio"
-                          onChange={(e) =>
-                            handleInputChange(currentQuestion.key, value)
-                          }
-                          className="border rounded-md px-3 py-2 mr-2 text-black"
-                        />
-                        <label htmlFor={key} className="text-black">
-                          {key}
-                        </label>
-                      </div>
-                    )
-                  )
-                : Array.isArray(currentQuestion.key)
-                ? currentQuestion.key.map((k) => {
-                    return <input key={k} type="number" />;
-                  })(
+              {currentQuestion.type === "radio" ? (
+                Object.entries(currentQuestion.options).map(([key, value]) => (
+                  <div key={key} className="flex items-center mb-3">
                     <input
-                      type="number"
+                      name={currentQuestion.key}
+                      id={key}
+                      value={value}
+                      type="radio"
                       onChange={(e) =>
-                        handleInputChange(
-                          currentQuestion.key,
-                          parseFloat(e.target.value)
-                        )
+                        handleInputChange(currentQuestion.key, value)
                       }
-                      className="border rounded-md px-3 py-2 w-full"
+                      className="hidden"
                     />
-                  )
-                : ""}
+                    <label
+                      htmlFor={key}
+                      className={`border-2 border-[#b98e6d] w-full grid grid-cols-10 shadow-lg rounded-xl text-center font-semibold text-lg py-2 px-5 ${
+                        selectedOption === value ? "bg-white" : ""
+                      }`}
+                    >
+                      <div className="col-span-1">
+                        {selectedOption === value && (
+                          <img
+                            src="./selected.png"
+                            alt="selected"
+                            className="h-[1.7rem]"
+                          />
+                        )}
+                      </div>
+                      <div className="col-span-8 text-[#553d27]">{key}</div>
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <input
+                  type="number"
+                  placeholder={sampleQuestions.placeholder}
+                  onChange={(e) =>
+                    handleInputChange(
+                      currentQuestion.key,
+                      parseFloat(e.target.value)
+                    )
+                  }
+                  className="border-2 border-[#b98e6d] w-full grid grid-cols-10 shadow-lg rounded-xl text-center font-semibold text-lg py-2 px-5 focus:outline-none"
+                />
+              )}
             </div>
           )}
 
           {questionIndex !== sampleQuestions.length && (
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-14 mb-4">
               <button
                 onClick={handlePreviousQuestion}
-                className="text-white bg-gray-600 px-4 py-2 rounded-md mt-4 button"
+                className="text-md  px-16 py-3 text-white font-bold hover:shadow-lg transition-all duration-300 cursor-pointer bg-[#d3b79f] hover:bg-[#c9a687]  rounded-full  focus:outline-none "
                 disabled={questionIndex === 0}
               >
-                Previous
+                Back
               </button>
+              {questionIndex === sampleQuestions.length - 1 && (
+                <button
+                  onClick={handleSubmit}
+                  className="text-md  px-20 py-3 text-white font-bold hover:shadow-lg transition-all duration-300 cursor-pointer bg-[#d3b79f] hover:bg-[#c9a687]  rounded-full  focus:outline-none  "
+                >
+                  Submit
+                </button>
+              )}
               <button
                 onClick={handleNextQuestion}
-                className="text-white bg-blue-500 px-4 py-2 rounded-md mt-4 button"
+                className="text-md  px-16 py-3 text-white font-bold hover:shadow-lg transition-all duration-300 cursor-pointer bg-[#d3b79f] hover:bg-[#c9a687]  rounded-full  focus:outline-none "
                 disabled={questionIndex === sampleQuestions.length - 1}
               >
                 Next
               </button>
             </div>
           )}
-
-          {recommendedBreed ? (
-            <div className="mb-6">
-              <p className="text-2xl font-semibold text-green-700 mb-2">
-                Recommended Dog Breed: {recommendedBreed}
-              </p>
-              <p className="text-gray-700 text-justify">
-                Description: {breed_desc[recommendedBreed]}
-              </p>
-              <button
-                onClick={restartQuiz}
-                className="text-white bg-indigo-500 px-4 py-2 rounded-md mt-4 button"
-              >
-                Restart Quiz
-              </button>
-            </div>
-          ) : (
-            questionIndex === sampleQuestions.length - 1 && (
-              <button
-                onClick={handleSubmit}
-                className="text-white bg-green-500 px-4 py-2 rounded-md mt-4 button"
-              >
-                Submit
-              </button>
-            )
-          )}
         </div>
       </div>
+      {recommendedBreed && (
+        <div className=" bg-white p-8 rounded-xl shadow-xl my-10 ">
+          <h2 className="text-3xl font-bold text-green-700 mb-4">
+            Your Perfect Match: {recommendedBreed}
+          </h2>
+          <p className="text-gray-700 text-lg mb-6">
+            Congratulations! The {recommendedBreed} is known for its friendly
+            nature and loyalty. Here's a brief overview of this wonderful breed:
+          </p>
+          <p className="text-gray-700 text-justify mb-6">
+            {breed_desc[recommendedBreed]}
+          </p>
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-gray-600">
+                Want to learn more about {recommendedBreed} ownership?
+              </p>
+              <Link
+                to="/blog"
+                className="text-blue-500 hover:underline transition-all duration-300"
+              >
+                Explore Care Tips
+              </Link>
+            </div>
+            <button
+              onClick={restartQuiz}
+              className="text-lg px-8 py-3 text-white font-bold rounded-2xl bg-[#d3b79f] hover:bg-rounded-full transition-all duration-300 focus:outline-none"
+            >
+              Restart Quiz
+            </button>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 }
