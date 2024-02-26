@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "tailwindcss/tailwind.css";
 import breed_desc from "../constants/constants";
-import Layout from "../layouts/Layout";
+
 import { Link } from "react-router-dom";
+import PageNav from "../components/PageNav";
 
 function PetQuiz() {
   const [userResponses, setUserResponses] = useState({
@@ -170,19 +171,12 @@ function PetQuiz() {
     }));
     setSelectedOption(value);
   };
-  console.log(selectedOption);
-  console.log(userResponses);
 
   const handleNextQuestion = () => {
-    if (questionIndex < sampleQuestions.length) {
+    if (selectedOption !== null) {
       setQuestionIndex((prev) => prev + 1);
     }
-  };
-
-  const handlePreviousQuestion = () => {
-    if (questionIndex > 0) {
-      setQuestionIndex((prev) => prev - 1);
-    }
+    setSelectedOption(null);
   };
 
   const handleSubmit = async () => {
@@ -207,16 +201,18 @@ function PetQuiz() {
     setUserResponses({});
     setQuestionIndex(0);
     setRecommendedBreed(null);
+    setHidden(!hidden);
   };
 
   const currentQuestion = sampleQuestions[questionIndex];
 
   return (
-    <Layout>
+    <div className="bg-[#f1eeea] rounded-xl h-[50rem]">
+      <PageNav />
       <div
-        className={`${toggleClassHidden} min-h-screen flex items-center justify-center bg-[#eee4db] my-10`}
+        className={`${toggleClassHidden} min-h-screen flex items-center justify-center  my-10`}
       >
-        <div className="bg-white border-2 border-[#b98e6d] p-8 shadow-lg rounded-3xl w-[45rem] ">
+        <div className="bg-white border-2 border-[#b98e6d] p-10 shadow-lg rounded-3xl w-[45rem] ">
           <h1 className="text-4xl flex items-center justify-center gap-5 font-bold mb-6 text-center text-[#b98e6d]">
             Dog Breed Quiz{" "}
             <img src="/quiz.png" alt="quiz" className="h-[3rem]" />
@@ -242,7 +238,7 @@ function PetQuiz() {
                     />
                     <label
                       htmlFor={key}
-                      className={`border-2 border-[#b98e6d] w-full grid grid-cols-10 shadow-lg rounded-xl text-center font-semibold text-lg py-2 px-5 ${
+                      className={`border-2 border-[#b98e6d] w-full grid grid-cols-10  rounded-xl text-center font-semibold text-lg py-2 px-5 cursor-pointer hover:shadow-2xl hover:scale-105 transition-all duration-300 ${
                         selectedOption === value ? "bg-white" : ""
                       }`}
                     >
@@ -251,7 +247,7 @@ function PetQuiz() {
                           <img
                             src="./selected.png"
                             alt="selected"
-                            className="h-[1.7rem]"
+                            className="h-[1.7rem] "
                           />
                         )}
                       </div>
@@ -276,46 +272,48 @@ function PetQuiz() {
           )}
 
           {questionIndex !== sampleQuestions.length && (
-            <div className="flex justify-between mt-14 mb-4">
-              <button
-                onClick={handlePreviousQuestion}
-                className="text-md  px-16 py-3 text-white font-bold hover:shadow-lg transition-all duration-300 cursor-pointer bg-[#d3b79f] hover:bg-[#c9a687]  rounded-full  focus:outline-none "
-                disabled={questionIndex === 0}
-              >
-                Back
-              </button>
+            <div className="flex flex-col justify-center items-center mt-14 mb-4">
               {questionIndex === sampleQuestions.length - 1 && (
                 <button
                   onClick={handleSubmit}
-                  className="text-md  px-20 py-3 text-white font-bold hover:shadow-lg transition-all duration-300 cursor-pointer bg-[#d3b79f] hover:bg-[#c9a687]  rounded-full  focus:outline-none  "
+                  className="text-md  px-20 py-3 text-white font-bold hover:shadow-lg transition-all duration-300 cursor-pointer bg-[#ceae93] hover:bg-[#c9a687]  rounded-full  focus:outline-none  "
                 >
                   Submit
                 </button>
               )}
-              <button
-                onClick={handleNextQuestion}
-                className="text-md  px-16 py-3 text-white font-bold hover:shadow-lg transition-all duration-300 cursor-pointer bg-[#d3b79f] hover:bg-[#c9a687]  rounded-full  focus:outline-none "
-                disabled={questionIndex === sampleQuestions.length - 1}
-              >
-                Next
-              </button>
+              {questionIndex === sampleQuestions.length - 1 ? (
+                ""
+              ) : (
+                <button
+                  onClick={handleNextQuestion}
+                  className={`text-md  px-16 py-3 text-white font-bold hover:shadow-lg transition-all duration-300 cursor-pointer bg-[#ceae93] hover:bg-[#c9a687]  rounded-full  focus:outline-none ${
+                    selectedOption === null
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  } {questionIndex === sampleQuestions.length ? "hidden":""}
+                `}
+                  disabled={questionIndex === sampleQuestions.length - 1}
+                >
+                  Next
+                </button>
+              )}
             </div>
           )}
         </div>
       </div>
       {recommendedBreed && (
-        <div className=" bg-white p-8 rounded-xl shadow-xl my-10 ">
-          <h2 className="text-3xl font-bold text-green-700 mb-4">
+        <div className=" bg-white p-8 rounded-xl shadow-xl my-10 flex flex-col items-center justify-center">
+          <h2 className="text-4xl font-bold text-center text-green-700 mb-4">
             Your Perfect Match: {recommendedBreed}
           </h2>
-          <p className="text-gray-700 text-lg mb-6">
+          <p className="text-gray-700 text-lg mb-6 font-bold text-center w-[50rem]">
             Congratulations! The {recommendedBreed} is known for its friendly
             nature and loyalty. Here's a brief overview of this wonderful breed:
           </p>
-          <p className="text-gray-700 text-justify mb-6">
+          <p className="text-gray-700 text-justify mb-6 w-[60rem] ">
             {breed_desc[recommendedBreed]}
           </p>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between gap-[25rem] items-center">
             <div>
               <p className="text-gray-600">
                 Want to learn more about {recommendedBreed} ownership?
@@ -329,14 +327,14 @@ function PetQuiz() {
             </div>
             <button
               onClick={restartQuiz}
-              className="text-lg px-8 py-3 text-white font-bold rounded-2xl bg-[#d3b79f] hover:bg-rounded-full transition-all duration-300 focus:outline-none"
+              className="text-lg px-8 py-3 text-white font-bold rounded-2xl bg-[#ceae93] hover:bg-rounded-full transition-all duration-300 focus:outline-none"
             >
               Restart Quiz
             </button>
           </div>
         </div>
       )}
-    </Layout>
+    </div>
   );
 }
 
