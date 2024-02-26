@@ -5,7 +5,7 @@ function Footer() {
   const sellerToken = localStorage.getItem("sellerToken");
 
   return (
-    <div className="bg-[#b98e6d] py-10">
+    <div className="bg-[#b98e6d] py-10 rounded-xl">
       <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         <div className="flex flex-col items-center gap-6 text-center">
           <span className="text-3xl text-black font-bold">Pawdoption</span>

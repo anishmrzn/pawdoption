@@ -21,7 +21,7 @@ from django.http import JsonResponse
 # loaded_model = joblib.load('dog_breed_classifier_model.joblib')
 
 # Load the trained model
-loaded_model = joblib.load(r'MLquiz/breedquiz.joblib')
+loaded_model = joblib.load(r'MLquiz/breed.joblib')
 
 
 # Create your views here.
