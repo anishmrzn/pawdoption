@@ -16,7 +16,7 @@ class Pets(models.Model):
   description = models.TextField(blank = True, null = True)
   petImgUrl = models.URLField(blank = True)
   email = models.EmailField(null = True)
-  vaccinated = models.CharField(max_length = 10, blank = True)
+  vaccinated = models.CharField(max_length = 20, blank = True)
   reason = models.TextField(blank = True, null = True)
   medicalDescription = models.TextField(blank = True, null = True)
   username = models.CharField(max_length = 50, null = True)
