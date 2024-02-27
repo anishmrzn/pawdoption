@@ -44,7 +44,7 @@ function PetQuiz() {
     },
     {
       question:
-        "2. What is the shortest you would like your pet to be? Min value (10-50)",
+        "2. What is the shortest you would like your pet to be? Min value (10-60 in cm)",
       // options: {
       //   tiny: 10,
       //   small: 20,
@@ -56,31 +56,31 @@ function PetQuiz() {
     },
     {
       question:
-        "3. What is the tallest you would like your pet to grow? Max value (20-65)",
+        "3. What is the tallest you would like your pet to grow? Max value (20-82 in cm)",
       key: "max_height",
       type: "number",
     },
     {
       question:
-        "4. What is the lightest you would like your pet to be? Min value (2-50)",
+        "4. What is the lightest you would like your pet to be? Min value (2-60 in kg)",
       key: ["min_weight"],
       type: "number",
     },
     {
       question:
-        "5. What is the heaviest you would like your pet to be? Max value (10-60)",
+        "5. What is the heaviest you would like your pet to be? Max value (3-90 in kg)",
       key: "max_weight",
       type: "number",
     },
     {
       question:
-        "6. How many years at least would you like to spend with your pet? Min value (7-14)",
+        "6. How many years at least would you like to spend with your pet? Min value (6-15 in years)",
       key: ["min_expectancy"],
       type: "number",
     },
     {
       question:
-        "7. How many joyful years would you like to share with your furry friend? Max value (10-16)",
+        "7. How many joyful years would you like to share with your furry friend? Max value (9-18 in years)",
       key: "max_expectancy",
       type: "number",
     },
@@ -115,7 +115,7 @@ function PetQuiz() {
     {
       question: "10. How much coat shedding can you deal with?",
       options: {
-        tnfrequent: 0.2,
+        infrequent: 0.2,
         occasional: 0.4,
         seasonal: 0.6,
         regularly: 0.8,

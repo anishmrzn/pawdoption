@@ -209,7 +209,7 @@ EMAIL_USE_SSL = False
 
 
 AUTH_USER_MODEL = 'api.CustomUser'
-# AUTH_USER_MODEL = 'users.Seller'
+AUTH_USER_MODEL = 'users.Seller'
 
 
 # Default primary key field type
