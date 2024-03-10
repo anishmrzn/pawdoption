@@ -20,7 +20,7 @@ function CartItem({
         </div>
 
         <div className="flex items-center justify-center">
-          $ {(price - (price * discount) / 100).toFixed(2)}
+          Rs. {(price - (price * discount) / 100).toFixed(2)}
         </div>
         <CartCounter
           amount={amount}
@@ -28,7 +28,7 @@ function CartItem({
           setIncrease={() => setIncrease(productId)}
         />
         <div className="flex items-center justify-center">
-          $ {((price - (price * discount) / 100) * amount).toFixed(2)}
+          Rs. {((price - (price * discount) / 100) * amount).toFixed(2)}
         </div>
         <button
           className="flex items-center justify-center text-red-700 text-xl"

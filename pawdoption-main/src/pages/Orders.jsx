@@ -88,7 +88,7 @@ function Orders() {
                         {order.products.map((product, productIndex) => (
                           <div key={product.productName}>
                             {productIndex !== 0 && <div className="mt-2"></div>}
-                            $ {product.discounted.toFixed(2)}{" "}
+                            Rs {product.discounted.toFixed(2)}{" "}
                           </div>
                         ))}
                       </td>
@@ -119,7 +119,7 @@ function Orders() {
                     Total Price:
                   </td>
                   <td className="py-3 px-6 text-left font-bold">
-                    ${totalPrice.toFixed(2)}
+                    Rs {totalPrice.toFixed(2)}
                   </td>
                 </tr>
               </tfoot>
