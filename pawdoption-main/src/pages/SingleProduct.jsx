@@ -40,7 +40,7 @@ function SingleProduct() {
           </div>
           <div className="flex items-center gap-5 justify-center">
             <h1 className="text-2xl font-extrabold text-green-600">
-              $
+              <span className="mr-2">Rs.</span>
               {(
                 singleProduct.price -
                 singleProduct.price * (singleProduct.discount / 100)
@@ -51,7 +51,7 @@ function SingleProduct() {
                 {singleProduct.discount}% off
               </span>
               <span className="text-lg text-white line-through pl-2">
-                $.{singleProduct.price}
+                Rs. {singleProduct.price}
               </span>
             </div>
           </div>
