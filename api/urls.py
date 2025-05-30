@@ -1,7 +1,7 @@
 from django.urls import path,include
 from . import views
 
-from .views import (customUserCreate, send_email,CustomTokenObtainPairView, getUserProfile,updateUserProfile,deleteUserProfile,predict_dog_breed, 
+from .views import (customUserCreate, send_email,CustomUserTokenObtainPairView, SellerTokenObtainPairView, getUserProfile,updateUserProfile,deleteUserProfile,predict_dog_breed, 
 StripeCheckoutView)
 
 from rest_framework_simplejwt.views import (
@@ -20,8 +20,8 @@ urlpatterns = [
 
     path('', include('paws.urls')),
 
-    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('seller/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/', CustomUserTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('seller/token/', SellerTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('signup/', customUserCreate, name='create_user'),
     path('create-product/', createProduct, name = 'create-product'),

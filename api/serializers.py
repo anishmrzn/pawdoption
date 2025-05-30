@@ -65,26 +65,46 @@ class EmailSerializer(serializers.Serializer):
     message = serializers.CharField()
     recipients = serializers.ListField(child=serializers.EmailField())
     
+
+
+class CustomUserTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        user = CustomUser.objects.filter(username=attrs.get('username')).first()
+        if user and user.check_password(attrs.get('password')):
+            refresh = self.get_token(user)
+            return {'refresh': str(refresh), 'access': str(refresh.access_token)}
+        raise serializers.ValidationError("Unable to log in with provided credentials.")
+
+class SellerTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        user = Seller.objects.filter(username=attrs.get('username')).first()
+        if user and user.check_password(attrs.get('password')):
+            refresh = self.get_token(user)
+            return {'refresh': str(refresh), 'access': str(refresh.access_token)}
+        raise serializers.ValidationError("Unable to log in with provided credentials.")
+
+
+
     
 
 
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    def validate(self, attrs):
-        credentials = {
-            'username': attrs.get('username'),
-            'password': attrs.get('password')
-        }
+# class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+#     def validate(self, attrs):
+#         credentials = {
+#             'username': attrs.get('username'),
+#             'password': attrs.get('password')
+#         }
         
-        user = CustomUser.objects.filter(username=credentials['username']).first()
-        if not user:
-            user = Seller.objects.filter(username=credentials['username']).first()
+#         user = CustomUser.objects.filter(username=credentials['username']).first()
+#         if not user:
+#             user = Seller.objects.filter(username=credentials['username']).first()
 
-        if user and user.check_password(credentials['password']):
-            refresh = self.get_token(user)
-            data = {'refresh': str(refresh), 'access': str(refresh.access_token)}
-            return data
-        else:
-            raise serializers.ValidationError("Unable to log in with provided credentials.")
+#         if user and user.check_password(credentials['password']):
+#             refresh = self.get_token(user)
+#             data = {'refresh': str(refresh), 'access': str(refresh.access_token)}
+#             return data
+#         else:
+#             raise serializers.ValidationError("Unable to log in with provided credentials.")
 
     
         # user = MultiModelBackend().authenticate(request=self.context.get('request'), username=credentials['username'], password=credentials['password'])
