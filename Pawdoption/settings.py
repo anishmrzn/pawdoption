@@ -14,7 +14,9 @@ from datetime import timedelta
 # import cloudinary_storage
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -28,8 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$5@8w5c*ex&tq$%w*v6vceg%vs_ue05i%hpqj%yz1v_f6!ge@v'
-
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -96,15 +97,13 @@ WSGI_APPLICATION = 'Pawdoption.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
         
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pawdoption',
-        'USER':'avnadmin',
-        'PASSWORD':'AVNS_-yD5mf9XltfRuxECo85',
-        'HOST':'mysql-2db041c4-sagarmatha-eb96.a.aivencloud.com',
-        'PORT':'24673',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'), 
     }
 }
 
@@ -200,8 +199,8 @@ SIMPLE_JWT = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'pawdoption0@gmail.com'
-EMAIL_HOST_PASSWORD = 'aseb mpyi mpqt tajg'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
@@ -222,13 +221,13 @@ CORS_ALLOW_ALL_ORIGINS = True
 APPEND_SLASH = False
 
 cloudinary.config(
-    cloud_name="djzfsffst",
-    api_key="554852596428659",
-    api_secret="mr7DiXiNtCngFiM6ZwwmvEKdKHU",
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
     secure=True,
 )
 
 #secret key for poyment integration using stripe
-STRIPE_SECRET_KEY = 'sk_test_51OiKR0HRxrEnXWBt5FNsTFMcYRS3nl40vfr7EWKR7pVNuiOckyuHb1wx9zKqgrNJ6pZQoCvAqhL0mYJMm0GYkRSg00KWaJqVvt'
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
     
 SITE_URL = 'http://localhost:5173/'
